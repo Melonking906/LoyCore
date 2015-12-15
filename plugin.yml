@@ -1,0 +1,55 @@
+name: LoyCore
+main: me.nonit.loycore.LoyCore
+version: 0.6
+author: Melonking
+description: Needed things for LoyLoy
+depend: [Vault,Nicky,Fe]
+
+commands:
+  hug:
+    description: Hug someone!
+  motd:
+    description: Show the Motd!
+  setnews:
+    description: Set the Motd news!
+  unsign:
+    description: Unsign books!
+  fix:
+    description: Fix tools!
+  loyreload:
+    description: Reloyd!
+  announce:
+    description: Announce stuff!
+    aliases: [anc]
+  alert:
+    description: Alert stuff!
+  kickemall:
+    description: Kick Everyone!
+    aliases: [kea]
+  invclaim:
+    description: Claim inventory!
+  giveeveryone:
+    description: Give something to everyone!
+  mollytalk:
+    description: Talk as Molly!
+    aliases: [mt]
+  playertalk:
+    description: Talk as someone!
+    aliases: [pt]
+  send:
+    description: Send items to players!
+  fly:
+    description: Fly!
+    aliases: [f]
+  seen:
+    description: See when a player was last online!
+  addpet:
+    description: Adds a players pet perm!
+  chat:
+    description: Loy chat commands!
+    aliases: [c]
+  pvp:
+    description: Toggle pvp!
+  prefixtoken:
+    description: Spawn a prefix token!
+    aliases: [pfxtoken]
