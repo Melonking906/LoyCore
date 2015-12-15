@@ -1,2 +1,6 @@
 
 *.iml
+
+META-INF/
+output/
+.idea/
