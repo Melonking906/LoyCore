@@ -1,7 +1,5 @@
-
 *.iml
-
 META-INF/
+out/
 output/
 .idea/
-out/
