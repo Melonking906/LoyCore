@@ -8,7 +8,6 @@ import me.nonit.loycore.autopromote.AutoPromote;
 import me.nonit.loycore.chat.ChannelStore;
 import me.nonit.loycore.chat.ChatCommand;
 import me.nonit.loycore.chat.ChatListener;
-import me.nonit.loycore.chat.IRCManager;
 import me.nonit.loycore.commands.*;
 import me.nonit.loycore.database.MySQL;
 import me.nonit.loycore.database.SQL;
@@ -82,7 +81,6 @@ public class LoyCore extends JavaPlugin
         pm.registerEvents( chatListener, this );
         getCommand( "chat" ).setExecutor( new ChatCommand( channelStore ) );
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
-        pm.registerEvents( new IRCManager( channelStore ), this );
 
         //Stuff
         pm.registerEvents( new JoinLeaveListener( this ), this );
