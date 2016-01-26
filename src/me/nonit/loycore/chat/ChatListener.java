@@ -58,7 +58,7 @@ public class ChatListener implements Listener
         prefixes.add( "Spark" );
     }
 
-    @EventHandler( priority= EventPriority.LOWEST )
+    @EventHandler( priority= EventPriority.LOW )
     public void onChat( AsyncPlayerChatEvent e )
     {
         if ( e.isCancelled() )
@@ -219,7 +219,7 @@ public class ChatListener implements Listener
             }
         }
 
-        if( recipients.size() < 2 )
+        if( recipients.size() < 2 && !isStaff )
         {
             p.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + "There is no one around to hear you..." );
         }
