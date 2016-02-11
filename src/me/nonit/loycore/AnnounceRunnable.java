@@ -64,7 +64,7 @@ public class AnnounceRunnable extends BukkitRunnable
             message = prefix + ChatColor.WHITE + " " + message;
             message = ChatColor.translateAlternateColorCodes( '&', message );
             message = message.replace( "%player%", player.getDisplayName() );
-            message = message.replace( "%money%", LoyCore.economy.format( LoyCore.economy.getBalance( player ) ) );
+            //message = message.replace( "%money%", LoyCore.economy.format( LoyCore.economy.getBalance( player ) ) );
             return message;
         }
 

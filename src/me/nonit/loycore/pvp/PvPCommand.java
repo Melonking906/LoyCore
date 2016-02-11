@@ -9,11 +9,13 @@ import org.bukkit.entity.Player;
 
 public class PvPCommand implements CommandExecutor
 {
+    private PvP pvp;
     private PvPListener listener;
 
-    public PvPCommand( PvPListener listener )
+    public PvPCommand( PvPListener listener, PvP pvp )
     {
         this.listener = listener;
+        this.pvp = pvp;
     }
 
     @Override
@@ -26,6 +28,12 @@ public class PvPCommand implements CommandExecutor
         }
 
         Player player = (Player) sender;
+
+        if ( pvp.isPvPWorld( player.getWorld().getName() ) )
+        {
+            player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "PvP cant be disabled here!" );
+            return true;
+        }
 
         boolean isEnabled = listener.containsPvPPlayer( player );
 

@@ -35,11 +35,11 @@ public class InvClaimCommand implements CommandExecutor
                     return true;
                 }
 
-                if( LoyCore.economy.getBalance( p ) < invs.getClaimCost() )
-                {
-                    p.sendMessage( LoyCore.getPfx() + ChatColor.RED + "It takes " + ChatColor.WHITE + LoyCore.economy.format( invs.getClaimCost() ) + ChatColor.RED + " to claim your inv, you only have " + ChatColor.WHITE + LoyCore.economy.format( LoyCore.economy.getBalance( p ) ) + ChatColor.RED + " :(" );
-                    return true;
-                }
+//                if( LoyCore.economy.getBalance( p ) < invs.getClaimCost() )
+//                {
+//                    p.sendMessage( LoyCore.getPfx() + ChatColor.RED + "It takes " + ChatColor.WHITE + LoyCore.economy.format( invs.getClaimCost() ) + ChatColor.RED + " to claim your inv, you only have " + ChatColor.WHITE + LoyCore.economy.format( LoyCore.economy.getBalance( p ) ) + ChatColor.RED + " :(" );
+//                    return true;
+//                }
 
                 invs.removeInv( p.getUniqueId() );
                 ItemStack[] oldInv = p.getInventory().getContents();
@@ -48,10 +48,10 @@ public class InvClaimCommand implements CommandExecutor
                 p.getInventory().setContents( drop.getContents() );
                 p.setExp( drop.getExp() );
 
-                LoyCore.economy.withdrawPlayer( p, invs.getClaimCost() );
-                LoyCore.economy.depositPlayer( "IoCo", invs.getClaimCost() );
+                //LoyCore.economy.withdrawPlayer( p, invs.getClaimCost() );
+                //LoyCore.economy.depositPlayer( "IoCo", invs.getClaimCost() );
 
-                p.sendMessage( LoyCore.getPfx() + "You recovered your inventory for " + ChatColor.YELLOW + LoyCore.economy.format( invs.getClaimCost() ) + ChatColor.GREEN + " !" );
+                //p.sendMessage( LoyCore.getPfx() + "You recovered your inventory for " + ChatColor.YELLOW + LoyCore.economy.format( invs.getClaimCost() ) + ChatColor.GREEN + " !" );
 
                 for( ItemStack item : oldInv )
                 {

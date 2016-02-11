@@ -11,12 +11,14 @@ import java.util.Date;
 public abstract class SQL
 {
     private Connection connection;
+    private SimpleDateFormat sqlDateFormat;
 
     protected LoyCore plugin;
 
     public SQL( LoyCore plugin )
     {
         this.plugin = plugin;
+        this.sqlDateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 
         plugin.getServer().getScheduler().runTaskTimerAsynchronously( plugin, new Runnable()
         {
@@ -182,9 +184,110 @@ public abstract class SQL
 
     private String getNowInSQLFormat()
     {
-        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         Date date = new Date();
+        return sqlDateFormat.format( date );
+    }
 
-        return format.format( date );
+    //+++ Death SQL +++
+
+    public ArrayList<DeadPlayer> getDeadPlayers()
+    {
+        Date now = new Date();
+        ArrayList<DeadPlayer> deadPlayers = new ArrayList<>();
+
+        ArrayList<HashMap<String,String>> data = query( "SELECT * FROM loy_players WHERE deaths > 0;", true );
+        if( data == null )
+        {
+            return deadPlayers;
+        }
+
+        for( HashMap<String,String> row : data )
+        {
+            UUID playerUUID;
+            Date deathDate;
+
+            try
+            {
+                playerUUID = UUID.fromString(row.get("uuid"));
+                deathDate = sqlDateFormat.parse(row.get("lastdeath"));
+            }
+            catch (Exception x)
+            {
+                continue;
+            }
+
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.setTime(deathDate);
+            calendar.add(Calendar.DATE, 1);
+
+            Date dateOfAwake = calendar.getTime();
+
+            if (now.before(dateOfAwake))
+            {
+                deadPlayers.add( new DeadPlayer( playerUUID, dateOfAwake ) );
+            }
+        }
+
+        return deadPlayers;
+    }
+
+    public void updatePlayerDeath( Player player )
+    {
+        String uuid = player.getUniqueId().toString();
+
+        ArrayList<HashMap<String,String>> data = query("SELECT deaths FROM loy_players WHERE uuid = '"+uuid+"'", true);
+        if( data == null )
+        {
+            return;
+        }
+
+        int deaths;
+
+        try
+        {
+            deaths = Integer.parseInt(data.get(0).get("deaths"));
+        }
+        catch( Exception e )
+        {
+            return;
+        }
+
+        deaths++;
+        String dateOfDeath = getNowInSQLFormat();
+
+        query("UPDATE loy_players SET deaths = "+deaths+", lastdeath = '"+dateOfDeath+"' WHERE uuid = '"+uuid+"'", false);
+    }
+
+    public void resetPlayerDeath( UUID uuid )
+    {
+        query("UPDATE loy_players SET deaths = 0 WHERE uuid = '"+uuid.toString()+"'", false);
+    }
+
+    public void resetAllPlayerDeaths()
+    {
+        query("UPDATE loy_players SET deaths = 0;", false);
+    }
+
+    public class DeadPlayer
+    {
+        private UUID uuid;
+        private Date dateOfAwake;
+
+        public DeadPlayer(UUID uuid, Date dateOfAwake)
+        {
+            this.uuid = uuid;
+            this.dateOfAwake = dateOfAwake;
+        }
+
+        public UUID getUuid()
+        {
+            return uuid;
+        }
+
+        public Date getDateOfAwake()
+        {
+            return dateOfAwake;
+        }
     }
 }

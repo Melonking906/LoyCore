@@ -1,7 +1,5 @@
 package me.nonit.loycore.chat;
 
-import com.gamingmesh.jobs.Jobs;
-import com.gamingmesh.jobs.container.JobProgression;
 import me.nonit.loycore.LoyCore;
 import net.md_5.bungee.api.chat.*;
 import net.milkbowl.vault.chat.Chat;
@@ -103,10 +101,10 @@ public class ChatListener implements Listener
         {
             prefix = prefixes.get( random.nextInt( prefixes.size() ) );
         }
-        if( prefix.equals( "{fe}" ) )
-        {
-            prefix = LoyCore.economy.format( LoyCore.economy.getBalance( p ) );
-        }
+//        if( prefix.equals( "{fe}" ) )
+//        {
+//            prefix = LoyCore.economy.format( LoyCore.economy.getBalance( p ) );
+//        }
 
         String suffix = chat.getPlayerSuffix( p );
 
@@ -116,20 +114,23 @@ public class ChatListener implements Listener
 
         String nameToolTip = "";
 
-        List<JobProgression> jobs = Jobs.getPlayerManager().getJobsPlayer(p).getJobProgression();
-        if( jobs.size() == 0 )
-        {
-            nameToolTip += ChatColor.GRAY + "No jobs...";
-        }
-        for ( JobProgression job : jobs )
-        {
-            if( !nameToolTip.equals( "" ) )
-            {
-                nameToolTip += "\n";
-            }
-            nameToolTip += ChatColor.YELLOW + job.getJob().getName() + " " + ChatColor.GRAY + "Level " + job.getLevel();
-        }
-        nameToolTip += "\n" + ChatColor.GOLD + "Fé " + ChatColor.GRAY + LoyCore.economy.getBalance( p );
+        //Jobs Code
+//        List<JobProgression> jobs = Jobs.getPlayerManager().getJobsPlayer(p).getJobProgression();
+//        if( jobs.size() == 0 )
+//        {
+//            nameToolTip += ChatColor.GRAY + "No jobs...";
+//        }
+//        for ( JobProgression job : jobs )
+//        {
+//            if( !nameToolTip.equals( "" ) )
+//            {
+//                nameToolTip += "\n";
+//            }
+//            nameToolTip += ChatColor.YELLOW + job.getJob().getName() + " " + ChatColor.GRAY + "Level " + job.getLevel();
+//        }
+
+        //Other Code
+        //nameToolTip += "\n" + ChatColor.GOLD + "Fé " + ChatColor.GRAY + LoyCore.economy.getBalance( p );
         nameToolTip += "\n" + ChatColor.WHITE + "Name " + ChatColor.GRAY + p.getName();
 
         if( p.hasPermission( "loy.chat.color" ) )

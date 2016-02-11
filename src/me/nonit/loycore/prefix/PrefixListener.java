@@ -106,7 +106,7 @@ public class PrefixListener implements Listener
             event.setLine( 0, color + "[Prefix]" );
             event.setLine( 1, ChatColor.DARK_GRAY + prefix );
             event.setLine( 2, "" );
-            event.setLine( 3, color + LoyCore.economy.format( price ) );
+            //event.setLine( 3, color + LoyCore.economy.format( price ) );
 
             player.sendMessage( LoyCore.getPfx() + "Prefix sign created!" );
             return;
@@ -158,13 +158,13 @@ public class PrefixListener implements Listener
                         return;
                     }
 
-                    if( LoyCore.economy.getBalance( player ) < price )
-                    {
-                        player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You can't afford this prefix!" );
-                        return;
-                    }
+//                    if( LoyCore.economy.getBalance( player ) < price )
+//                    {
+//                        player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You can't afford this prefix!" );
+//                        return;
+//                    }
+//                    LoyCore.economy.withdrawPlayer( player, price );
 
-                    LoyCore.economy.withdrawPlayer( player, price );
                     LoyCore.chat.setPlayerPrefix( player, prefix );
 
                     player.sendMessage( LoyCore.getPfx() + "Yay, prefix set to " + ChatColor.GRAY + prefix + ChatColor.GREEN + "!" );

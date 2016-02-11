@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -90,6 +93,16 @@ public class GameModesListener implements Listener
         }
 
         ActionMessage.showMessage( player, ChatColor.RED + "Remember this world gets reset!" );
+    }
+
+    //Disable npc trading
+    @EventHandler
+    public void onTradeWithNPC(InventoryOpenEvent event)
+    {
+        if ( event.getPlayer() instanceof Player && event.getInventory().getType() == InventoryType.MERCHANT )
+        {
+            event.setCancelled(true);
+        }
     }
 
 //    @EventHandler

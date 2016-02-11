@@ -33,14 +33,14 @@ public class PayRunnable extends BukkitRunnable
 
         for( Player player : players )
         {
-            if( LoyCore.economy.getBalance( player ) < MAX_PLAYER_FE_FOR_PAY )
-            {
-                LoyCore.economy.depositPlayer( player, pocketMoney );
-
-                player.sendMessage(LoyCore.getPfx() + "You got " + ChatColor.YELLOW + LoyCore.economy.format(pocketMoney) + ChatColor.GREEN + " pocket money!");
-
-                TitleMessage.showMessage( player, "", ChatColor.GOLD + "You got " + ChatColor.YELLOW + LoyCore.economy.format( pocketMoney ) + ChatColor.GOLD + " pocket money!", 80 );
-            }
+//            if( LoyCore.economy.getBalance( player ) < MAX_PLAYER_FE_FOR_PAY )
+//            {
+//                LoyCore.economy.depositPlayer( player, pocketMoney );
+//
+//                player.sendMessage(LoyCore.getPfx() + "You got " + ChatColor.YELLOW + LoyCore.economy.format(pocketMoney) + ChatColor.GREEN + " pocket money!");
+//
+//                TitleMessage.showMessage( player, "", ChatColor.GOLD + "You got " + ChatColor.YELLOW + LoyCore.economy.format( pocketMoney ) + ChatColor.GOLD + " pocket money!", 80 );
+//            }
         }
     }
 }

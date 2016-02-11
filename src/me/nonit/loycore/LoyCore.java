@@ -2,18 +2,20 @@ package me.nonit.loycore;
 
 import com.github.hoqhuuep.islandcraft.api.IslandCraft;
 import com.github.hoqhuuep.islandcraft.bukkit.IslandCraftPlugin;
-import io.loyloy.fe.API;
-import io.loyloy.fe.Fe;
 import me.nonit.loycore.autopromote.AutoPromote;
 import me.nonit.loycore.chat.ChannelStore;
 import me.nonit.loycore.chat.ChatCommand;
 import me.nonit.loycore.chat.ChatListener;
-import me.nonit.loycore.chat.IRCManager;
 import me.nonit.loycore.commands.*;
 import me.nonit.loycore.database.MySQL;
 import me.nonit.loycore.database.SQL;
+import me.nonit.loycore.death.Death;
+import me.nonit.loycore.death.DeathListener;
+import me.nonit.loycore.death.DeathRunnable;
+import me.nonit.loycore.death.ResurrectCommand;
 import me.nonit.loycore.prefix.PfxTokenCommand;
 import me.nonit.loycore.prefix.PrefixListener;
+import me.nonit.loycore.pvp.PvP;
 import me.nonit.loycore.pvp.PvPCommand;
 import me.nonit.loycore.pvp.PvPListener;
 import net.milkbowl.vault.chat.Chat;
@@ -28,13 +30,12 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 public class LoyCore extends JavaPlugin
 {
-    public static Economy economy = null;
+    //public static Economy economy = null;
     public static Permission permission = null;
     public static Chat chat = null;
     public IslandCraft islandCraft = null;
 
     public SQL db;
-    public API fe = null;
 
     private static final String PREFIX = ChatColor.YELLOW + "[Loy]" + ChatColor.GREEN + " ";
 
@@ -43,10 +44,9 @@ public class LoyCore extends JavaPlugin
     {
         this.saveDefaultConfig(); // Makes a config is one does not exist.
 
-        setupEconomy();
+        //setupEconomy();
         setupPermissions();
         setupChat();
-        setupFeLink();
         setupIslandCraft();
 
         this.db = new MySQL( this );
@@ -82,7 +82,7 @@ public class LoyCore extends JavaPlugin
         pm.registerEvents( chatListener, this );
         getCommand( "chat" ).setExecutor( new ChatCommand( channelStore ) );
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
-        pm.registerEvents( new IRCManager( channelStore ), this );
+        //pm.registerEvents( new IRCManager( channelStore ), this );
 
         //Stuff
         pm.registerEvents( new JoinLeaveListener( this ), this );
@@ -91,21 +91,22 @@ public class LoyCore extends JavaPlugin
         pm.registerEvents( new DontBuildListener(), this );
 
         // PvP
-        PvPListener pvPListener = new PvPListener();
+        PvP pvp = new PvP();
+        PvPListener pvPListener = new PvPListener( pvp );
         pm.registerEvents( pvPListener, this );
-        getCommand( "pvp" ).setExecutor( new PvPCommand( pvPListener ) );
+        getCommand( "pvp" ).setExecutor( new PvPCommand( pvPListener, pvp ) );
 
         // Inv Saver
-        InvSaverListener saverListener = new InvSaverListener( this );
-        pm.registerEvents( saverListener, this );
-        getCommand( "invclaim" ).setExecutor( new InvClaimCommand( saverListener ) );
+        //InvSaverListener saverListener = new InvSaverListener( this );
+        //pm.registerEvents( saverListener, this );
+        //getCommand( "invclaim" ).setExecutor( new InvClaimCommand( saverListener ) );
 
         //Prefix Stuff
         pm.registerEvents( new PrefixListener(), this );
         getCommand( "prefixtoken" ).setExecutor( new PfxTokenCommand() );
 
         // Pocket money
-        scheduler.scheduleSyncRepeatingTask( this, new PayRunnable( this ), 35000L, 72000L ); // Every hour
+        //scheduler.scheduleSyncRepeatingTask( this, new PayRunnable( this ), 35000L, 72000L ); // Every hour
 
         // Announcments
         if( getConfig().getStringList( "announcements" ).size() >= 2 )
@@ -123,6 +124,12 @@ public class LoyCore extends JavaPlugin
         //Gamemode managr
         pm.registerEvents( new GameModesListener(), this );
 
+        // Death system
+        Death death = new Death( this );
+        pm.registerEvents( new DeathListener( death ), this );
+        scheduler.scheduleSyncRepeatingTask(this, new DeathRunnable( death ), 0L, 12000L );
+        getCommand( "resurrect" ).setExecutor(new ResurrectCommand( death ));
+
         // Votifier
         if( pm.getPlugin( "Votifier" ) != null )
         {
@@ -139,21 +146,6 @@ public class LoyCore extends JavaPlugin
 
     public static String getPfx() { return PREFIX; }
 
-    private void setupFeLink()
-    {
-        try
-        {
-            final Fe fePlugin = getPlugin( Fe.class );
-            this.fe = fePlugin.getAPI();
-
-        }
-        catch( final Exception e )
-        {
-            getLogger().severe( "Could not find Fe, please make sure plugin is installed correctly." );
-            setEnabled( false );
-        }
-    }
-
     private void setupIslandCraft()
     {
         try {
@@ -166,15 +158,15 @@ public class LoyCore extends JavaPlugin
         }
     }
 
-    private boolean setupEconomy()
-    {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-        if (economyProvider != null) {
-            economy = economyProvider.getProvider();
-        }
-
-        return (economy != null);
-    }
+//    private boolean setupEconomy()
+//    {
+//        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+//        if (economyProvider != null) {
+//            economy = economyProvider.getProvider();
+//        }
+//
+//        return (economy != null);
+//    }
 
     private boolean setupPermissions()
     {

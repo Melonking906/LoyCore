@@ -54,7 +54,7 @@ public class InvSaverListener implements Listener
         final Date dropDate = drop.getDate();
 
         p.sendMessage( LoyCore.getPfx() + "You died :O Block bandits saved your inventory for 1 min!" );
-        p.sendMessage( LoyCore.getPfx() + "Pay them " + ChatColor.YELLOW + LoyCore.economy.format( CLAIM_COST ) + ChatColor.GREEN + " with "+ ChatColor.YELLOW + "/invclaim" + ChatColor.GREEN + " or they will drop it!" );
+        //p.sendMessage( LoyCore.getPfx() + "Pay them " + ChatColor.YELLOW + LoyCore.economy.format( CLAIM_COST ) + ChatColor.GREEN + " with "+ ChatColor.YELLOW + "/invclaim" + ChatColor.GREEN + " or they will drop it!" );
 
         p.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new Runnable()
         {
