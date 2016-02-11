@@ -1,6 +1,6 @@
 name: LoyCore
 main: me.nonit.loycore.LoyCore
-version: 0.6
+version: 0.7
 author: Melonking
 description: Needed things for LoyLoy
 depend: [Vault,Nicky]
@@ -38,14 +38,13 @@ commands:
     description: Send items to players!
   fly:
     description: Fly!
-    aliases: [f]
   seen:
     description: See when a player was last online!
   addpet:
     description: Adds a players pet perm!
   chat:
     description: Loy chat commands!
-    aliases: [c]
+    aliases: [c,ch]
   pvp:
     description: Toggle pvp!
   prefixtoken:
@@ -53,3 +52,6 @@ commands:
     aliases: [pfxtoken]
   resurrect:
     description: Return players from the dead!
+  emeralds:
+    description: Get your emerald balance!
+    aliases: [money,fe]

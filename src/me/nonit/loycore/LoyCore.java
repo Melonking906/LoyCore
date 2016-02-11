@@ -6,6 +6,7 @@ import me.nonit.loycore.autopromote.AutoPromote;
 import me.nonit.loycore.chat.ChannelStore;
 import me.nonit.loycore.chat.ChatCommand;
 import me.nonit.loycore.chat.ChatListener;
+import me.nonit.loycore.clawgame.ClawRunnable;
 import me.nonit.loycore.commands.*;
 import me.nonit.loycore.database.MySQL;
 import me.nonit.loycore.database.SQL;
@@ -30,7 +31,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 public class LoyCore extends JavaPlugin
 {
-    //public static Economy economy = null;
     public static Permission permission = null;
     public static Chat chat = null;
     public IslandCraft islandCraft = null;
@@ -44,7 +44,6 @@ public class LoyCore extends JavaPlugin
     {
         this.saveDefaultConfig(); // Makes a config is one does not exist.
 
-        //setupEconomy();
         setupPermissions();
         setupChat();
         setupIslandCraft();
@@ -65,9 +64,10 @@ public class LoyCore extends JavaPlugin
         getCommand( "kickemall" ).setExecutor( new KickEmAllCommand() );
         getCommand( "giveeveryone" ).setExecutor( new GiveEveryoneCommand() );
         getCommand( "mollytalk" ).setExecutor( new MollyTalkCommand( this ) );
-        getCommand( "send" ).setExecutor( new SendCommand( this ) );
+        getCommand( "send" ).setExecutor( new SendCommand() );
         getCommand( "fly" ).setExecutor( new FlyCommand() );
         getCommand( "seen" ).setExecutor( new SeenCommand( this ) );
+        getCommand( "emeralds" ).setExecutor( new EmeraldsCommand() );
 
         if( pm.getPlugin( "EchoPet" ) != null )
         {
@@ -96,17 +96,12 @@ public class LoyCore extends JavaPlugin
         pm.registerEvents( pvPListener, this );
         getCommand( "pvp" ).setExecutor( new PvPCommand( pvPListener, pvp ) );
 
-        // Inv Saver
-        //InvSaverListener saverListener = new InvSaverListener( this );
-        //pm.registerEvents( saverListener, this );
-        //getCommand( "invclaim" ).setExecutor( new InvClaimCommand( saverListener ) );
-
         //Prefix Stuff
         pm.registerEvents( new PrefixListener(), this );
         getCommand( "prefixtoken" ).setExecutor( new PfxTokenCommand() );
 
         // Pocket money
-        //scheduler.scheduleSyncRepeatingTask( this, new PayRunnable( this ), 35000L, 72000L ); // Every hour
+        scheduler.scheduleSyncRepeatingTask( this, new PayRunnable(), 35000L, 72000L ); // Every hour
 
         // Announcments
         if( getConfig().getStringList( "announcements" ).size() >= 2 )
@@ -135,6 +130,12 @@ public class LoyCore extends JavaPlugin
         {
             pm.registerEvents( new VoteListener( this ), this );
         }
+
+        //Rain Drops
+        scheduler.scheduleSyncRepeatingTask( this, new RaindropsRunnable(), 600L, 600L );
+
+        //Claw Games
+        scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 5L, 5L );
     }
 
     @Override
@@ -157,16 +158,6 @@ public class LoyCore extends JavaPlugin
             return;
         }
     }
-
-//    private boolean setupEconomy()
-//    {
-//        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-//        if (economyProvider != null) {
-//            economy = economyProvider.getProvider();
-//        }
-//
-//        return (economy != null);
-//    }
 
     private boolean setupPermissions()
     {

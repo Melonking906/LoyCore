@@ -219,7 +219,7 @@ public abstract class SQL
             Calendar calendar = Calendar.getInstance();
 
             calendar.setTime(deathDate);
-            calendar.add(Calendar.DATE, 1);
+            calendar.add(Calendar.MINUTE, 15);
 
             Date dateOfAwake = calendar.getTime();
 

@@ -15,11 +15,9 @@ import org.bukkit.inventory.ItemStack;
 public class SendCommand implements CommandExecutor
 {
     private static final int COST = 1;
-    private final String SERVER_ACCOUNT;
 
-    public SendCommand( LoyCore p )
+    public SendCommand()
     {
-        this.SERVER_ACCOUNT = p.getConfig().getString( "serveraccount" );
     }
 
     @Override
@@ -33,11 +31,6 @@ public class SendCommand implements CommandExecutor
             {
                 if( args.length > 0 )
                 {
-//                    if( ! LoyCore.economy.has( s, COST ) )
-//                    {
-//                        s.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You cant afford that! Its " + LoyCore.economy.format( COST ) + " to send an item." );
-//                        return true;
-//                    }
                     if ( EmeraldEcon.getBalance( s ) < COST )
                     {
                         s.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You cant afford that! Its " + COST + " emerald to send an item." );
@@ -76,8 +69,6 @@ public class SendCommand implements CommandExecutor
                         r.getInventory().addItem( item );
                         TitleMessage.showMessage( r, "", ChatColor.GREEN + "You got an item from " + ChatColor.YELLOW + sName + ChatColor.GREEN + ", check your inv!", 60 );
 
-                        //LoyCore.economy.withdrawPlayer( s, COST );
-                        //LoyCore.economy.depositPlayer( SERVER_ACCOUNT, COST );
                         EmeraldEcon.removeEmeralds( s, COST );
 
                         //s.sendMessage( LoyCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + " for " + LoyCore.economy.format( COST ) + " :D" );

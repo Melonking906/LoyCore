@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class FixCommand implements CommandExecutor
 {
-    private static final int COST = 5;
+    private static final int COST = 50;
 
     public FixCommand()
     {

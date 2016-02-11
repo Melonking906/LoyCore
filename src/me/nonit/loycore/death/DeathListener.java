@@ -1,5 +1,6 @@
 package me.nonit.loycore.death;
 
+import me.nonit.loycore.LoyCore;
 import me.nonit.loycore.database.SQL;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,7 +28,7 @@ public class DeathListener implements Listener
 
     public DeathListener( Death death )
     {
-        this.niceDateFormat = new SimpleDateFormat( "HH:mm dd/MM" );
+        this.niceDateFormat = new SimpleDateFormat( "h:mm a" );
         this.death = death;
         this.dieingPlayers = new ArrayList<>();
     }
@@ -103,7 +104,7 @@ public class DeathListener implements Listener
         death.refreshDeadPlayers();
 
         player.kickPlayer(ChatColor.RED + "You died...");
-        Bukkit.broadcastMessage(ChatColor.GRAY + "You feel a cold shiver... " + player.getDisplayName() + " has died.");
+        Bukkit.broadcastMessage( LoyCore.getPfx() + ChatColor.GRAY + "You feel a cold shiver... " + player.getDisplayName() + " has died.");
 
         dieingPlayers.remove( player );
     }
