@@ -16,13 +16,11 @@ public class PromoteRunnable extends BukkitRunnable
 {
     private final AutoPromote autoPromote;
     private final LoyCore plugin;
-    private final String mollyPrefix;
 
     public PromoteRunnable( AutoPromote autoPromote, LoyCore plugin )
     {
         this.autoPromote = autoPromote;
         this.plugin = plugin;
-        this.mollyPrefix = ChatColor.translateAlternateColorCodes( '&', plugin.getConfig().getString( "announce_prefix" ) ) + ChatColor.WHITE + " ";
     }
 
     @Override
@@ -54,7 +52,7 @@ public class PromoteRunnable extends BukkitRunnable
 
                         for( Player onlinePlayer : Bukkit.getServer().getOnlinePlayers() )
                         {
-                            onlinePlayer.sendMessage( mollyPrefix + "Welcome! " + player.getDisplayName() + " joined for the first time!" );
+                            onlinePlayer.sendMessage( LoyCore.getMol() + "Yass! " + player.getDisplayName() + " is now a member!" );
 
                             if( ! onlinePlayer.equals( player ) )
                             {

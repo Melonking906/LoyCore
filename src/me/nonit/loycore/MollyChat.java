@@ -17,8 +17,6 @@ public class MollyChat implements Listener
 
     public MollyChat( LoyCore p )
     {
-        String mollyPrefix = p.getConfig().getString( "announce_prefix" );
-
         replies = new HashMap<>();
         lastTime = System.currentTimeMillis();
 
@@ -30,7 +28,7 @@ public class MollyChat implements Listener
         {
             String[] temp = rawReplie.split( "=" );
 
-            String reply = ChatColor.translateAlternateColorCodes( '&', mollyPrefix + ChatColor.WHITE + " " + temp[0] );
+            String reply = ChatColor.translateAlternateColorCodes( '&', LoyCore.getMol() + temp[0] );
             String wordsString = temp[1];
 
             String[] wordsArray = wordsString.split( "\\+" );

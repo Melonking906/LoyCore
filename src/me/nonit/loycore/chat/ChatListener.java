@@ -1,5 +1,7 @@
 package me.nonit.loycore.chat;
 
+import com.massivecraft.factions.entity.MPlayer;
+import me.nonit.loycore.EmeraldEcon;
 import me.nonit.loycore.LoyCore;
 import net.md_5.bungee.api.chat.*;
 import net.milkbowl.vault.chat.Chat;
@@ -101,6 +103,19 @@ public class ChatListener implements Listener
         {
             prefix = prefixes.get( random.nextInt( prefixes.size() ) );
         }
+
+        MPlayer factionPlayer = MPlayer.get( p );
+        if ( prefix.equals( "{faction}" ) )
+        {
+            if ( factionPlayer.hasFaction() )
+            {
+                prefix = ChatColor.DARK_AQUA + factionPlayer.getFactionName();
+            }
+            else
+            {
+                prefix = ChatColor.DARK_AQUA + "Factionless";
+            }
+        }
 //        if( prefix.equals( "{fe}" ) )
 //        {
 //            prefix = LoyCore.economy.format( LoyCore.economy.getBalance( p ) );
@@ -112,25 +127,22 @@ public class ChatListener implements Listener
 
         String msg = e.getMessage();
 
+        //Name Tooltip
         String nameToolTip = "";
 
-        //Jobs Code
-//        List<JobProgression> jobs = Jobs.getPlayerManager().getJobsPlayer(p).getJobProgression();
-//        if( jobs.size() == 0 )
-//        {
-//            nameToolTip += ChatColor.GRAY + "No jobs...";
-//        }
-//        for ( JobProgression job : jobs )
-//        {
-//            if( !nameToolTip.equals( "" ) )
-//            {
-//                nameToolTip += "\n";
-//            }
-//            nameToolTip += ChatColor.YELLOW + job.getJob().getName() + " " + ChatColor.GRAY + "Level " + job.getLevel();
-//        }
-
-        //Other Code
-        //nameToolTip += "\n" + ChatColor.GOLD + "Fé " + ChatColor.GRAY + LoyCore.economy.getBalance( p );
+        String faction = "none...";
+        String title = "none...";
+        if ( factionPlayer.hasFaction() )
+        {
+            faction = factionPlayer.getFactionName();
+        }
+        if ( factionPlayer.hasTitle() )
+        {
+            title = factionPlayer.getTitle();
+        }
+        nameToolTip += ChatColor.RED + "Faction " + ChatColor.GRAY + faction;
+        nameToolTip += "\n" + ChatColor.GOLD + "Title " + ChatColor.GRAY + title;
+        nameToolTip += "\n" + ChatColor.GREEN + "Emeralds " + ChatColor.GRAY + EmeraldEcon.getBalance( p );
         nameToolTip += "\n" + ChatColor.WHITE + "Name " + ChatColor.GRAY + p.getName();
 
         if( p.hasPermission( "loy.chat.color" ) )

@@ -20,7 +20,6 @@ import java.util.Random;
 
 public class VoteListener implements Listener
 {
-    private String mollyPrefix;
     private int votes;
     private Random random;
 
@@ -28,9 +27,8 @@ public class VoteListener implements Listener
 
     private static final int VOTES_PER_REWARD = 6;
 
-    public VoteListener( LoyCore plugin )
+    public VoteListener()
     {
-        mollyPrefix = ChatColor.translateAlternateColorCodes( '&', plugin.getConfig().getString( "announce_prefix" ) ) + ChatColor.WHITE;
         votes = 0;
         random = new Random();
 
@@ -75,7 +73,7 @@ public class VoteListener implements Listener
 
         if( p != null )
         {
-            Bukkit.getServer().broadcastMessage( mollyPrefix + " Yay! " + p.getDisplayName() + " voted for LoyLoy, just " + ChatColor.YELLOW + (VOTES_PER_REWARD - votes) + ChatColor.WHITE + " more until we have a party :D" );
+            Bukkit.getServer().broadcastMessage( LoyCore.getMol() + "Yay! " + p.getDisplayName() + " voted for LoyLoy, just " + ChatColor.YELLOW + (VOTES_PER_REWARD - votes) + ChatColor.WHITE + " more until we have a party :D" );
 
             //Give the p an I voted cookie.
             PlayerInventory inventory = p.getInventory();
@@ -94,7 +92,7 @@ public class VoteListener implements Listener
         }
         else
         {
-            Bukkit.getServer().broadcastMessage( mollyPrefix + " Yay! " + vote.getUsername() + " voted for LoyLoy, just " + ChatColor.YELLOW + (VOTES_PER_REWARD - votes) + ChatColor.WHITE + " more until we have a party :D" );
+            Bukkit.getServer().broadcastMessage( LoyCore.getMol() + "Yay! " + vote.getUsername() + " voted for LoyLoy, just " + ChatColor.YELLOW + (VOTES_PER_REWARD - votes) + ChatColor.WHITE + " more until we have a party :D" );
         }
 
         if( votes == VOTES_PER_REWARD )

@@ -1,5 +1,6 @@
 package me.nonit.loycore.death;
 
+import me.nonit.loycore.LoyCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -39,7 +40,7 @@ public class ResurrectCommand implements CommandExecutor
             death.getDB().resetAllPlayerDeaths();
             death.refreshDeadPlayers();
 
-            sender.sendMessage("All player deaths reset");
+            sender.sendMessage( LoyCore.getPfx() + "You resurrected everyone!.. Did Io approve?..");
             return true;
         }
 
@@ -47,14 +48,14 @@ public class ResurrectCommand implements CommandExecutor
 
         if( !player.hasPlayedBefore() )
         {
-            sender.sendMessage("That person has not played before...");
+            sender.sendMessage(LoyCore.getPfx() + ChatColor.RED + name + " has not played before...");
             return true;
         }
 
         death.getDB().resetPlayerDeath( player.getUniqueId() );
         death.refreshDeadPlayers();
 
-        sender.sendMessage("Player has been resurrected!");
+        sender.sendMessage(LoyCore.getPfx() + name + " is alive again!");
 
         return true;
     }

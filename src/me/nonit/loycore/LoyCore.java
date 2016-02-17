@@ -38,6 +38,7 @@ public class LoyCore extends JavaPlugin
     public SQL db;
 
     private static final String PREFIX = ChatColor.YELLOW + "[Loy]" + ChatColor.GREEN + " ";
+    private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
     @Override
     public void onEnable()
@@ -63,7 +64,7 @@ public class LoyCore extends JavaPlugin
         getCommand( "alert" ).setExecutor( new AlertCommand() );
         getCommand( "kickemall" ).setExecutor( new KickEmAllCommand() );
         getCommand( "giveeveryone" ).setExecutor( new GiveEveryoneCommand() );
-        getCommand( "mollytalk" ).setExecutor( new MollyTalkCommand( this ) );
+        getCommand( "mollytalk" ).setExecutor( new MollyTalkCommand() );
         getCommand( "send" ).setExecutor( new SendCommand() );
         getCommand( "fly" ).setExecutor( new FlyCommand() );
         getCommand( "seen" ).setExecutor( new SeenCommand( this ) );
@@ -128,14 +129,14 @@ public class LoyCore extends JavaPlugin
         // Votifier
         if( pm.getPlugin( "Votifier" ) != null )
         {
-            pm.registerEvents( new VoteListener( this ), this );
+            pm.registerEvents( new VoteListener(), this );
         }
 
         //Rain Drops
         scheduler.scheduleSyncRepeatingTask( this, new RaindropsRunnable(), 600L, 600L );
 
         //Claw Games
-        scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 5L, 5L );
+        //scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 1L, 1L );
     }
 
     @Override
@@ -146,6 +147,8 @@ public class LoyCore extends JavaPlugin
     }
 
     public static String getPfx() { return PREFIX; }
+
+    public static String getMol() { return MOLLY; }
 
     private void setupIslandCraft()
     {
