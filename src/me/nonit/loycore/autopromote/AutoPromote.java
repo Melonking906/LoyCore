@@ -22,7 +22,7 @@ public class AutoPromote
         pm.registerEvents( new PromoteListener( this ), plugin );
 
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-        scheduler.scheduleSyncRepeatingTask( plugin, new PromoteRunnable( this, plugin ), 1200L, 1200L ); // Runs every 1 minutes.
+        scheduler.scheduleSyncRepeatingTask( plugin, new PromoteRunnable( this, plugin ), 200L, 200L ); // Runs every 10 seconds;
     }
 
     public boolean hasUUID( UUID uuid )

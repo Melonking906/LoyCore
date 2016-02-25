@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class FixCommand implements CommandExecutor
 {
-    private static final int COST = 50;
+    private static final int COST = 10;
 
     public FixCommand()
     {
@@ -54,6 +54,7 @@ public class FixCommand implements CommandExecutor
         return true;
     }
 
+    @SuppressWarnings( "deprecation" )
     private boolean itemCheck( ItemStack w )
     {
         if( ( w.getType().getId() == 256 ) || ( w.getType().getId() == 257 ) ||

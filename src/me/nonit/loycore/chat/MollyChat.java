@@ -1,11 +1,12 @@
-package me.nonit.loycore;
+package me.nonit.loycore.chat;
 
+import me.nonit.loycore.LoyCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.*;
 
@@ -15,8 +16,12 @@ public class MollyChat implements Listener
     private String lastMsg = "";
     private long lastTime;
 
-    public MollyChat( LoyCore p )
+    private ChannelStore cs;
+
+    public MollyChat( LoyCore p, ChannelStore cs )
     {
+        this.cs = cs;
+
         replies = new HashMap<>();
         lastTime = System.currentTimeMillis();
 
@@ -44,8 +49,13 @@ public class MollyChat implements Listener
     }
 
     @EventHandler
-    public void onChat( PlayerChatEvent event )
+    public void onChat( AsyncPlayerChatEvent event )
     {
+        if ( cs.getPlayerChannel( event.getPlayer() ) != 'g' )
+        {
+            return;
+        }
+
         String reply = getReply( event.getMessage() );
 
         if( reply == null )

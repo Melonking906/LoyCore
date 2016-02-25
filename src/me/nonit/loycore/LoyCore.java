@@ -6,7 +6,7 @@ import me.nonit.loycore.autopromote.AutoPromote;
 import me.nonit.loycore.chat.ChannelStore;
 import me.nonit.loycore.chat.ChatCommand;
 import me.nonit.loycore.chat.ChatListener;
-import me.nonit.loycore.clawgame.ClawRunnable;
+import me.nonit.loycore.chat.MollyChat;
 import me.nonit.loycore.commands.*;
 import me.nonit.loycore.database.MySQL;
 import me.nonit.loycore.database.SQL;
@@ -20,14 +20,17 @@ import me.nonit.loycore.pvp.PvP;
 import me.nonit.loycore.pvp.PvPCommand;
 import me.nonit.loycore.pvp.PvPListener;
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoyCore extends JavaPlugin
 {
@@ -79,17 +82,15 @@ public class LoyCore extends JavaPlugin
 
         //Loy Chat module
         ChannelStore channelStore = new ChannelStore();
-        ChatListener chatListener = new ChatListener( this, channelStore );
+        ChatListener chatListener = new ChatListener( channelStore );
         pm.registerEvents( chatListener, this );
+        pm.registerEvents( new MollyChat( this, channelStore ), this );
         getCommand( "chat" ).setExecutor( new ChatCommand( channelStore ) );
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
         //pm.registerEvents( new IRCManager( channelStore ), this );
 
-        //Stuff
-        pm.registerEvents( new JoinLeaveListener( this ), this );
-        pm.registerEvents( new MollyChat( this ), this );
-        pm.registerEvents( new EggDropListener(), this );
-        pm.registerEvents( new DontBuildListener(), this );
+        //Anti Afk
+        scheduler.scheduleSyncRepeatingTask( this, new AntiAfkRunnable(), 5000L, 12000L ); //Runs every 10 mins
 
         // PvP
         PvP pvp = new PvP();
@@ -107,7 +108,7 @@ public class LoyCore extends JavaPlugin
         // Announcments
         if( getConfig().getStringList( "announcements" ).size() >= 2 )
         {
-            scheduler.scheduleSyncRepeatingTask( this, new AnnounceRunnable( this ), 25000, 25000 );
+            scheduler.scheduleSyncRepeatingTask( this, new AnnounceRunnable( this ), 25000L, 25000L );
         }
         else
         {
@@ -123,7 +124,7 @@ public class LoyCore extends JavaPlugin
         // Death system
         Death death = new Death( this );
         pm.registerEvents( new DeathListener( death ), this );
-        scheduler.scheduleSyncRepeatingTask(this, new DeathRunnable( death ), 0L, 12000L );
+        scheduler.scheduleSyncRepeatingTask(this, new DeathRunnable( death ), 0L, 2400L );
         getCommand( "resurrect" ).setExecutor(new ResurrectCommand( death ));
 
         // Votifier
@@ -137,6 +138,11 @@ public class LoyCore extends JavaPlugin
 
         //Claw Games
         //scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 1L, 1L );
+
+        //Stuff
+        pm.registerEvents( new JoinLeaveListener( this, death ), this );
+        pm.registerEvents( new EggDropListener(), this );
+        pm.registerEvents( new DontBuildListener(), this );
     }
 
     @Override
@@ -180,4 +186,29 @@ public class LoyCore extends JavaPlugin
 
         return (chat != null);
     }
+
+    public static List<Player> getOnlineStaff()
+    {
+        List<Player> staff = new ArrayList<>();
+
+        for( Player receiver : Bukkit.getOnlinePlayers() )
+        {
+            if( permission.playerInGroup( receiver, "mod" ) || permission.playerInGroup( receiver, "admin" ) )
+            {
+                staff.add( receiver );
+            }
+        }
+
+        return staff;
+    }
+
+    public static void staffBroadcast( String msg )
+    {
+        for( Player p : getOnlineStaff() )
+        {
+            p.sendMessage( ChatColor.RED + "[Staff] " + ChatColor.GRAY + msg );
+        }
+    }
+
+
 }

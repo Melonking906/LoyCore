@@ -36,7 +36,7 @@ public class MollyTalkCommand implements CommandExecutor
 
         for( String word : args )
         {
-            msg = msg + " " + word;
+            msg = msg + word + " ";
         }
 
         msg = LoyCore.getMol() + msg;

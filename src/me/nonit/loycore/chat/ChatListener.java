@@ -31,7 +31,7 @@ public class ChatListener implements Listener
     private Random random;
     private List<String> prefixes;
 
-    public ChatListener( LoyCore plugin, ChannelStore cs )
+    public ChatListener( ChannelStore cs )
     {
         this.sendThread = new SendPacketThread();
         this.cs = cs;
@@ -73,12 +73,6 @@ public class ChatListener implements Listener
             return;
         }
 
-        if( ! perm.playerInGroup( p, "builder" ) )
-        {
-            p.sendMessage( LoyCore.getPfx() + ChatColor.GRAY + "Please wait to be promoted for chat to enable ^-^" );
-            return;
-        }
-
         ChatColor msgColor = ChatColor.WHITE;
         boolean isLocal = false;
         boolean isStaff = false;
@@ -116,10 +110,6 @@ public class ChatListener implements Listener
                 prefix = ChatColor.DARK_AQUA + "Factionless";
             }
         }
-//        if( prefix.equals( "{fe}" ) )
-//        {
-//            prefix = LoyCore.economy.format( LoyCore.economy.getBalance( p ) );
-//        }
 
         String suffix = chat.getPlayerSuffix( p );
 
@@ -170,8 +160,7 @@ public class ChatListener implements Listener
             msg = msg.replace( links.get(0), ChatColor.UNDERLINE + "Click Meh" + msgColor );
         }
 
-        //Color fix
-        msg = StringWrapping.wrapString( msgColor + msg, '§', 80, false );
+        msg = msgColor + msg;
 
         TextComponent tcMessage = new TextComponent( msg );
         if( links.size() > 0 )
@@ -194,8 +183,14 @@ public class ChatListener implements Listener
         Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
         List<Player> recipients = new ArrayList<>();
 
-        //Island only chat
-        if( isLocal )
+        if( ! perm.playerInGroup( p, "builder" ) )
+        {
+            p.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + "Only staff can see your chat atm ^-^" );
+
+            recipients.addAll( LoyCore.getOnlineStaff() );
+            recipients.add( p );
+        }
+        else if( isLocal )
         {
             Location l = p.getLocation();
 
@@ -216,13 +211,7 @@ public class ChatListener implements Listener
         }
         else if( isStaff )
         {
-            for( Player receiver : onlinePlayers )
-            {
-                if( perm.playerInGroup( receiver, "mod" ) || perm.playerInGroup( receiver, "admin" ) )
-                {
-                    recipients.add( receiver );
-                }
-            }
+            recipients = LoyCore.getOnlineStaff();
         }
         else
         {

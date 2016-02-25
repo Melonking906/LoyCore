@@ -28,9 +28,14 @@ public class PromoteRunnable extends BukkitRunnable
     {
         HashMap<UUID,Date> waitinglist = autoPromote.getWaitinglist();
 
+        if ( waitinglist.isEmpty() )
+        {
+            return;
+        }
+
         for( Map.Entry<UUID,Date> waiter : waitinglist.entrySet() )
         {
-            if( timeSince( waiter.getValue() ) >= 150 )
+            if( timeSince( waiter.getValue() ) >= 60 )
             {
                 Player player = Bukkit.getPlayer( waiter.getKey() );
 
@@ -45,7 +50,7 @@ public class PromoteRunnable extends BukkitRunnable
 
                         player.sendMessage( " " );
                         player.sendMessage( LoyCore.getPfx() + "\\o/ Congratz, you've been promoted to builder! \\o/" );
-                        player.sendMessage( LoyCore.getPfx() + "Do /random to find empty land :D" );
+                        player.sendMessage( LoyCore.getPfx() + "Say hello to everyone!" );
                         player.sendMessage( " " );
 
                         plugin.db.setPromotedTime( player );

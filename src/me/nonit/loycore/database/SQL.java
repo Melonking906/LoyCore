@@ -78,9 +78,15 @@ public abstract class SQL
             while( set.next() )
             {
                 HashMap<String,String> row = new HashMap<>( columns );
-                for( int i = 1; i < columns; ++i )
+                for( int i = 1; i <= columns; ++i )
                 {
-                    row.put( md.getColumnName( i ), set.getObject( i ).toString() );
+                    String columnData = null;
+                    if ( set.getObject( i ) != null )
+                    {
+                        columnData = set.getObject( i ).toString();
+                    }
+
+                    row.put( md.getColumnName( i ), columnData );
                 }
                 list.add( row );
             }
@@ -195,7 +201,7 @@ public abstract class SQL
         Date now = new Date();
         ArrayList<DeadPlayer> deadPlayers = new ArrayList<>();
 
-        ArrayList<HashMap<String,String>> data = query( "SELECT * FROM loy_players WHERE deaths > 0;", true );
+        ArrayList<HashMap<String,String>> data = query( "SELECT uuid, lastdeath FROM loy_players WHERE deaths > 0;", true );
         if( data == null )
         {
             return deadPlayers;
@@ -219,13 +225,17 @@ public abstract class SQL
             Calendar calendar = Calendar.getInstance();
 
             calendar.setTime(deathDate);
-            calendar.add(Calendar.MINUTE, 15);
+            calendar.add(Calendar.MINUTE, 5);
 
             Date dateOfAwake = calendar.getTime();
 
             if (now.before(dateOfAwake))
             {
                 deadPlayers.add( new DeadPlayer( playerUUID, dateOfAwake ) );
+            }
+            else
+            {
+                resetPlayerDeath(playerUUID);
             }
         }
 

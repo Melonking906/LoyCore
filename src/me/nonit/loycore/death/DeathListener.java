@@ -40,27 +40,21 @@ public class DeathListener implements Listener
         {
             if( deadPlayer.getUuid().equals(event.getPlayer().getUniqueId()) )
             {
-                event.getPlayer().kickPlayer(ChatColor.RED + "You're dead until - " + niceDateFormat.format(deadPlayer.getDateOfAwake()));
+                event.setJoinMessage( null );
+                event.getPlayer().kickPlayer(ChatColor.RED + "You're dead for 5 mins! - Till.. " + niceDateFormat.format(deadPlayer.getDateOfAwake()) + " New York time!");
                 return;
             }
         }
     }
 
-    @EventHandler( priority = EventPriority.HIGHEST )
-    public void onLeave( PlayerQuitEvent event )
-    {
-        for( SQL.DeadPlayer deadPlayer : death.getDeadPlayers() )
-        {
-            if( deadPlayer.getUuid().equals( event.getPlayer().getUniqueId() ) )
-            {
-                return;
-            }
-        }
-    }
-
-    @EventHandler( priority = EventPriority.HIGH )
+    @EventHandler( priority = EventPriority.LOW )
     public void onEntityDamage( EntityDamageEvent event )
     {
+        if(event.isCancelled())
+        {
+            return;
+        }
+
         Entity entity = event.getEntity();
         if( !entity.getType().equals( EntityType.PLAYER ) )
         {
@@ -68,6 +62,17 @@ public class DeathListener implements Listener
         }
 
         Player player = (Player)entity;
+
+        //Disable unwanted damages
+        if ( event.getCause() == EntityDamageEvent.DamageCause.FALL
+                || event.getCause() == EntityDamageEvent.DamageCause.VOID
+                || event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION
+                || event.getCause() == EntityDamageEvent.DamageCause.STARVATION
+                || event.getCause() == EntityDamageEvent.DamageCause.FALLING_BLOCK )
+        {
+            event.setCancelled( true );
+            return;
+        }
 
         if( (player.getHealth() - event.getDamage()) > 0 )
         {
@@ -87,7 +92,7 @@ public class DeathListener implements Listener
 
         dieingPlayers.add( player );
 
-        Location spawn = Bukkit.getWorlds().get( 0 ).getSpawnLocation();
+        Location spawn = Bukkit.getWorld( "Space" ).getSpawnLocation();
         if( player.getBedSpawnLocation() != null )
         {
             spawn = player.getBedSpawnLocation();

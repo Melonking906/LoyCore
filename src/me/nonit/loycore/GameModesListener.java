@@ -7,9 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -29,14 +26,6 @@ public class GameModesListener implements Listener
 
         if( toWorld.getName().equals( "Space" ) )
         {
-            if( !player.hasPermission( "loy.access.space" ) )
-            {
-                player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You need space air from spawn first!" );
-
-                player.teleport( event.getFrom().getSpawnLocation() );
-                return;
-            }
-
             player.addPotionEffect(new PotionEffect( PotionEffectType.JUMP, 99999, 3 ));
         }
         else
