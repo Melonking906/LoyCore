@@ -16,9 +16,9 @@ public class MySQL extends SQL
     {
         String host = "localhost";
         String port = "3306";
-        String database = "minecraft_spore";
+        String database = "loy";
         String user = "loy";
-        String pass = "zrFerNHENCNmZVDa";
+        String pass = "U^8d3;5B3&uCW6Y";
 
         try
         {

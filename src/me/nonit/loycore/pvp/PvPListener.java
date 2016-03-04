@@ -5,9 +5,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +17,33 @@ import java.util.List;
 public class PvPListener implements Listener
 {
     private List<Player> pvpPlayers;
+    private PvP pvp;
 
-    public PvPListener()
+    public PvPListener( PvP pvp )
     {
+        this.pvp = pvp;
         this.pvpPlayers = new ArrayList<>();
     }
 
-    @EventHandler
+    @EventHandler( priority = EventPriority.LOW )
+    public void onWorldChange( PlayerChangedWorldEvent event )
+    {
+        if ( event.getPlayer() == null )
+        {
+            return;
+        }
+
+        if ( pvp.isPvPWorld( event.getPlayer().getWorld().getName() ) )
+        {
+            ActionMessage.showMessage( event.getPlayer(), ChatColor.RED + "*Beep* PvP is enabled in this world!" );
+        }
+        else
+        {
+            ActionMessage.showMessage( event.getPlayer(), ChatColor.GREEN + "*Boop* PvP is optional in this world!" );
+        }
+    }
+
+    @EventHandler( priority = EventPriority.HIGH )
     public void onPvP( EntityDamageByEntityEvent event )
     {
         if( event.isCancelled() )
@@ -35,6 +57,11 @@ public class PvPListener implements Listener
         }
 
         if( !(event.getEntity() instanceof Player) )
+        {
+            return;
+        }
+
+        if ( pvp.isPvPWorld( event.getDamager().getWorld().getName() ) )
         {
             return;
         }

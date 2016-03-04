@@ -2,51 +2,54 @@ package me.nonit.loycore;
 
 import com.github.hoqhuuep.islandcraft.api.IslandCraft;
 import com.github.hoqhuuep.islandcraft.bukkit.IslandCraftPlugin;
-import io.loyloy.fe.API;
-import io.loyloy.fe.Fe;
 import me.nonit.loycore.autopromote.AutoPromote;
 import me.nonit.loycore.chat.ChannelStore;
 import me.nonit.loycore.chat.ChatCommand;
 import me.nonit.loycore.chat.ChatListener;
-import me.nonit.loycore.chat.IRCManager;
+import me.nonit.loycore.chat.MollyChat;
 import me.nonit.loycore.commands.*;
 import me.nonit.loycore.database.MySQL;
 import me.nonit.loycore.database.SQL;
+import me.nonit.loycore.death.Death;
+import me.nonit.loycore.death.DeathListener;
+import me.nonit.loycore.death.DeathRunnable;
+import me.nonit.loycore.death.ResurrectCommand;
 import me.nonit.loycore.prefix.PfxTokenCommand;
 import me.nonit.loycore.prefix.PrefixListener;
+import me.nonit.loycore.pvp.PvP;
 import me.nonit.loycore.pvp.PvPCommand;
 import me.nonit.loycore.pvp.PvPListener;
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoyCore extends JavaPlugin
 {
-    public static Economy economy = null;
     public static Permission permission = null;
     public static Chat chat = null;
     public IslandCraft islandCraft = null;
 
     public SQL db;
-    public API fe = null;
 
     private static final String PREFIX = ChatColor.YELLOW + "[Loy]" + ChatColor.GREEN + " ";
+    private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
     @Override
     public void onEnable()
     {
         this.saveDefaultConfig(); // Makes a config is one does not exist.
 
-        setupEconomy();
         setupPermissions();
         setupChat();
-        setupFeLink();
         setupIslandCraft();
 
         this.db = new MySQL( this );
@@ -64,10 +67,11 @@ public class LoyCore extends JavaPlugin
         getCommand( "alert" ).setExecutor( new AlertCommand() );
         getCommand( "kickemall" ).setExecutor( new KickEmAllCommand() );
         getCommand( "giveeveryone" ).setExecutor( new GiveEveryoneCommand() );
-        getCommand( "mollytalk" ).setExecutor( new MollyTalkCommand( this ) );
-        getCommand( "send" ).setExecutor( new SendCommand( this ) );
+        getCommand( "mollytalk" ).setExecutor( new MollyTalkCommand() );
+        getCommand( "send" ).setExecutor( new SendCommand() );
         getCommand( "fly" ).setExecutor( new FlyCommand() );
         getCommand( "seen" ).setExecutor( new SeenCommand( this ) );
+        getCommand( "emeralds" ).setExecutor( new EmeraldsCommand() );
 
         if( pm.getPlugin( "EchoPet" ) != null )
         {
@@ -78,39 +82,33 @@ public class LoyCore extends JavaPlugin
 
         //Loy Chat module
         ChannelStore channelStore = new ChannelStore();
-        ChatListener chatListener = new ChatListener( this, channelStore );
+        ChatListener chatListener = new ChatListener( channelStore );
         pm.registerEvents( chatListener, this );
+        pm.registerEvents( new MollyChat( this, channelStore ), this );
         getCommand( "chat" ).setExecutor( new ChatCommand( channelStore ) );
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
-        pm.registerEvents( new IRCManager( channelStore ), this );
+        //pm.registerEvents( new IRCManager( channelStore ), this );
 
-        //Stuff
-        pm.registerEvents( new JoinLeaveListener( this ), this );
-        pm.registerEvents( new MollyChat( this ), this );
-        pm.registerEvents( new EggDropListener(), this );
-        pm.registerEvents( new DontBuildListener(), this );
+        //Anti Afk
+        scheduler.scheduleSyncRepeatingTask( this, new AntiAfkRunnable(), 5000L, 12000L ); //Runs every 10 mins
 
         // PvP
-        PvPListener pvPListener = new PvPListener();
+        PvP pvp = new PvP();
+        PvPListener pvPListener = new PvPListener( pvp );
         pm.registerEvents( pvPListener, this );
-        getCommand( "pvp" ).setExecutor( new PvPCommand( pvPListener ) );
-
-        // Inv Saver
-        InvSaverListener saverListener = new InvSaverListener( this );
-        pm.registerEvents( saverListener, this );
-        getCommand( "invclaim" ).setExecutor( new InvClaimCommand( saverListener ) );
+        getCommand( "pvp" ).setExecutor( new PvPCommand( pvPListener, pvp ) );
 
         //Prefix Stuff
         pm.registerEvents( new PrefixListener(), this );
         getCommand( "prefixtoken" ).setExecutor( new PfxTokenCommand() );
 
         // Pocket money
-        scheduler.scheduleSyncRepeatingTask( this, new PayRunnable( this ), 35000L, 72000L ); // Every hour
+        scheduler.scheduleSyncRepeatingTask( this, new PayRunnable(), 35000L, 72000L ); // Every hour
 
         // Announcments
         if( getConfig().getStringList( "announcements" ).size() >= 2 )
         {
-            scheduler.scheduleSyncRepeatingTask( this, new AnnounceRunnable( this ), 25000, 25000 );
+            scheduler.scheduleSyncRepeatingTask( this, new AnnounceRunnable( this ), 25000L, 25000L );
         }
         else
         {
@@ -123,11 +121,28 @@ public class LoyCore extends JavaPlugin
         //Gamemode managr
         pm.registerEvents( new GameModesListener(), this );
 
+        // Death system
+        Death death = new Death( this );
+        pm.registerEvents( new DeathListener( death ), this );
+        scheduler.scheduleSyncRepeatingTask(this, new DeathRunnable( death ), 0L, 2400L );
+        getCommand( "resurrect" ).setExecutor(new ResurrectCommand( death ));
+
         // Votifier
         if( pm.getPlugin( "Votifier" ) != null )
         {
-            pm.registerEvents( new VoteListener( this ), this );
+            pm.registerEvents( new VoteListener(), this );
         }
+
+        //Rain Drops
+        scheduler.scheduleSyncRepeatingTask( this, new RaindropsRunnable(), 600L, 600L );
+
+        //Claw Games
+        //scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 1L, 1L );
+
+        //Stuff
+        pm.registerEvents( new JoinLeaveListener( this, death ), this );
+        pm.registerEvents( new EggDropListener(), this );
+        pm.registerEvents( new DontBuildListener(), this );
     }
 
     @Override
@@ -139,20 +154,7 @@ public class LoyCore extends JavaPlugin
 
     public static String getPfx() { return PREFIX; }
 
-    private void setupFeLink()
-    {
-        try
-        {
-            final Fe fePlugin = getPlugin( Fe.class );
-            this.fe = fePlugin.getAPI();
-
-        }
-        catch( final Exception e )
-        {
-            getLogger().severe( "Could not find Fe, please make sure plugin is installed correctly." );
-            setEnabled( false );
-        }
-    }
+    public static String getMol() { return MOLLY; }
 
     private void setupIslandCraft()
     {
@@ -164,16 +166,6 @@ public class LoyCore extends JavaPlugin
             setEnabled(false);
             return;
         }
-    }
-
-    private boolean setupEconomy()
-    {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-        if (economyProvider != null) {
-            economy = economyProvider.getProvider();
-        }
-
-        return (economy != null);
     }
 
     private boolean setupPermissions()
@@ -194,4 +186,29 @@ public class LoyCore extends JavaPlugin
 
         return (chat != null);
     }
+
+    public static List<Player> getOnlineStaff()
+    {
+        List<Player> staff = new ArrayList<>();
+
+        for( Player receiver : Bukkit.getOnlinePlayers() )
+        {
+            if( permission.playerInGroup( receiver, "mod" ) || permission.playerInGroup( receiver, "admin" ) )
+            {
+                staff.add( receiver );
+            }
+        }
+
+        return staff;
+    }
+
+    public static void staffBroadcast( String msg )
+    {
+        for( Player p : getOnlineStaff() )
+        {
+            p.sendMessage( ChatColor.RED + "[Staff] " + ChatColor.GRAY + msg );
+        }
+    }
+
+
 }

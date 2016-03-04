@@ -1,5 +1,6 @@
 package me.nonit.loycore.commands;
 
+import me.nonit.loycore.EmeraldEcon;
 import me.nonit.loycore.LoyCore;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class FixCommand implements CommandExecutor
 {
+    private static final int COST = 10;
+
     public FixCommand()
     {
     }
@@ -24,10 +27,18 @@ public class FixCommand implements CommandExecutor
                 Player player = ( Player ) sender;
                 ItemStack berepaired = player.getItemInHand();
 
+                if ( EmeraldEcon.getBalance( player ) < COST )
+                {
+                    player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You cant afford that! Its " + COST + " emeralds to fix an item." );
+                    return true;
+                }
+
                 if( itemCheck( berepaired ) )
                 {
                     berepaired.setDurability( ( short ) ( berepaired.getType().getMaxDurability() - berepaired.getType().getMaxDurability() ) );
                     sender.sendMessage( LoyCore.getPfx() + ChatColor.GREEN + "You have repaired the item!" );
+
+                    EmeraldEcon.removeEmeralds( player, COST );
                 }
                 else
                 {
@@ -43,6 +54,7 @@ public class FixCommand implements CommandExecutor
         return true;
     }
 
+    @SuppressWarnings( "deprecation" )
     private boolean itemCheck( ItemStack w )
     {
         if( ( w.getType().getId() == 256 ) || ( w.getType().getId() == 257 ) ||

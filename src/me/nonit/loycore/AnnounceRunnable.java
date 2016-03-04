@@ -50,21 +50,19 @@ public class AnnounceRunnable extends BukkitRunnable
     {
         private Player player;
         private String message;
-        private String prefix;
 
         public Announcement( Player player, String message )
         {
             this.player = player;
             this.message = message;
-            this.prefix = plugin.getConfig().getString( "announce_prefix" );
         }
 
         private String format()
         {
-            message = prefix + ChatColor.WHITE + " " + message;
+            message = LoyCore.getMol() + message;
             message = ChatColor.translateAlternateColorCodes( '&', message );
             message = message.replace( "%player%", player.getDisplayName() );
-            message = message.replace( "%money%", LoyCore.economy.format( LoyCore.economy.getBalance( player ) ) );
+            //message = message.replace( "%money%", LoyCore.economy.format( LoyCore.economy.getBalance( player ) ) );
             return message;
         }
 

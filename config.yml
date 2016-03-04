@@ -1,11 +1,5 @@
-login: '&dMolly &fHiya {player}!'
-logout: '&dMolly &fBye Bye {player}!'
-
 newsLine1: 'Welcome to LoyLoy!'
 newsLine2: 'Now with extra /hug'
-
-announce_prefix: '&7Godess &eMolly &a✕'
-dark_prefix: '&7Godess &cTana &a✕'
 
 tab_header: '&7*- &eThis is Loy&a, Lets do this! &7-*'
 tab_footer: ''

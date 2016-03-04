@@ -1,5 +1,6 @@
 package me.nonit.loycore.commands;
 
+import me.nonit.loycore.EmeraldEcon;
 import me.nonit.loycore.LoyCore;
 import me.nonit.loycore.TitleMessage;
 import org.bukkit.Bukkit;
@@ -13,12 +14,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class SendCommand implements CommandExecutor
 {
-    private static final double SEND_COST = 10;
-    private final String SERVER_ACCOUNT;
+    private static final int COST = 1;
 
-    public SendCommand( LoyCore p )
+    public SendCommand()
     {
-        this.SERVER_ACCOUNT = p.getConfig().getString( "serveraccount" );
     }
 
     @Override
@@ -32,9 +31,9 @@ public class SendCommand implements CommandExecutor
             {
                 if( args.length > 0 )
                 {
-                    if( ! LoyCore.economy.has( s, SEND_COST ) )
+                    if ( EmeraldEcon.getBalance( s ) < COST )
                     {
-                        s.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You cant afford that! Its " + LoyCore.economy.format( SEND_COST ) + " to send an item." );
+                        s.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You cant afford that! Its " + COST + " emerald to send an item." );
                         return true;
                     }
 
@@ -70,10 +69,10 @@ public class SendCommand implements CommandExecutor
                         r.getInventory().addItem( item );
                         TitleMessage.showMessage( r, "", ChatColor.GREEN + "You got an item from " + ChatColor.YELLOW + sName + ChatColor.GREEN + ", check your inv!", 60 );
 
-                        LoyCore.economy.withdrawPlayer( s, SEND_COST );
-                        LoyCore.economy.depositPlayer( SERVER_ACCOUNT, SEND_COST );
+                        EmeraldEcon.removeEmeralds( s, COST );
 
-                        s.sendMessage( LoyCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + " for " + LoyCore.economy.format( SEND_COST ) + " :D" );
+                        //s.sendMessage( LoyCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + " for " + LoyCore.economy.format( COST ) + " :D" );
+                        s.sendMessage( LoyCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + " :D" );
                     }
                     else
                     {
@@ -83,7 +82,8 @@ public class SendCommand implements CommandExecutor
                 }
                 else
                 {
-                    s.sendMessage( LoyCore.getPfx() + "Send items to people for only " + LoyCore.economy.format( SEND_COST ) + "! /" + label + " <name>" );
+                    //s.sendMessage( LoyCore.getPfx() + "Send items to people for only " + LoyCore.economy.format( COST ) + "! /" + label + " <name>" );
+                    s.sendMessage( LoyCore.getPfx() + "Send items to people! /" + label + " <name>" );
                 }
                 return true;
             }

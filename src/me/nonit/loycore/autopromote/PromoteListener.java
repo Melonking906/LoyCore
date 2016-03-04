@@ -2,6 +2,7 @@ package me.nonit.loycore.autopromote;
 
 import me.nonit.loycore.LoyCore;
 import me.nonit.loycore.TitleMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,18 +28,24 @@ public class PromoteListener implements Listener
         {
             autoPromote.addUUID( player.getUniqueId() );
 
-            if( player.isOnline() )
-            {
-                player.sendMessage( " " );
-                player.sendMessage( LoyCore.getPfx() + "Welcome newbie, please wait 1 minute online" );
-                player.sendMessage( LoyCore.getPfx() + "to build and chat, we like to keep things spam free!" );
-                player.sendMessage( " " );
+            //Send them to spawn on first join.
+            player.teleport( Bukkit.getWorld( "Space" ).getSpawnLocation() );
 
-                String title = ChatColor.GRAY + "Hail " + ChatColor.GREEN + player.getDisplayName() + ChatColor.GRAY + "!";
-                String subTitle = ChatColor.YELLOW + "You will be promoted to builder in 1 minute!";
+            player.sendMessage( " " );
+            player.sendMessage( ChatColor.YELLOW + "Hello new person! We are so glad you joined!" );
+            player.sendMessage( ChatColor.GRAY + "Don't Worry! You'll be able to build in 1 min!" );
+            player.sendMessage( ChatColor.GRAY + "While you wait, please enjoy exploring spawn!" );
+            player.sendMessage( ChatColor.GRAY + "We know its all confusing now so" );
+            player.sendMessage( ChatColor.GRAY + "just ask in chat if you need any help ;3" );
+            player.sendMessage( ChatColor.YELLOW + "Love - Loy Server Staff" );
+            player.sendMessage( " " );
 
-                TitleMessage.showMessage( player, title, subTitle, 80 );
-            }
+            String title = ChatColor.YELLOW + "Hi " + ChatColor.GREEN + player.getDisplayName() + ChatColor.YELLOW + "!";
+            String subTitle = ChatColor.AQUA + "You're our new fav player <3";
+
+            TitleMessage.showMessage( player, title, subTitle, 120 );
+
+            LoyCore.staffBroadcast( player.getDisplayName() + " is new and has just joined!" );
         }
     }
 

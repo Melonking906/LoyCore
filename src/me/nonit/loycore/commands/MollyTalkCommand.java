@@ -12,11 +12,8 @@ import java.util.Collection;
 
 public class MollyTalkCommand implements CommandExecutor
 {
-    private final String mollyPrefix;
-
-    public MollyTalkCommand( LoyCore p )
+    public MollyTalkCommand()
     {
-        this.mollyPrefix = p.getConfig().getString( "announce_prefix" );
     }
 
     @Override
@@ -35,14 +32,14 @@ public class MollyTalkCommand implements CommandExecutor
         }
 
         Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-        String msg = "§f";
+        String msg = "";
 
         for( String word : args )
         {
-            msg = msg + " " + word;
+            msg = msg + word + " ";
         }
 
-        msg = mollyPrefix + msg;
+        msg = LoyCore.getMol() + msg;
         msg = ChatColor.translateAlternateColorCodes( '&', msg );
 
         for( Player player : players )

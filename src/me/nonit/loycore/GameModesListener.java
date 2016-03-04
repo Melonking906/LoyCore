@@ -26,14 +26,6 @@ public class GameModesListener implements Listener
 
         if( toWorld.getName().equals( "Space" ) )
         {
-            if( !player.hasPermission( "loy.access.space" ) )
-            {
-                player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You need space air from spawn first!" );
-
-                player.teleport( event.getFrom().getSpawnLocation() );
-                return;
-            }
-
             player.addPotionEffect(new PotionEffect( PotionEffectType.JUMP, 99999, 3 ));
         }
         else
@@ -77,7 +69,7 @@ public class GameModesListener implements Listener
 
         World world = event.getBlock().getWorld();
 
-        if( ! world.getName().equals( "Mine" ) )
+        if( ! world.getName().contains( "Mine" ) )
         {
             return;
         }
@@ -91,16 +83,4 @@ public class GameModesListener implements Listener
 
         ActionMessage.showMessage( player, ChatColor.RED + "Remember this world gets reset!" );
     }
-
-//    @EventHandler
-//    public void onFlyChange(PlayerToggleFlightEvent event)
-//    {
-//        Player player = event.getPlayer();
-//
-//        if( player.getWorld().getName().equals( "Space" ) )
-//        {
-//            event.getPlayer().setFlying( true );
-//            event.setCancelled( true );
-//        }
-//    }
 }

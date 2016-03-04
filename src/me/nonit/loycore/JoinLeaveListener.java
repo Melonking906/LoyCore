@@ -2,11 +2,14 @@ package me.nonit.loycore;
 
 import io.loyloy.nicky.Nick;
 import me.nonit.loycore.autopromote.AutoPromote;
+import me.nonit.loycore.database.SQL;
+import me.nonit.loycore.death.Death;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +27,8 @@ public class JoinLeaveListener implements Listener
     private final LoyCore plugin;
     private List<String> blockedPlayers;
     private final SendPacketThread sendThread;
+
+    private Death death;
 
     private static HashMap<String, String> messages = new HashMap<>();
 
@@ -69,16 +74,15 @@ public class JoinLeaveListener implements Listener
             "Righteous!",
             "Live loy and prosper!"};
 
-    public JoinLeaveListener( LoyCore plugin )
+    public JoinLeaveListener( LoyCore plugin, Death death )
     {
         this.plugin = plugin;
         this.sendThread = new SendPacketThread();
+        this.death = death;
 
         reloadMessages( plugin );
 
         blockedPlayers = new ArrayList<>();
-        blockedPlayers.add( "e88ecb4d643c483fa6c12e7c4c3e59d1" );
-        blockedPlayers.add( "12215a408c9e410f902c9383533640d6" );
         blockedPlayers.add( "02219d7e13824a3fad362ab8ddfe5bfa" );
         blockedPlayers.add( "69876f77e2a94b0a82c5f66f120d5e5a" );
         blockedPlayers.add( "a81cfa83fc1348a8950a0af073d19329" );
@@ -113,20 +117,77 @@ public class JoinLeaveListener implements Listener
             player.setFlying( true );
         }
 
+        if( !player.hasPermission( "loy.gmanyworld" ) )
+        {
+            player.setGameMode( GameMode.SURVIVAL );
+        }
+
         new BukkitRunnable()
         {
             public void run()
             {
-                if( player.isOnline() )
+                if( !player.isOnline() )
                 {
-                    if( LoyCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+                    return;
+                }
+
+                String name;
+                String displayName = ChatColor.stripColor( player.getDisplayName() );
+                displayName = displayName.replace( "_", "" );
+                displayName = displayName.replace( "Mr", "" );
+                displayName = displayName.replace( "Sir", "" );
+                displayName = displayName.replace( "The", "" );
+                displayName = displayName.replace( "X", "" );
+                displayName = displayName.replace( "x", "" );
+                int cutLength = 3;
+
+                for ( int i=1 ; i < displayName.length() ; i++ )
+                {
+                    if ( Character.isUpperCase( displayName.codePointAt( i ) ) || !Character.isAlphabetic( displayName.codePointAt( i ) ) )
                     {
-                        String loginMessage = messages.get( "login" ).replace( "{player}", player.getDisplayName() );
-                        Bukkit.broadcastMessage( loginMessage );
+                        cutLength = i;
+                        break;
+                    }
+                }
+
+                if ( displayName.length() >= cutLength )
+                {
+                    name = displayName.substring( 0, cutLength );
+                }
+                else
+                {
+                    name = displayName;
+                }
+
+                player.sendMessage( LoyCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Loy ;3" );
+
+                if( !LoyCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+                {
+                    return;
+                }
+
+                for ( Player onlinePlayer : Bukkit.getOnlinePlayers() )
+                {
+                    if ( !onlinePlayer.equals( player ) )
+                    {
+                        onlinePlayer.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + ChatColor.stripColor( player.getDisplayName() ) + " is in!" );
                     }
                 }
             }
-        }.runTaskLater( plugin, 2L );
+        }.runTaskLater( plugin, 60L );
+
+        new BukkitRunnable()
+        {
+            public void run()
+            {
+                if( !player.isOnline() )
+                {
+                    return;
+                }
+
+                player.setResourcePack( "http://www.loyloy.io/filestore/jolicraft1.8.zip" );
+            }
+        }.runTaskLater( plugin, 400L ); //Run after 20 seconds
     }
 
     @EventHandler
@@ -134,8 +195,23 @@ public class JoinLeaveListener implements Listener
     {
         evt.setQuitMessage( null );
         Player player = evt.getPlayer();
-
         Nick nick = new Nick( player );
+
+        plugin.db.updatePlayer( player );
+
+        if( !LoyCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+        {
+            return;
+        }
+
+        for( SQL.DeadPlayer deadPlayer : death.getDeadPlayers() )
+        {
+            if( deadPlayer.getUuid().equals( player.getUniqueId() ) )
+            {
+                return;
+            }
+        }
+
         String name = nick.get();
         if( name != null )
         {
@@ -146,12 +222,12 @@ public class JoinLeaveListener implements Listener
             name = player.getDisplayName();
         }
 
-        plugin.db.updatePlayer( player );
-
-        if( LoyCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+        for ( Player onlinePlayer : Bukkit.getOnlinePlayers() )
         {
-            String logoutMessage = messages.get( "logout" ).replace( "{player}", name );
-            Bukkit.broadcastMessage( logoutMessage );
+            if ( !onlinePlayer.equals( player ) )
+            {
+                onlinePlayer.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + ChatColor.stripColor( name ) + " is out!" );
+            }
         }
 
         updateTabHF( true );
@@ -183,7 +259,7 @@ public class JoinLeaveListener implements Listener
         //Send MOTD
         player.sendMessage( "" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
-        player.sendMessage( "§3Welcome to Loy §f " + playerName + " §3❤" );
+        player.sendMessage( "§3Welcome to Loy §f" + playerName + " §3❤" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
         player.sendMessage( "§aNews: §f" + messages.get( "newsLine1" ) );
         player.sendMessage( "§f" + messages.get( "newsLine2" ) );
@@ -251,12 +327,9 @@ public class JoinLeaveListener implements Listener
     {
         messages.clear();
 
-        messages.put( "login", plugin.getConfig().getString( "login" ) );
-        messages.put( "logout", plugin.getConfig().getString( "logout" ) );
         messages.put( "newsLine1", plugin.getConfig().getString( "newsLine1" ) );
         messages.put( "newsLine2", plugin.getConfig().getString( "newsLine2" ) );
         messages.put( "header", plugin.getConfig().getString( "tab_header" ) );
-        messages.put( "footer", plugin.getConfig().getString( "tab_footer" ) );
         messages.put( "ping" , plugin.getConfig().getString( "ping_motd" ) );
 
         for( Map.Entry<String, String> message : messages.entrySet() )

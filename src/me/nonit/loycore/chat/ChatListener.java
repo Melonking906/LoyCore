@@ -1,7 +1,7 @@
 package me.nonit.loycore.chat;
 
-import com.gamingmesh.jobs.Jobs;
-import com.gamingmesh.jobs.container.JobProgression;
+import com.massivecraft.factions.entity.MPlayer;
+import me.nonit.loycore.EmeraldEcon;
 import me.nonit.loycore.LoyCore;
 import net.md_5.bungee.api.chat.*;
 import net.milkbowl.vault.chat.Chat;
@@ -31,7 +31,7 @@ public class ChatListener implements Listener
     private Random random;
     private List<String> prefixes;
 
-    public ChatListener( LoyCore plugin, ChannelStore cs )
+    public ChatListener( ChannelStore cs )
     {
         this.sendThread = new SendPacketThread();
         this.cs = cs;
@@ -73,12 +73,6 @@ public class ChatListener implements Listener
             return;
         }
 
-        if( ! perm.playerInGroup( p, "builder" ) )
-        {
-            p.sendMessage( LoyCore.getPfx() + ChatColor.GRAY + "Please wait to be promoted for chat to enable ^-^" );
-            return;
-        }
-
         ChatColor msgColor = ChatColor.WHITE;
         boolean isLocal = false;
         boolean isStaff = false;
@@ -103,9 +97,18 @@ public class ChatListener implements Listener
         {
             prefix = prefixes.get( random.nextInt( prefixes.size() ) );
         }
-        if( prefix.equals( "{fe}" ) )
+
+        MPlayer factionPlayer = MPlayer.get( p );
+        if ( prefix.equals( "{faction}" ) )
         {
-            prefix = LoyCore.economy.format( LoyCore.economy.getBalance( p ) );
+            if ( factionPlayer.hasFaction() )
+            {
+                prefix = ChatColor.DARK_AQUA + factionPlayer.getFactionName();
+            }
+            else
+            {
+                prefix = ChatColor.DARK_AQUA + "Factionless";
+            }
         }
 
         String suffix = chat.getPlayerSuffix( p );
@@ -114,22 +117,22 @@ public class ChatListener implements Listener
 
         String msg = e.getMessage();
 
+        //Name Tooltip
         String nameToolTip = "";
 
-        List<JobProgression> jobs = Jobs.getPlayerManager().getJobsPlayer(p).getJobProgression();
-        if( jobs.size() == 0 )
+        String faction = "none...";
+        String title = "none...";
+        if ( factionPlayer.hasFaction() )
         {
-            nameToolTip += ChatColor.GRAY + "No jobs...";
+            faction = factionPlayer.getFactionName();
         }
-        for ( JobProgression job : jobs )
+        if ( factionPlayer.hasTitle() )
         {
-            if( !nameToolTip.equals( "" ) )
-            {
-                nameToolTip += "\n";
-            }
-            nameToolTip += ChatColor.YELLOW + job.getJob().getName() + " " + ChatColor.GRAY + "Level " + job.getLevel();
+            title = factionPlayer.getTitle();
         }
-        nameToolTip += "\n" + ChatColor.GOLD + "Fé " + ChatColor.GRAY + LoyCore.economy.getBalance( p );
+        nameToolTip += ChatColor.RED + "Faction " + ChatColor.GRAY + faction;
+        nameToolTip += "\n" + ChatColor.GOLD + "Title " + ChatColor.GRAY + title;
+        nameToolTip += "\n" + ChatColor.GREEN + "Emeralds " + ChatColor.GRAY + EmeraldEcon.getBalance( p );
         nameToolTip += "\n" + ChatColor.WHITE + "Name " + ChatColor.GRAY + p.getName();
 
         if( p.hasPermission( "loy.chat.color" ) )
@@ -157,8 +160,7 @@ public class ChatListener implements Listener
             msg = msg.replace( links.get(0), ChatColor.UNDERLINE + "Click Meh" + msgColor );
         }
 
-        //Color fix
-        msg = StringWrapping.wrapString( msgColor + msg, '§', 80, false );
+        msg = msgColor + msg;
 
         TextComponent tcMessage = new TextComponent( msg );
         if( links.size() > 0 )
@@ -181,8 +183,14 @@ public class ChatListener implements Listener
         Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
         List<Player> recipients = new ArrayList<>();
 
-        //Island only chat
-        if( isLocal )
+        if( ! perm.playerInGroup( p, "builder" ) )
+        {
+            p.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + "Only staff can see your chat atm ^-^" );
+
+            recipients.addAll( LoyCore.getOnlineStaff() );
+            recipients.add( p );
+        }
+        else if( isLocal )
         {
             Location l = p.getLocation();
 
@@ -203,13 +211,7 @@ public class ChatListener implements Listener
         }
         else if( isStaff )
         {
-            for( Player receiver : onlinePlayers )
-            {
-                if( perm.playerInGroup( receiver, "mod" ) || perm.playerInGroup( receiver, "admin" ) )
-                {
-                    recipients.add( receiver );
-                }
-            }
+            recipients = LoyCore.getOnlineStaff();
         }
         else
         {

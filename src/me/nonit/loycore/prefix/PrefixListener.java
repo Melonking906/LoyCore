@@ -1,5 +1,6 @@
 package me.nonit.loycore.prefix;
 
+import me.nonit.loycore.EmeraldEcon;
 import me.nonit.loycore.LoyCore;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -82,14 +83,14 @@ public class PrefixListener implements Listener
                 error = true;
             }
 
-            double price;
+            int price;
             try
             {
-                price = Double.parseDouble( priceString.split( " " )[0] );
+                price = Integer.parseInt( priceString.split( " " )[0] );
             }
             catch( Exception e )
             {
-                price = 10;
+                price = 1;
             }
 
             if( error )
@@ -106,7 +107,11 @@ public class PrefixListener implements Listener
             event.setLine( 0, color + "[Prefix]" );
             event.setLine( 1, ChatColor.DARK_GRAY + prefix );
             event.setLine( 2, "" );
-            event.setLine( 3, color + LoyCore.economy.format( price ) );
+            event.setLine( 3, color + "FREE" );
+            if ( price > 0 )
+            {
+                event.setLine( 3, color + "" + price + " Emerald(s)" );
+            }
 
             player.sendMessage( LoyCore.getPfx() + "Prefix sign created!" );
             return;
@@ -147,24 +152,43 @@ public class PrefixListener implements Listener
                     }
 
                     String priceString = ChatColor.stripColor( sign.getLine( 3 ) );
-                    double price;
+                    int price = 0;
 
-                    try
+                    if ( !priceString.contains( "FREE" ) )
                     {
-                        price = Double.parseDouble( priceString.split( " " )[ 0 ] );
-                    } catch( Exception e )
-                    {
-                        player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "There was a price error! Tell an admin please ;3" );
-                        return;
+                        try
+                        {
+                            price = Integer.parseInt( priceString.split( " " )[0] );
+                        }
+                        catch ( Exception e )
+                        {
+                            player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "There was a price error! Tell an admin please ;3" );
+                            return;
+                        }
                     }
 
-                    if( LoyCore.economy.getBalance( player ) < price )
+                    //Update Fe Signs..
+                    if ( priceString.contains( "Fe" ) || priceString.contains( "Fé" ) )
+                    {
+                        price = price / 10;
+
+                        String color = sign.getLine( 0 ).substring( 0, 2 );
+
+                        sign.setLine( 3, color + "FREE" );
+                        if ( price > 0 )
+                        {
+                            sign.setLine( 3, color + "" + price + " Emerald(s)" );
+                        }
+                    }
+                    //End Update
+
+                    if( EmeraldEcon.getBalance( player ) < price )
                     {
                         player.sendMessage( LoyCore.getPfx() + ChatColor.RED + "You can't afford this prefix!" );
                         return;
                     }
+                    EmeraldEcon.removeEmeralds( player, price );
 
-                    LoyCore.economy.withdrawPlayer( player, price );
                     LoyCore.chat.setPlayerPrefix( player, prefix );
 
                     player.sendMessage( LoyCore.getPfx() + "Yay, prefix set to " + ChatColor.GRAY + prefix + ChatColor.GREEN + "!" );
@@ -182,7 +206,7 @@ public class PrefixListener implements Listener
 
                 ItemMeta im = i.getItemMeta();
 
-                if( !im.getDisplayName().contains( ChatColor.GOLD + "Prefix Token" ) )
+                if( !im.getDisplayName().contains( "Prefix Token" ) )
                 {
                     return;
                 }
