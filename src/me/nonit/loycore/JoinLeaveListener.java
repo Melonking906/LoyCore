@@ -204,11 +204,6 @@ public class JoinLeaveListener implements Listener
             return;
         }
 
-        if( player.isOnline() )
-        {
-            return;
-        }
-
         for( SQL.DeadPlayer deadPlayer : death.getDeadPlayers() )
         {
             if( deadPlayer.getUuid().equals( player.getUniqueId() ) )
