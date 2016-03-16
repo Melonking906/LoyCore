@@ -72,6 +72,8 @@ public class LoyCore extends JavaPlugin
         getCommand( "fly" ).setExecutor( new FlyCommand() );
         getCommand( "seen" ).setExecutor( new SeenCommand( this ) );
         getCommand( "emeralds" ).setExecutor( new EmeraldsCommand() );
+        getCommand( "hugall" ).setExecutor( new HugAllCommand() );
+
 
         if( pm.getPlugin( "EchoPet" ) != null )
         {
