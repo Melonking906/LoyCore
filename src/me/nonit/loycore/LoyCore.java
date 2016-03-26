@@ -46,7 +46,7 @@ public class LoyCore extends JavaPlugin
     @Override
     public void onEnable()
     {
-        this.saveDefaultConfig(); // Makes a config is one does not exist.
+        this.saveDefaultConfig(); // Makes a config if one does not exist.
 
         setupPermissions();
         setupChat();
@@ -89,8 +89,11 @@ public class LoyCore extends JavaPlugin
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
         //pm.registerEvents( new IRCManager( channelStore ), this );
 
-        //Anti Afk
-        scheduler.scheduleSyncRepeatingTask( this, new AntiAfkRunnable(), 5000L, 12000L ); //Runs every 10 mins
+        //Anti Afk (Uncomment to Re-Enable.)
+
+        // scheduler.scheduleSyncRepeatingTask( this, new AntiAfkRunnable(), 5000L, 12000L ); //Runs every 10 mins
+
+
 
         // PvP
         PvP pvp = new PvP();
@@ -121,11 +124,11 @@ public class LoyCore extends JavaPlugin
         //Gamemode managr
         pm.registerEvents( new GameModesListener(), this );
 
-        // Death system
-        Death death = new Death( this );
+        // Death system (DISABLED.  UNCOMMENT TO REENABLE.)
+/*        Death death = new Death( this );
         pm.registerEvents( new DeathListener( death ), this );
         scheduler.scheduleSyncRepeatingTask(this, new DeathRunnable( death ), 0L, 2400L );
-        getCommand( "resurrect" ).setExecutor(new ResurrectCommand( death ));
+        getCommand( "resurrect" ).setExecutor(new ResurrectCommand( death ));*/
 
         // Votifier
         if( pm.getPlugin( "Votifier" ) != null )
@@ -140,7 +143,7 @@ public class LoyCore extends JavaPlugin
         //scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 1L, 1L );
 
         //Stuff
-        pm.registerEvents( new JoinLeaveListener( this, death ), this );
+        pm.registerEvents( new JoinLeaveListener( this ), this );
         pm.registerEvents( new EggDropListener(), this );
         pm.registerEvents( new DontBuildListener(), this );
     }

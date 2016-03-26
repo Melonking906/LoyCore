@@ -28,7 +28,7 @@ public class JoinLeaveListener implements Listener
     private List<String> blockedPlayers;
     private final SendPacketThread sendThread;
 
-    private Death death;
+    // private Death death;
 
     private static HashMap<String, String> messages = new HashMap<>();
 
@@ -74,11 +74,12 @@ public class JoinLeaveListener implements Listener
             "Righteous!",
             "Live loy and prosper!"};
 
-    public JoinLeaveListener( LoyCore plugin, Death death )
+    public JoinLeaveListener( LoyCore plugin )
     {
         this.plugin = plugin;
         this.sendThread = new SendPacketThread();
-        this.death = death;
+     //   this.death = death;
+     //   this.death = death;
 
         reloadMessages( plugin );
 
@@ -204,13 +205,13 @@ public class JoinLeaveListener implements Listener
             return;
         }
 
-        for( SQL.DeadPlayer deadPlayer : death.getDeadPlayers() )
+/*        for( SQL.DeadPlayer deadPlayer : death.getDeadPlayers() )
         {
             if( deadPlayer.getUuid().equals( player.getUniqueId() ) )
             {
                 return;
             }
-        }
+        }*/
 
         String name = nick.get();
         if( name != null )

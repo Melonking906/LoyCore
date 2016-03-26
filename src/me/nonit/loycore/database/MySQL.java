@@ -14,11 +14,11 @@ public class MySQL extends SQL
 
     protected Connection getNewConnection()
     {
-        String host = "localhost";
+        String host = "127.0.0.1";
         String port = "3306";
-        String database = "loy";
-        String user = "loy";
-        String pass = "U^8d3;5B3&uCW6Y";
+        String database = "mc28126";
+        String user = "mc28126";
+        String pass = "bb08be6108";
 
         try
         {
