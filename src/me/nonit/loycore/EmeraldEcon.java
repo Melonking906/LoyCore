@@ -62,36 +62,35 @@ public class EmeraldEcon
         }
     }
 
+
     public static void addEmeralds( Player player, int amount )
     {
+
         if ( player == null || !player.hasPlayedBefore() || !player.isOnline() )
         {
             return;
         }
 
-        ItemStack emerald = new ItemStack( Material.EMERALD, 1 );
+        ItemStack emerald = new ItemStack( Material.EMERALD );
 
-        for ( int i = amount ; i > 0 ; i-- )
-        {
-            if ( !player.getInventory().contains( Material.EMERALD ) )
-            {
-                player.getInventory().addItem( emerald );
-                continue;
-            }
+            for (int i = amount; i > 0; i--) {
+                if ((!player.getInventory().contains( emerald ))) {
+                    player.getInventory().addItem( emerald );
+                    continue;
+                }
 
-            int slot = player.getInventory().first( Material.EMERALD );
-            ItemStack emeralds = player.getInventory().getItem( slot );
-            int count = emeralds.getAmount();
+                int slot = player.getInventory().first(Material.EMERALD);
+                ItemStack emeralds = player.getInventory().getItem(slot);
+                int count = emeralds.getAmount();
 
-            if ( count == 64 )
-            {
-                player.getWorld().dropItem( player.getLocation(), emerald );
-            }
-            else
-            {
-                emeralds.setAmount( count + 1 );
-                player.getInventory().setItem( slot, emeralds );
+                if (count == 64) {
+                    player.getWorld().dropItem(player.getLocation(), emerald);
+                } else {
+                    emeralds.setAmount(count + 1);
+                    player.getInventory().setItem(slot, emeralds);
+                }
             }
         }
-    }
+
 }
+

@@ -54,6 +54,8 @@ public abstract class SQL
         if( ! checkConnection() )
         {
             plugin.getLogger().info( "Error with database" );
+
+            plugin.getLogger().warning( "The Query for the error was:" + sql );
             return null;
         }
 

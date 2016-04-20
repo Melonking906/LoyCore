@@ -14,12 +14,12 @@ public class MySQL extends SQL
 
     protected Connection getNewConnection()
     {
-        String host = "127.0.0.1";
+        String host = "localhost";
         String port = "3306";
         String database = "mc28126";
         String user = "mc28126";
         String pass = "bb08be6108";
-
+// mysql://localhost:3306/mc28126
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
