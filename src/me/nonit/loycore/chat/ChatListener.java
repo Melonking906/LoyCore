@@ -28,6 +28,7 @@ public class ChatListener implements Listener
     private final SendPacketThread sendThread;
 
     private ChannelStore cs;
+    private IgnoreCommand ic;
     private Random random;
     private List<String> prefixes;
 
@@ -61,6 +62,7 @@ public class ChatListener implements Listener
     @EventHandler( priority= EventPriority.LOW )
     public void onChat( AsyncPlayerChatEvent e )
     {
+
         if ( e.isCancelled() )
         {
             return;
@@ -73,10 +75,15 @@ public class ChatListener implements Listener
             return;
         }
 
+        if(ic.isIgnored( p ))
+        {
+
+        }
+
         ChatColor msgColor = ChatColor.WHITE;
         boolean isLocal = false;
         boolean isStaff = false;
-
+        boolean isWorld = false; // Is this player in world-specific chat?
         switch( cs.getPlayerChannel( p ) )
         {
             case 'l':
@@ -87,9 +94,14 @@ public class ChatListener implements Listener
                 msgColor = ChatColor.RED;
                 isStaff = true;
                 break;
+            case 'w':
+                msgColor = ChatColor.LIGHT_PURPLE;
+                isWorld = true;
+                break;
             default:
                 break;
         }
+
 
         String name = p.getDisplayName();
         String prefix = chat.getPlayerPrefix( p );
@@ -213,6 +225,17 @@ public class ChatListener implements Listener
         {
             recipients = LoyCore.getOnlineStaff();
         }
+        else if( isWorld )
+        {
+            for( Player player : onlinePlayers ) {
+
+                if (player.getWorld() == cs.getRequestedWorld(p)) {
+
+                    recipients.add(player);
+
+                }
+            }
+        }
         else
         {
             for( Player receiver : onlinePlayers )
@@ -261,4 +284,7 @@ public class ChatListener implements Listener
 
         return links;
     }
+
+
+
 }

@@ -25,14 +25,14 @@ public class RaindropsRunnable extends BukkitRunnable
         this.dryBiomes = new ArrayList<>();
         this.random = new Random();
 
-        dryBiomes.add( Biome.BEACH );
+        dryBiomes.add( Biome.BEACHES );
         dryBiomes.add( Biome.DESERT );
         dryBiomes.add( Biome.DESERT_HILLS );
-        dryBiomes.add( Biome.DESERT_MOUNTAINS );
+        dryBiomes.add( Biome.MUTATED_DESERT);
         dryBiomes.add( Biome.SAVANNA );
-        dryBiomes.add( Biome.SAVANNA_MOUNTAINS );
-        dryBiomes.add( Biome.SAVANNA_PLATEAU );
-        dryBiomes.add( Biome.SAVANNA_PLATEAU_MOUNTAINS );
+        dryBiomes.add( Biome.SAVANNA_ROCK );
+        dryBiomes.add( Biome.MUTATED_SAVANNA );
+        dryBiomes.add( Biome.MUTATED_SAVANNA_ROCK );
 
         drops.add( Material.WHEAT );
         drops.add( Material.DIRT );

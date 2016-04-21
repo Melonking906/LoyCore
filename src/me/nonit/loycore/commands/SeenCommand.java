@@ -43,7 +43,7 @@ public class SeenCommand implements CommandExecutor
 
                 if( data == null )
                 {
-                    sender.sendMessage( LoyCore.getPfx() + ChatColor.RED + "Sorry no players found by the name " + search );
+                    sender.sendMessage( LoyCore.getPfx() + ChatColor.RED + "Sorry, no players found by the name " + search );
                     return true;
                 }
 

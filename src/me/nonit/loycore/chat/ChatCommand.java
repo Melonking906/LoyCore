@@ -22,6 +22,7 @@ public class ChatCommand implements CommandExecutor
         knownChannels.put( 'g', "Global" );
         knownChannels.put( 'l', "Local" );
         knownChannels.put( 's', "Staff" );
+        knownChannels.put( 'w', "World-Specific Chat");
     }
 
     @Override
@@ -41,13 +42,13 @@ public class ChatCommand implements CommandExecutor
 
             if( ! knownChannels.containsKey( channelRequested ) )
             {
-                p.sendMessage( LoyCore.getPfx() + ChatColor.RED + "Hmm.. thats not a channel.. try /c for a list!" );
+                p.sendMessage( LoyCore.getPfx() + ChatColor.RED + "Hmm.. that's not a channel.. try /c for a list!" );
                 return true;
             }
 
             if( ! p.hasPermission( "loy.chat." + knownChannels.get( channelRequested ).toLowerCase() ) )
             {
-                p.sendMessage( LoyCore.getPfx() + ChatColor.RED + "Sorry! you dont have permission for that channel!" );
+                p.sendMessage( LoyCore.getPfx() + ChatColor.RED + "Sorry! you don't have permission for that channel!" );
                 return true;
             }
 
@@ -74,7 +75,7 @@ public class ChatCommand implements CommandExecutor
         else
         {
             p.sendMessage( LoyCore.getPfx() + "Change your chat channel with " + ChatColor.YELLOW + "/c <channel> (msg)" );
-            p.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + "Known Channels:" );
+            p.sendMessage( ChatColor.YELLOW + "----" + ChatColor.GRAY + "Known Channels" +  ChatColor.YELLOW + "----" );
             for( Map.Entry<Character,String> channel : knownChannels.entrySet() )
             {
                 if( p.hasPermission( "loy.chat." + channel.getValue().toLowerCase() ) )

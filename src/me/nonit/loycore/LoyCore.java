@@ -3,10 +3,7 @@ package me.nonit.loycore;
 import com.github.hoqhuuep.islandcraft.api.IslandCraft;
 import com.github.hoqhuuep.islandcraft.bukkit.IslandCraftPlugin;
 import me.nonit.loycore.autopromote.AutoPromote;
-import me.nonit.loycore.chat.ChannelStore;
-import me.nonit.loycore.chat.ChatCommand;
-import me.nonit.loycore.chat.ChatListener;
-import me.nonit.loycore.chat.MollyChat;
+import me.nonit.loycore.chat.*;
 import me.nonit.loycore.commands.*;
 import me.nonit.loycore.database.MySQL;
 import me.nonit.loycore.database.SQL;
@@ -73,6 +70,7 @@ public class LoyCore extends JavaPlugin
         getCommand( "seen" ).setExecutor( new SeenCommand( this ) );
         getCommand( "emeralds" ).setExecutor( new EmeraldsCommand() );
 
+
         if( pm.getPlugin( "EchoPet" ) != null )
         {
             getCommand( "addpet" ).setExecutor( new AddPetCommand() );
@@ -87,6 +85,7 @@ public class LoyCore extends JavaPlugin
         pm.registerEvents( new MollyChat( this, channelStore ), this );
         getCommand( "chat" ).setExecutor( new ChatCommand( channelStore ) );
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
+        getCommand( "ignore" ).setExecutor( new IgnoreCommand());
         //pm.registerEvents( new IRCManager( channelStore ), this );
 
         //Anti Afk (Uncomment to Re-Enable.)
@@ -108,7 +107,7 @@ public class LoyCore extends JavaPlugin
         // Pocket money
         scheduler.scheduleSyncRepeatingTask( this, new PayRunnable(), 35000L, 72000L ); // Every hour
 
-        // Announcments
+        // Announcements
         if( getConfig().getStringList( "announcements" ).size() >= 2 )
         {
             scheduler.scheduleSyncRepeatingTask( this, new AnnounceRunnable( this ), 25000L, 25000L );
