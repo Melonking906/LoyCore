@@ -1,6 +1,5 @@
 package me.nonit.loycore.chat;
 
-import com.massivecraft.factions.entity.MPlayer;
 import me.nonit.loycore.EmeraldEcon;
 import me.nonit.loycore.LoyCore;
 import net.md_5.bungee.api.chat.*;
@@ -75,15 +74,17 @@ public class ChatListener implements Listener
             return;
         }
 
+/*
         if(ic.isIgnored( p ))
         {
 
         }
+*/
 
         ChatColor msgColor = ChatColor.WHITE;
         boolean isLocal = false;
         boolean isStaff = false;
-        boolean isWorld = false; // Is this player in world-specific chat?
+       //  boolean isWorld = false; // Is this player in world-specific chat?
         switch( cs.getPlayerChannel( p ) )
         {
             case 'l':
@@ -94,10 +95,11 @@ public class ChatListener implements Listener
                 msgColor = ChatColor.RED;
                 isStaff = true;
                 break;
-            case 'w':
+ /*           case 'w':
                 msgColor = ChatColor.LIGHT_PURPLE;
                 isWorld = true;
                 break;
+ */
             default:
                 break;
         }
@@ -110,7 +112,9 @@ public class ChatListener implements Listener
             prefix = prefixes.get( random.nextInt( prefixes.size() ) );
         }
 
-        MPlayer factionPlayer = MPlayer.get( p );
+
+        // Disable faction prefixes, no factions.
+/*        MPlayer factionPlayer = MPlayer.get( p );
         if ( prefix.equals( "{faction}" ) )
         {
             if ( factionPlayer.hasFaction() )
@@ -121,7 +125,7 @@ public class ChatListener implements Listener
             {
                 prefix = ChatColor.DARK_AQUA + "Factionless";
             }
-        }
+        }*/
 
         String suffix = chat.getPlayerSuffix( p );
 
@@ -132,7 +136,8 @@ public class ChatListener implements Listener
         //Name Tooltip
         String nameToolTip = "";
 
-        String faction = "none...";
+        // More factions stuff off.
+ /*       String faction = "none...";
         String title = "none...";
         if ( factionPlayer.hasFaction() )
         {
@@ -144,6 +149,7 @@ public class ChatListener implements Listener
         }
         nameToolTip += ChatColor.RED + "Faction " + ChatColor.GRAY + faction;
         nameToolTip += "\n" + ChatColor.GOLD + "Title " + ChatColor.GRAY + title;
+*/
         nameToolTip += "\n" + ChatColor.GREEN + "Emeralds " + ChatColor.GRAY + EmeraldEcon.getBalance( p );
         nameToolTip += "\n" + ChatColor.WHITE + "Name " + ChatColor.GRAY + p.getName();
 
@@ -225,7 +231,7 @@ public class ChatListener implements Listener
         {
             recipients = LoyCore.getOnlineStaff();
         }
-        else if( isWorld )
+/*        else if( isWorld )
         {
             for( Player player : onlinePlayers ) {
 
@@ -235,7 +241,7 @@ public class ChatListener implements Listener
 
                 }
             }
-        }
+        }*/
         else
         {
             for( Player receiver : onlinePlayers )

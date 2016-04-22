@@ -188,10 +188,10 @@ public class JoinLeaveListener implements Listener
                // Old Jolicraft Pack (1.8)
                // player.setResourcePack( "http://www.loyloy.io/filestore/jolicraft1.8.zip" );
                 // Faithful 1.8
-                player.setResourcePack( "https://dl.dropbox.com/s/s8erbqp06t3swl7/faithful-1.8-edit.zip" );
+               // player.setResourcePack( "https://dl.dropbox.com/s/s8erbqp06t3swl7/faithful-1.8-edit.zip" );
 
                 // Faithful 1.9
-                //player.setResourcePack( "https://dl.dropbox.com/s/aj6f44s5q9kprhl/faithful-1.9-edit.zip" );
+                player.setResourcePack( "https://dl.dropbox.com/s/aj6f44s5q9kprhl/faithful-1.9-edit.zip" );
 
             }
         }.runTaskLater( plugin, 400L ); //Run after 20 seconds

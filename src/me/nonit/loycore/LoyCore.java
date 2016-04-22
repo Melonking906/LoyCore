@@ -85,7 +85,7 @@ public class LoyCore extends JavaPlugin
         pm.registerEvents( new MollyChat( this, channelStore ), this );
         getCommand( "chat" ).setExecutor( new ChatCommand( channelStore ) );
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
-        getCommand( "ignore" ).setExecutor( new IgnoreCommand());
+      //  getCommand( "ignore" ).setExecutor( new IgnoreCommand());
         //pm.registerEvents( new IRCManager( channelStore ), this );
 
         //Anti Afk (Uncomment to Re-Enable.)
@@ -105,7 +105,7 @@ public class LoyCore extends JavaPlugin
         getCommand( "prefixtoken" ).setExecutor( new PfxTokenCommand() );
 
         // Pocket money
-        scheduler.scheduleSyncRepeatingTask( this, new PayRunnable(), 35000L, 72000L ); // Every hour
+        scheduler.scheduleSyncRepeatingTask(this, new PayRunnable(), 35000L, 72000L ); // Every hour
 
         // Announcements
         if( getConfig().getStringList( "announcements" ).size() >= 2 )
