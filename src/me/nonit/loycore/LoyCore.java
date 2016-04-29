@@ -7,10 +7,6 @@ import me.nonit.loycore.chat.*;
 import me.nonit.loycore.commands.*;
 import me.nonit.loycore.database.MySQL;
 import me.nonit.loycore.database.SQL;
-import me.nonit.loycore.death.Death;
-import me.nonit.loycore.death.DeathListener;
-import me.nonit.loycore.death.DeathRunnable;
-import me.nonit.loycore.death.ResurrectCommand;
 import me.nonit.loycore.prefix.PfxTokenCommand;
 import me.nonit.loycore.prefix.PrefixListener;
 import me.nonit.loycore.pvp.PvP;
@@ -37,8 +33,8 @@ public class LoyCore extends JavaPlugin
 
     public SQL db;
 
-    private static final String PREFIX = ChatColor.YELLOW + "[Loy]" + ChatColor.GREEN + " ";
-    private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
+    private static final String PREFIX = ChatColor.YELLOW + "[Loy]:" + ChatColor.GREEN + " ";
+    private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.GOLD + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
     @Override
     public void onEnable()
@@ -70,12 +66,6 @@ public class LoyCore extends JavaPlugin
         getCommand( "seen" ).setExecutor( new SeenCommand( this ) );
         getCommand( "emeralds" ).setExecutor( new EmeraldsCommand() );
 
-
-        if( pm.getPlugin( "EchoPet" ) != null )
-        {
-            getCommand( "addpet" ).setExecutor( new AddPetCommand() );
-        }
-
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 
         //Loy Chat module
@@ -85,13 +75,6 @@ public class LoyCore extends JavaPlugin
         pm.registerEvents( new MollyChat( this, channelStore ), this );
         getCommand( "chat" ).setExecutor( new ChatCommand( channelStore ) );
         getCommand( "playertalk" ).setExecutor( new PlayerTalkCommand( chatListener ) );
-      //  getCommand( "ignore" ).setExecutor( new IgnoreCommand());
-        //pm.registerEvents( new IRCManager( channelStore ), this );
-
-        //Anti Afk (Uncomment to Re-Enable.)
-
-        // scheduler.scheduleSyncRepeatingTask( this, new AntiAfkRunnable(), 5000L, 12000L ); //Runs every 10 mins
-
 
 
         // PvP
@@ -120,14 +103,8 @@ public class LoyCore extends JavaPlugin
         // Auto Promote
         new AutoPromote( this );
 
-        //Gamemode managr
+        //Gamemode manager
         pm.registerEvents( new GameModesListener(), this );
-
-        // Death system (DISABLED.  UNCOMMENT TO REENABLE.)
-/*        Death death = new Death( this );
-        pm.registerEvents( new DeathListener( death ), this );
-        scheduler.scheduleSyncRepeatingTask(this, new DeathRunnable( death ), 0L, 2400L );
-        getCommand( "resurrect" ).setExecutor(new ResurrectCommand( death ));*/
 
         // Votifier
         if( pm.getPlugin( "Votifier" ) != null )

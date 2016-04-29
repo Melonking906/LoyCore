@@ -2,8 +2,6 @@ package me.nonit.loycore;
 
 import io.loyloy.nicky.Nick;
 import me.nonit.loycore.autopromote.AutoPromote;
-import me.nonit.loycore.database.SQL;
-import me.nonit.loycore.death.Death;
 import net.minecraft.server.v1_9_R1.IChatBaseComponent;
 import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_9_R1.PlayerConnection;
@@ -28,7 +26,8 @@ public class JoinLeaveListener implements Listener
     private List<String> blockedPlayers;
     private final SendPacketThread sendThread;
 
-    // private Death death;
+    private static final String MOLJOIN = ChatColor.DARK_GRAY + "Join " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕" + ChatColor.GRAY;
+    private static final String MOLLEAVE = ChatColor.DARK_GRAY + "Leave " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕" + ChatColor.GRAY;
 
     private static HashMap<String, String> messages = new HashMap<>();
 
@@ -82,11 +81,6 @@ public class JoinLeaveListener implements Listener
      //   this.death = death;
 
         reloadMessages( plugin );
-
-        blockedPlayers = new ArrayList<>();
-        blockedPlayers.add( "02219d7e13824a3fad362ab8ddfe5bfa" );
-        blockedPlayers.add( "69876f77e2a94b0a82c5f66f120d5e5a" );
-        blockedPlayers.add( "a81cfa83fc1348a8950a0af073d19329" );
     }
 
     @EventHandler
@@ -97,13 +91,6 @@ public class JoinLeaveListener implements Listener
 
         if( player == null )
         {
-            return;
-        }
-
-        String playerUUID = player.getUniqueId().toString().replaceAll( "-", "" );
-        if( blockedPlayers.contains( playerUUID ) )
-        {
-            new PlayerQuitEvent( player, "com.avaje.ebeaninternal.server.lib.thread.PooledThread.run(PooledThread.java)" );
             return;
         }
 
@@ -127,55 +114,56 @@ public class JoinLeaveListener implements Listener
         {
             public void run()
             {
-                if( !player.isOnline() )
-                {
-                    return;
-                }
+            }
 
-                String name;
-                String displayName = ChatColor.stripColor( player.getDisplayName() );
-                displayName = displayName.replace( "_", "" );
-                displayName = displayName.replace( "Mr", "" );
-                displayName = displayName.replace( "Sir", "" );
-                displayName = displayName.replace( "The", "" );
-                displayName = displayName.replace( "X", "" );
-                displayName = displayName.replace( "x", "" );
-                int cutLength = 3;
+        }.runTaskLater( plugin, 60L );
 
-                for ( int i=1 ; i < displayName.length() ; i++ )
-                {
-                    if ( Character.isUpperCase( displayName.codePointAt( i ) ) || !Character.isAlphabetic( displayName.codePointAt( i ) ) )
-                    {
-                        cutLength = i;
-                        break;
-                    }
-                }
+            if( !player.isOnline() )
+            {
+                return;
+            }
 
-                if ( displayName.length() >= cutLength )
-                {
-                    name = displayName.substring( 0, cutLength );
-                }
-                else
-                {
-                    name = displayName;
-                }
+            String name;
+            String displayName = ChatColor.stripColor( player.getDisplayName() );
+            displayName = displayName.replace( "_", "" );
+            displayName = displayName.replace( "Mr", "" );
+            displayName = displayName.replace( "Sir", "" );
+            displayName = displayName.replace( "The", "" );
+            displayName = displayName.replace( "X", "" );
+            displayName = displayName.replace( "x", "" );
+            int cutLength = 3;
 
-                player.sendMessage( LoyCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Loy ;3" );
-
-                if( !LoyCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+            for ( int i=1 ; i < displayName.length() ; i++ )
+            {
+                if ( Character.isUpperCase( displayName.codePointAt( i ) ) || !Character.isAlphabetic( displayName.codePointAt( i ) ) )
                 {
-                    return;
-                }
-
-                for ( Player onlinePlayer : Bukkit.getOnlinePlayers() )
-                {
-                    if ( !onlinePlayer.equals( player ) )
-                    {
-                        onlinePlayer.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + ChatColor.stripColor( player.getDisplayName() ) + " is in!" );
-                    }
+                    cutLength = i;
+                    break;
                 }
             }
-        }.runTaskLater( plugin, 60L );
+
+            if ( displayName.length() >= cutLength )
+            {
+                name = displayName.substring( 0, cutLength );
+            }
+            else
+            {
+                name = displayName;
+            }
+
+            player.sendMessage( LoyCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Loy ;3" );
+
+            if( !LoyCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+            {
+                return;
+            }
+
+            for ( Player onlinePlayer : Bukkit.getOnlinePlayers() ) {
+                if (!onlinePlayer.equals(player)) {
+                    onlinePlayer.sendMessage(getJoinMessage( player));
+                }
+            }
+
 
         new BukkitRunnable()
         {
@@ -211,14 +199,6 @@ public class JoinLeaveListener implements Listener
             return;
         }
 
-/*        for( SQL.DeadPlayer deadPlayer : death.getDeadPlayers() )
-        {
-            if( deadPlayer.getUuid().equals( player.getUniqueId() ) )
-            {
-                return;
-            }
-        }*/
-
         String name = nick.get();
         if( name != null )
         {
@@ -233,7 +213,7 @@ public class JoinLeaveListener implements Listener
         {
             if ( !onlinePlayer.equals( player ) )
             {
-                onlinePlayer.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + ChatColor.stripColor( name ) + " is out!" );
+                onlinePlayer.sendMessage( getLeaveMessage( player ) );
             }
         }
 
@@ -266,7 +246,7 @@ public class JoinLeaveListener implements Listener
         //Send MOTD
         player.sendMessage( "" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
-        player.sendMessage( "§3Welcome to Loy §f" + playerName + " §3❤" );
+        player.sendMessage( "§3Welcome to Loy, §f" + playerName + " §3❤" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
         player.sendMessage( "§aNews: §f" + messages.get( "newsLine1" ) );
         player.sendMessage( "§f" + messages.get( "newsLine2" ) );
@@ -274,7 +254,7 @@ public class JoinLeaveListener implements Listener
 
         // Inject screen title.
         String rawTitle = "§7*- §b" + greeting + " §7-*";
-        String rawSubTitle = "§aWelcome to Loy " + playerName;
+        String rawSubTitle = "§aWelcome to Loy :3 " + playerName;
 
         TitleMessage.showMessage( player, rawTitle, rawSubTitle, 60 );
     }
@@ -345,4 +325,8 @@ public class JoinLeaveListener implements Listener
             messages.put( message.getKey(), message.getValue() );
         }
     }
+    public static String getJoinMessage( Player p ) { return MOLJOIN + ChatColor.stripColor( p.getDisplayName() ) +  " is in! :3"; }
+
+    public static String getLeaveMessage( Player p ) { return MOLLEAVE + ChatColor.stripColor( p.getDisplayName() ) + " is out the door! 3:"; }
+
 }
