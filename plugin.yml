@@ -1,8 +1,8 @@
-name: LoyCore
-main: LoyCore
-version: 0.7
-author: Melonking
-description: Needed things for LoyLoy
+name: OkiCore
+main: OkiCore
+version: 0.8
+author: Melonking, TheMIP3
+description: Needed things for New OkiCraft
 depend: [Vault,Nicky]
 
 commands:
@@ -16,8 +16,8 @@ commands:
     description: Unsign books!
   fix:
     description: Fix tools!
-  loyreload:
-    description: Reloyd!
+  okireload:
+    description: OkiCore Reload!
   announce:
     description: Announce stuff!
     aliases: [anc]

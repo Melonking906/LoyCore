@@ -23,7 +23,6 @@ import java.util.*;
 public class JoinLeaveListener implements Listener
 {
     private final OkiCore plugin;
-    private List<String> blockedPlayers;
     private final SendPacketThread sendThread;
 
     private static final String MOLJOIN = ChatColor.GRAY + "Join " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕ " + ChatColor.GRAY;
@@ -179,7 +178,7 @@ public class JoinLeaveListener implements Listener
                // player.setResourcePack( "https://dl.dropbox.com/s/s8erbqp06t3swl7/faithful-1.8-edit.zip" );
 
                 // Faithful 1.9
-                player.setResourcePack( "https://dl.dropbox.com/s/aj6f44s5q9kprhl/faithful-1.9-edit.zip" );
+                player.setResourcePack( "https://s04-cdn.anonfiles.com/635ca795bbfd98594a32adfaa90ecef2.zip" );
 
             }
         }.runTaskLater( plugin, 400L ); //Run after 20 seconds
@@ -231,7 +230,7 @@ public class JoinLeaveListener implements Listener
             motd = greetings[idx];
         }
 
-        motd = ChatColor.GRAY + motd + "\n"+ChatColor.GRAY+"*- "+ChatColor.YELLOW+"LoyLoy.io"+ChatColor.GRAY+" -*";
+        motd = ChatColor.GRAY + motd + "\n"+ChatColor.GRAY+"*- "+ChatColor.AQUA +"OkiCraft"+ChatColor.GRAY+" -*";
 
         event.setMotd( motd );
     }
@@ -246,7 +245,7 @@ public class JoinLeaveListener implements Listener
         //Send MOTD
         player.sendMessage( "" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
-        player.sendMessage( "§3Welcome to Loy, §f" + playerName + " §3❤" );
+        player.sendMessage( "§3Welcome to OkiCraft, §f" + playerName + " §3❤" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
         player.sendMessage( "§aNews: §f" + messages.get( "newsLine1" ) );
         player.sendMessage( "§f" + messages.get( "newsLine2" ) );
