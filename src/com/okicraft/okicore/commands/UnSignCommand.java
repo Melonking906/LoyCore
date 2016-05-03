@@ -23,7 +23,7 @@ public class UnSignCommand implements CommandExecutor
         if( sender instanceof Player )
         {
             Player player = (Player) sender;
-            ItemStack is = player.getItemInHand();
+            ItemStack is = player.getInventory().getItemInMainHand();
 
             if( player.hasPermission( "loy.unsign" ) )
             {
@@ -40,7 +40,7 @@ public class UnSignCommand implements CommandExecutor
                                 BookMeta newMeta = bookMeta.clone();
                                 ItemStack newIs = new ItemStack( Material.BOOK_AND_QUILL );
                                 newIs.setItemMeta( newMeta );
-                                player.setItemInHand( newIs );
+                                player.getInventory().setItemInMainHand( newIs );
 
                                 player.sendMessage( OkiCore.getPfx() + ChatColor.GREEN + "Unsigned \"" + ChatColor.WHITE + bookMeta.getTitle() + ChatColor.GREEN + "\"!" );
                             }

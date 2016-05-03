@@ -6,11 +6,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class LoyReloadCommand implements CommandExecutor
+public class OkiReloadCommand implements CommandExecutor
 {
     private OkiCore plugin;
 
-    public LoyReloadCommand( OkiCore plugin )
+    public OkiReloadCommand(OkiCore plugin )
     {
         this.plugin = plugin;
     }

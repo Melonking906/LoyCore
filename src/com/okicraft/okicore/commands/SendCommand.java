@@ -56,7 +56,7 @@ public class SendCommand implements CommandExecutor
                             return true;
                         }
 
-                        ItemStack item = s.getItemInHand();
+                        ItemStack item = s.getInventory().getItemInMainHand();
 
                         if( item.getType().equals( Material.AIR ) )
                         {
@@ -64,7 +64,7 @@ public class SendCommand implements CommandExecutor
                             return true;
                         }
 
-                        s.setItemInHand( new ItemStack( Material.AIR ) );
+                        s.getInventory().setItemInMainHand( new ItemStack( Material.AIR ) );
 
                         r.getInventory().addItem( item );
                         TitleMessage.showMessage( r, "", ChatColor.GREEN + "You got an item from " + ChatColor.YELLOW + sName + ChatColor.GREEN + ", check your inv!", 60 );

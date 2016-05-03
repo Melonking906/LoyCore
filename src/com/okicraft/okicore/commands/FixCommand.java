@@ -25,7 +25,7 @@ public class FixCommand implements CommandExecutor
             if( sender.hasPermission( "loy.fix" ) )
             {
                 Player player = ( Player ) sender;
-                ItemStack berepaired = player.getItemInHand();
+                ItemStack berepaired = player.getInventory().getItemInMainHand();
 
                 if ( EmeraldEcon.getBalance( player ) < COST )
                 {

@@ -17,7 +17,7 @@ commands:
   fix:
     description: Fix tools!
   okireload:
-    description: OkiCore Reload!
+    description: OkiCorehb   mReload!
   announce:
     description: Announce stuff!
     aliases: [anc]

@@ -86,10 +86,6 @@ public class MollyChat implements Listener
             if( isSubset )
             {
                 // Anti Spam for duplicated messages.
-                //if( lastMsg.equals( reply.getKey() ) )
-                //{
-                //    return null;
-                //}
 
                 long time = System.currentTimeMillis();
                 if( time <= (lastTime + 10 * 1000) )

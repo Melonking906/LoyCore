@@ -32,7 +32,7 @@ public class GiveEveryoneCommand implements CommandExecutor
         }
 
         Player p = (Player) sender;
-        ItemStack item = p.getItemInHand();
+        ItemStack item = p.getInventory().getItemInMainHand();
 
         if( item.getType().equals( Material.AIR ) )
         {

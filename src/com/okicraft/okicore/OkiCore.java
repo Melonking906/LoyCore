@@ -14,14 +14,8 @@ import com.okicraft.okicore.prefix.PrefixListener;
 import com.okicraft.okicore.pvp.PvP;
 import com.okicraft.okicore.pvp.PvPCommand;
 import com.okicraft.okicore.pvp.PvPListener;
-import com.okicraft.okicore.autopromote.AutoPromote;
-import com.okicraft.okicore.database.MySQL;
-import com.okicraft.okicore.database.SQL;
 import com.okicraft.okicore.prefix.PfxTokenCommand;
-import com.okicraft.okicore.prefix.PrefixListener;
-import com.okicraft.okicore.pvp.PvP;
-import com.okicraft.okicore.pvp.PvPCommand;
-import com.okicraft.okicore.pvp.PvPListener;
+import com.okicraft.okicore.signs.SignColorzListener;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -65,7 +59,7 @@ public class OkiCore extends JavaPlugin
         getCommand( "setnews" ).setExecutor( new SetNewsCommand( this ) );
         getCommand( "unsign" ).setExecutor( new UnSignCommand() );
         getCommand( "fix" ).setExecutor( new FixCommand() );
-        getCommand( "loyreload" ).setExecutor( new LoyReloadCommand( this ) );
+        getCommand( "okireload" ).setExecutor( new OkiReloadCommand( this ) );
         getCommand( "announce" ).setExecutor( new AnnounceCommand( this ) );
         getCommand( "alert" ).setExecutor( new AlertCommand() );
         getCommand( "kickemall" ).setExecutor( new KickEmAllCommand() );
@@ -132,6 +126,9 @@ public class OkiCore extends JavaPlugin
         pm.registerEvents( new JoinLeaveListener( this ), this );
         pm.registerEvents( new EggDropListener(), this );
         pm.registerEvents( new DontBuildListener(), this );
+
+        //Sign
+        pm.registerEvents( new SignColorzListener(), this);
     }
 
     @Override

@@ -197,7 +197,7 @@ public class PrefixListener implements Listener
             //Else assume its a token
             else
             {
-                ItemStack i = player.getItemInHand();
+                ItemStack i = player.getInventory().getItemInMainHand();
 
                 if( !i.getType().equals( Material.PAPER ) )
                 {
@@ -232,15 +232,15 @@ public class PrefixListener implements Listener
 
     private void useItem( Player player )
     {
-        ItemStack handItems = player.getItemInHand();
+        ItemStack handItems = player.getInventory().getItemInMainHand();
 
         if( handItems.getAmount() > 1 )
         {
             handItems.setAmount( handItems.getAmount() - 1 );
-            player.setItemInHand( handItems );
+            player.getInventory().setItemInMainHand( handItems );
             return;
         }
 
-        player.setItemInHand( new ItemStack( Material.AIR ) );
+        player.getInventory().setItemInMainHand( new ItemStack( Material.AIR ) );
     }
 }

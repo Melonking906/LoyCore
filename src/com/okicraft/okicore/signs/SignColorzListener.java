@@ -4,13 +4,14 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.material.Sign;
 
 /**
  * Created by skitt on 5/2/2016.
  */
-public class SignColorzListener {
+public class SignColorzListener implements Listener {
 
     // CONSTRUCTOR
     public SignColorzListener()
