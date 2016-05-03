@@ -1,7 +1,6 @@
 package com.okicraft.okicore.commands;
 
 import com.okicraft.okicore.JoinLeaveListener;
-import com.okicraft.okicore.JoinLeaveListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

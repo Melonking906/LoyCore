@@ -1,26 +1,24 @@
 package com.okicraft.okicore.signs;
 
+import com.okicraft.okicore.OkiCore;
 import org.bukkit.ChatColor;
 
-
+/**
+ * Created by skitt on 5/2/2016.
+ */
 public class SignColorz {
+        // REFERENCES
+        private static SignColorz	instance;
 
-    // REFERENCES
-    private static SignColorz	instance;
+        // Messages
+        public static final String permissions_message = OkiCore.getPfx() + "Sorry, you don't have permission for that!";
 
-    // CONFIG VALUES
-    public static String		permissions_message;
-    public static String		magic_permissions_message;
+        // CONSTRUCTOR
+        public SignColorz()
+        {
+            instance = this;
+        }
 
-    public static boolean		permission_based;
-    public static boolean		magic_permission_based;
-
-
-    // CONSTRUCTOR
-    public SignColorz()
-    {
-        instance = this;
-    }
 
     // GETTERS
     public static SignColorz getInstance()
@@ -61,6 +59,4 @@ public class SignColorz {
 
         return false;
     }
-
-
 }

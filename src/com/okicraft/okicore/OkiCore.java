@@ -10,11 +10,11 @@ import com.okicraft.okicore.chat.MollyChat;
 import com.okicraft.okicore.commands.*;
 import com.okicraft.okicore.database.MySQL;
 import com.okicraft.okicore.database.SQL;
+import com.okicraft.okicore.prefix.PfxTokenCommand;
 import com.okicraft.okicore.prefix.PrefixListener;
 import com.okicraft.okicore.pvp.PvP;
 import com.okicraft.okicore.pvp.PvPCommand;
 import com.okicraft.okicore.pvp.PvPListener;
-import com.okicraft.okicore.prefix.PfxTokenCommand;
 import com.okicraft.okicore.signs.SignColorzListener;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
@@ -119,16 +119,19 @@ public class OkiCore extends JavaPlugin
         //Rain Drops
         scheduler.scheduleSyncRepeatingTask( this, new RaindropsRunnable(), 600L, 600L );
 
-        //Claw Games
-        //scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 1L, 1L );
 
         //Stuff
         pm.registerEvents( new JoinLeaveListener( this ), this );
         pm.registerEvents( new EggDropListener(), this );
         pm.registerEvents( new DontBuildListener(), this );
 
-        //Sign
-        pm.registerEvents( new SignColorzListener(), this);
+        //Sign Stuff
+        pm.registerEvents( new SignColorzListener(), this );
+
+
+
+
+
     }
 
     @Override

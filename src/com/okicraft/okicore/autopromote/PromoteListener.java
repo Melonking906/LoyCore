@@ -29,15 +29,15 @@ public class PromoteListener implements Listener
             autoPromote.addUUID( player.getUniqueId() );
 
             //Send them to spawn on first join.
-            player.teleport( Bukkit.getWorld( "Space" ).getSpawnLocation() );
+            player.teleport( Bukkit.getWorld( "Spore" ).getSpawnLocation() );
 
             player.sendMessage( " " );
-            player.sendMessage( ChatColor.YELLOW + "Hello new person! We are so glad you joined!" );
+            player.sendMessage( ChatColor.YELLOW + "Hello, new person! We are so glad you joined!" );
             player.sendMessage( ChatColor.GRAY + "Don't Worry! You'll be able to build in 1 min!" );
             player.sendMessage( ChatColor.GRAY + "While you wait, please enjoy exploring spawn!" );
             player.sendMessage( ChatColor.GRAY + "We know its all confusing now so" );
             player.sendMessage( ChatColor.GRAY + "just ask in chat if you need any help ;3" );
-            player.sendMessage( ChatColor.YELLOW + "Love - Loy Server Staff" );
+            player.sendMessage( ChatColor.YELLOW + "Love - Oki Server Staff" );
             player.sendMessage( " " );
 
             String title = ChatColor.YELLOW + "Hi " + ChatColor.GREEN + player.getDisplayName() + ChatColor.YELLOW + "!";

@@ -1,8 +1,8 @@
 name: OkiCore
-main: OkiCore
+main: com.okicraft.okicore.OkiCore
 version: 0.8
-author: Melonking, TheMIP3
-description: Needed things for New OkiCraft
+author: TheMIP3, Melonking
+description: Needed things for New Oki
 depend: [Vault,Nicky]
 
 commands:
@@ -17,7 +17,7 @@ commands:
   fix:
     description: Fix tools!
   okireload:
-    description: OkiCorehb   mReload!
+    description: Reload OkiCore!
   announce:
     description: Announce stuff!
     aliases: [anc]
@@ -50,8 +50,6 @@ commands:
   prefixtoken:
     description: Spawn a prefix token!
     aliases: [pfxtoken]
-  resurrect:
-    description: Return players from the dead!
   emeralds:
     description: Get your emerald balance!
     aliases: [money,fe]

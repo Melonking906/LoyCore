@@ -27,7 +27,6 @@ public class ChatListener implements Listener
     private final SendPacketThread sendThread;
 
     private ChannelStore cs;
-    private IgnoreCommand ic;
     private Random random;
     private List<String> prefixes;
 

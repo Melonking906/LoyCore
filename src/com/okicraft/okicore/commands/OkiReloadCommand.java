@@ -22,7 +22,7 @@ public class OkiReloadCommand implements CommandExecutor
         {
             plugin.reloadConfig();
             JoinLeaveListener.reloadMessages( plugin );
-            sender.sendMessage( "Loy Messages Reloaded!!" );
+            sender.sendMessage( OkiCore.getPfx() + "Oki Messages Reloaded!" );
         }
         return true;
     }

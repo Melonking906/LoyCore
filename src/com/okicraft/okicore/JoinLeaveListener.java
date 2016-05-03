@@ -76,68 +76,66 @@ public class JoinLeaveListener implements Listener
     {
         this.plugin = plugin;
         this.sendThread = new SendPacketThread();
-     //   this.death = death;
-     //   this.death = death;
 
         reloadMessages( plugin );
     }
 
     @EventHandler
-    public void onJoin( PlayerJoinEvent evt )
-    {
-        evt.setJoinMessage( null );
-        final Player player = evt.getPlayer();
+                    public void onJoin( PlayerJoinEvent evt )
+                    {
+                        evt.setJoinMessage( null );
+                        final Player player = evt.getPlayer();
 
-        if( player == null )
-        {
-            return;
-        }
+                        if( player == null )
+                        {
+                            return;
+                        }
 
-        sendMotd( player );
-        updateTabHF( false );
+                        sendMotd( player );
+                        updateTabHF( false );
 
-        plugin.db.updatePlayer( player );
+                        plugin.db.updatePlayer( player );
 
-        if( player.hasPermission( "loy.fly" ) )
-        {
-            player.setAllowFlight( true );
-            player.setFlying( true );
-        }
+                        if( player.hasPermission( "loy.fly" ) )
+                        {
+                            player.setAllowFlight( true );
+                            player.setFlying( true );
+                        }
 
-        if( !player.hasPermission( "loy.gmanyworld" ) )
-        {
-            player.setGameMode( GameMode.SURVIVAL );
-        }
+                        if( !player.hasPermission( "loy.gmanyworld" ) )
+                        {
+                            player.setGameMode( GameMode.SURVIVAL );
+                        }
 
-        new BukkitRunnable()
-        {
-            public void run()
-            {
-            }
+                        new BukkitRunnable()
+                        {
+                            public void run()
+                            {
+                            }
 
-        }.runTaskLater( plugin, 60L );
+                        }.runTaskLater( plugin, 60L );
 
-            if( !player.isOnline() )
-            {
-                return;
-            }
+                        if( !player.isOnline() )
+                        {
+                            return;
+                        }
 
-            String name;
-            String displayName = ChatColor.stripColor( player.getDisplayName() );
-            displayName = displayName.replace( "_", "" );
-            displayName = displayName.replace( "Mr", "" );
-            displayName = displayName.replace( "Sir", "" );
-            displayName = displayName.replace( "The", "" );
-            displayName = displayName.replace( "X", "" );
-            displayName = displayName.replace( "x", "" );
-            int cutLength = 3;
+                        String name;
+                        String displayName = ChatColor.stripColor( player.getDisplayName() );
+                        displayName = displayName.replace( "_", "" );
+                        displayName = displayName.replace( "Mr", "" );
+                        displayName = displayName.replace( "Sir", "" );
+                        displayName = displayName.replace( "The", "" );
+                        displayName = displayName.replace( "X", "" );
+                        displayName = displayName.replace( "x", "" );
+                        int cutLength = 3;
 
-            for ( int i=1 ; i < displayName.length() ; i++ )
-            {
-                if ( Character.isUpperCase( displayName.codePointAt( i ) ) || !Character.isAlphabetic( displayName.codePointAt( i ) ) )
-                {
-                    cutLength = i;
-                    break;
+                        for ( int i=1 ; i < displayName.length() ; i++ )
+                        {
+                            if ( Character.isUpperCase( displayName.codePointAt( i ) ) || !Character.isAlphabetic( displayName.codePointAt( i ) ) )
+                            {
+                                cutLength = i;
+                                break;
                 }
             }
 
@@ -178,7 +176,7 @@ public class JoinLeaveListener implements Listener
                // player.setResourcePack( "https://dl.dropbox.com/s/s8erbqp06t3swl7/faithful-1.8-edit.zip" );
 
                 // Faithful 1.9
-                player.setResourcePack( "https://s04-cdn.anonfiles.com/635ca795bbfd98594a32adfaa90ecef2.zip" );
+                player.setResourcePack( "https://dl.dropbox.com/s/aj6f44s5q9kprhl/faithful-1.9-edit.zip" );
 
             }
         }.runTaskLater( plugin, 400L ); //Run after 20 seconds
@@ -230,7 +228,7 @@ public class JoinLeaveListener implements Listener
             motd = greetings[idx];
         }
 
-        motd = ChatColor.GRAY + motd + "\n"+ChatColor.GRAY+"*- "+ChatColor.AQUA +"OkiCraft"+ChatColor.GRAY+" -*";
+        motd = ChatColor.GRAY + motd + "\n"+ChatColor.GRAY+"*- "+ChatColor.AQUA+"OkiCraft"+ChatColor.GRAY+" -*";
 
         event.setMotd( motd );
     }
@@ -245,7 +243,7 @@ public class JoinLeaveListener implements Listener
         //Send MOTD
         player.sendMessage( "" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
-        player.sendMessage( "§3Welcome to OkiCraft, §f" + playerName + " §3❤" );
+        player.sendMessage( "§3Welcome to Oki, §f" + playerName + " §3❤" );
         player.sendMessage( "§b§m---------------------------------------------------" ); //Strike
         player.sendMessage( "§aNews: §f" + messages.get( "newsLine1" ) );
         player.sendMessage( "§f" + messages.get( "newsLine2" ) );
@@ -253,7 +251,7 @@ public class JoinLeaveListener implements Listener
 
         // Inject screen title.
         String rawTitle = "§7*- §b" + greeting + " §7-*";
-        String rawSubTitle = "§aWelcome to Loy :3 " + playerName;
+        String rawSubTitle = "§aWelcome to Oki :3 " + playerName;
 
         TitleMessage.showMessage( player, rawTitle, rawSubTitle, 60 );
     }
