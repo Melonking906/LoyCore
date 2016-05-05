@@ -113,55 +113,59 @@ public class JoinLeaveListener implements Listener
         {
             public void run()
             {
+                if( !player.isOnline() )
+                {
+                    return;
+                }
+
+                String name;
+                String displayName = ChatColor.stripColor( player.getDisplayName() );
+                displayName = displayName.replace( "_", "" );
+                displayName = displayName.replace( "Mr", "" );
+                displayName = displayName.replace( "Sir", "" );
+                displayName = displayName.replace( "The", "" );
+                displayName = displayName.replace( "X", "" );
+                displayName = displayName.replace( "x", "" );
+                int cutLength = 3;
+
+                for ( int i=1 ; i < displayName.length() ; i++ )
+                {
+                    if ( Character.isUpperCase( displayName.codePointAt( i ) ) || !Character.isAlphabetic( displayName.codePointAt( i ) ) )
+                    {
+                        cutLength = i;
+                        break;
+                    }
+                }
+
+                if ( displayName.length() >= cutLength )
+                {
+                    name = displayName.substring( 0, cutLength );
+                }
+                else
+                {
+                    name = displayName;
+                }
+
+                player.sendMessage( OkiCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Loy ;3" );
+
+                if( !OkiCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+                {
+                    return;
+                }
+
+                for ( Player onlinePlayer : Bukkit.getOnlinePlayers() ) {
+                    if (!onlinePlayer.equals(player)) {
+                        System.out.println( "Sending JOIN message for " + player + " to " + onlinePlayer + ".");
+                        onlinePlayer.sendMessage(getJoinMessage( player ));
+                    }
+                }
+
+
             }
 
         }.runTaskLater( plugin, 60L );
 
-            if( !player.isOnline() )
-            {
-                return;
-            }
 
-            String name;
-            String displayName = ChatColor.stripColor( player.getDisplayName() );
-            displayName = displayName.replace( "_", "" );
-            displayName = displayName.replace( "Mr", "" );
-            displayName = displayName.replace( "Sir", "" );
-            displayName = displayName.replace( "The", "" );
-            displayName = displayName.replace( "X", "" );
-            displayName = displayName.replace( "x", "" );
-            int cutLength = 3;
-
-            for ( int i=1 ; i < displayName.length() ; i++ )
-            {
-                if ( Character.isUpperCase( displayName.codePointAt( i ) ) || !Character.isAlphabetic( displayName.codePointAt( i ) ) )
-                {
-                    cutLength = i;
-                    break;
-                }
-            }
-
-            if ( displayName.length() >= cutLength )
-            {
-                name = displayName.substring( 0, cutLength );
-            }
-            else
-            {
-                name = displayName;
-            }
-
-            player.sendMessage( OkiCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Loy ;3" );
-
-            if( !OkiCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
-            {
-                return;
-            }
-
-            for ( Player onlinePlayer : Bukkit.getOnlinePlayers() ) {
-                if (!onlinePlayer.equals(player)) {
-                    onlinePlayer.sendMessage(getJoinMessage( player));
-                }
-            }
 
 
         new BukkitRunnable()

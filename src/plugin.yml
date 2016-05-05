@@ -1,5 +1,5 @@
 name: OkiCore
-main: OkiCore
+main: com.okicraft.okicore.OkiCore
 version: 0.8
 author: Melonking, TheMIP3
 description: Needed things for New OkiCraft
@@ -17,7 +17,7 @@ commands:
   fix:
     description: Fix tools!
   okireload:
-    description: OkiCorehb   mReload!
+    description: OkiCore Reload!
   announce:
     description: Announce stuff!
     aliases: [anc]

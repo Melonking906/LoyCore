@@ -119,8 +119,6 @@ public class OkiCore extends JavaPlugin
         //Rain Drops
         scheduler.scheduleSyncRepeatingTask( this, new RaindropsRunnable(), 600L, 600L );
 
-        //Claw Games
-        //scheduler.scheduleSyncRepeatingTask( this, new ClawRunnable(), 1L, 1L );
 
         //Stuff
         pm.registerEvents( new JoinLeaveListener( this ), this );
