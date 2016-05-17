@@ -1,7 +1,7 @@
 package com.okicraft.okicore;
 
 import com.okicraft.okicore.autopromote.AutoPromote;
-import io.loyoki.nicky.Nick;
+import io.loyloy.nicky.Nick;
 import net.minecraft.server.v1_9_R1.IChatBaseComponent;
 import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_9_R1.PlayerConnection;

@@ -40,7 +40,7 @@ public class PfxTokenCommand implements CommandExecutor
 
         if( args.length < 2 && !(sender instanceof Player) )
         {
-            sender.sendMessage( "Please include a player /prefix <prefix> <name>" );
+            sender.sendMessage( "Please include a player: /prefix <prefix> <name>" );
             return true;
         }
 

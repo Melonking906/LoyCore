@@ -18,8 +18,8 @@ public class PromoteRunnable extends BukkitRunnable
     private final AutoPromote autoPromote;
     private final OkiCore plugin;
     private final Economy_Gringotts econ;
-
-    public PromoteRunnable( AutoPromote autoPromote, OkiCore plugin )
+    private final double start_amt = 50.0;
+    public PromoteRunnable( AutoPromote autoPromote, OkiCore plugin, Economy_Gringotts econ )
     {
         this.autoPromote = autoPromote;
         this.plugin = plugin;
@@ -54,10 +54,9 @@ public class PromoteRunnable extends BukkitRunnable
                         player.sendMessage( " " );
                         player.sendMessage( OkiCore.getPfx() + "\\o/ Congratz, you've been promoted to builder! \\o/" );
                         player.sendMessage( OkiCore.getPfx() + "Say hello to everyone!" );
-                        player.sendMessage( OkiCore.getPfx() + ChatColor.YELLOW + "*" + ChatColor.GRAY + "--- " + ChatColor.LIGHT_PURPLE + "Oki" + ChatColor.WHITE + "Kit" + ChatColor.GRAY + " ---" + ChatColor.YELLOW + "*" );
+                        player.sendMessage( " " );
 
-                        player.sendMessage( " " );
-                        player.sendMessage( " " );
+                        setupNewAccount( player );
 
                         plugin.db.setPromotedTime( player );
 
@@ -80,5 +79,13 @@ public class PromoteRunnable extends BukkitRunnable
     {
         Date currentDate = new Date();
         return (currentDate.getTime()-since.getTime())/1000;
+    }
+
+    private void setupNewAccount( Player p )
+    {
+
+        econ.createPlayerAccount( p );
+        econ.depositPlayer( p, start_amt );
+
     }
 }
