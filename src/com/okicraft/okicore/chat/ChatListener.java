@@ -28,7 +28,6 @@ public class ChatListener implements Listener
     private final SendPacketThread sendThread;
 
     private ChannelStore cs;
-    private IgnoreCommand ic;
     private Random random;
     private List<String> prefixes;
 
@@ -109,8 +108,8 @@ public class ChatListener implements Listener
 
         //Name Tooltip
         String nameToolTip = "";
-        nameToolTip += ChatColor.GREEN + "Ro:   " + ChatColor.GRAY + econ.getBalance( p );
-        nameToolTip += "\n" + ChatColor.WHITE + "Name: " + ChatColor.GRAY + p.getName();
+        nameToolTip += ChatColor.WHITE + "Name: " + ChatColor.GRAY + p.getName();
+        nameToolTip +=  "\n" + ChatColor.GREEN + "Ro: " + ChatColor.GRAY + econ.getBalance( p );
 
         if( p.hasPermission( "oki.chat.color" ) )
         {

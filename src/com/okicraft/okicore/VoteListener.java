@@ -81,12 +81,18 @@ public class VoteListener implements Listener
             String myDisplayName = "I Voted!";
 
             ItemStack cookie = new ItemStack( Material.COOKIE, 1 );
-            ItemMeta im = cookie.getItemMeta();
-            im.setDisplayName( myDisplayName );
-            cookie.setItemMeta( im );
+            ItemMeta cookieItemMeta = cookie.getItemMeta();
+            cookieItemMeta.setDisplayName( myDisplayName );
+            cookie.setItemMeta( cookieItemMeta );
 
             inventory.addItem( cookie );
 
+            ItemStack diamond = new ItemStack( Material.DIAMOND, 5 );
+            ItemMeta diamondItemMeta = diamond.getItemMeta();
+            diamondItemMeta.setDisplayName( myDisplayName );
+            diamond.setItemMeta( diamondItemMeta );
+
+            inventory.addItem( diamond );
         }
         else
         {

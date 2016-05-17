@@ -40,8 +40,8 @@ public class OkiCore extends JavaPlugin
 
     public SQL db;
 
-    private static final String PREFIX = ChatColor.WHITE + "[" + ChatColor.DARK_PURPLE + "Oki" + ChatColor.WHITE + "]" + ChatColor.GREEN + " ";
-    private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
+    private static final String PREFIX = ChatColor.WHITE + "[" + ChatColor.AQUA+ "Oki" + ChatColor.WHITE + "]" + ChatColor.GREEN + " ";
+    private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
     @Override
     public void onEnable()
