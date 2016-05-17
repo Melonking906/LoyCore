@@ -18,7 +18,7 @@ public class AddPetCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if( sender.hasPermission( "loy.addpet" ) )
+        if( sender.hasPermission( "oki.addpet" ) )
         {
             if( args.length > 0 )
             {

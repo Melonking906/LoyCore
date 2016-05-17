@@ -21,7 +21,7 @@ public class PvPCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command command, String s, String[] args )
     {
-        if( !sender.hasPermission( "loy.pvp" ) )
+        if( !sender.hasPermission( "oki.pvp" ) )
         {
             sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You don't got permission for that!" );
             return true;

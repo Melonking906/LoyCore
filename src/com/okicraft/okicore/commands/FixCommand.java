@@ -2,6 +2,7 @@ package com.okicraft.okicore.commands;
 
 import com.okicraft.okicore.EmeraldEcon;
 import com.okicraft.okicore.OkiCore;
+import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,6 +14,8 @@ public class FixCommand implements CommandExecutor
 {
     private static final int COST = 10;
 
+    private static final Economy_Gringotts econ = OkiCore.gringottsEcon;
+
     public FixCommand()
     {
     }
@@ -22,14 +25,14 @@ public class FixCommand implements CommandExecutor
     {
         if( sender instanceof Player )
         {
-            if( sender.hasPermission( "loy.fix" ) )
+            if( sender.hasPermission( "oki.fix" ) )
             {
                 Player player = ( Player ) sender;
                 ItemStack berepaired = player.getInventory().getItemInMainHand();
 
-                if ( EmeraldEcon.getBalance( player ) < COST )
+                if ( econ.getBalance( player ) < COST )
                 {
-                    player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You cant afford that! Its " + COST + " emeralds to fix an item." );
+                    player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You can\'t afford that! It\'s " + COST + " emeralds to fix an item." );
                     return true;
                 }
 
@@ -37,12 +40,12 @@ public class FixCommand implements CommandExecutor
                 {
                     berepaired.setDurability( ( short ) ( berepaired.getType().getMaxDurability() - berepaired.getType().getMaxDurability() ) );
                     sender.sendMessage( OkiCore.getPfx() + ChatColor.GREEN + "You have repaired the item!" );
+                    econ.withdrawPlayer( player, COST ); // Gringotts again.
 
-                    EmeraldEcon.removeEmeralds( player, COST );
                 }
                 else
                 {
-                    sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "This item cannot be repaired :(" );
+                    sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "This item cannot be repaired! :(" );
                 }
             }
             else

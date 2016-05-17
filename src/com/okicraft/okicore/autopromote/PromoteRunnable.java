@@ -2,6 +2,7 @@ package com.okicraft.okicore.autopromote;
 
 import com.okicraft.okicore.OkiCore;
 import com.okicraft.okicore.TitleMessage;
+import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,11 +17,13 @@ public class PromoteRunnable extends BukkitRunnable
 {
     private final AutoPromote autoPromote;
     private final OkiCore plugin;
+    private final Economy_Gringotts econ;
 
     public PromoteRunnable( AutoPromote autoPromote, OkiCore plugin )
     {
         this.autoPromote = autoPromote;
         this.plugin = plugin;
+        this.econ = econ;
     }
 
     @Override
@@ -51,6 +54,9 @@ public class PromoteRunnable extends BukkitRunnable
                         player.sendMessage( " " );
                         player.sendMessage( OkiCore.getPfx() + "\\o/ Congratz, you've been promoted to builder! \\o/" );
                         player.sendMessage( OkiCore.getPfx() + "Say hello to everyone!" );
+                        player.sendMessage( OkiCore.getPfx() + ChatColor.YELLOW + "*" + ChatColor.GRAY + "--- " + ChatColor.LIGHT_PURPLE + "Oki" + ChatColor.WHITE + "Kit" + ChatColor.GRAY + " ---" + ChatColor.YELLOW + "*" );
+
+                        player.sendMessage( " " );
                         player.sendMessage( " " );
 
                         plugin.db.setPromotedTime( player );

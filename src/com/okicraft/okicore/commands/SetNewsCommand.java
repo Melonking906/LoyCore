@@ -18,7 +18,7 @@ public class SetNewsCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if ( sender.hasPermission("loy.setnews") )
+        if ( sender.hasPermission("oki.setnews") )
         {
             if( args.length > 1 )
             {

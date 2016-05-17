@@ -17,6 +17,7 @@ import com.okicraft.okicore.pvp.PvPListener;
 import com.okicraft.okicore.prefix.PfxTokenCommand;
 import com.okicraft.okicore.signs.SignColorzListener;
 import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,13 +32,15 @@ import java.util.List;
 
 public class OkiCore extends JavaPlugin
 {
+    public static Economy_Gringotts gringottsEcon = null; // Added for convert to Gringotts/Vault setup.
+
     public static Permission permission = null;
     public static Chat chat = null;
     public IslandCraft islandCraft = null;
 
     public SQL db;
 
-    private static final String PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + "Oki" + ChatColor.GRAY + "]" + ChatColor.GREEN + " ";
+    private static final String PREFIX = ChatColor.WHITE + "[" + ChatColor.DARK_PURPLE + "Oki" + ChatColor.WHITE + "]" + ChatColor.GREEN + " ";
     private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
     @Override
@@ -68,7 +71,6 @@ public class OkiCore extends JavaPlugin
         getCommand( "send" ).setExecutor( new SendCommand() );
         getCommand( "fly" ).setExecutor( new FlyCommand() );
         getCommand( "seen" ).setExecutor( new SeenCommand( this ) );
-        getCommand( "emeralds" ).setExecutor( new EmeraldsCommand() );
 
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 
@@ -171,6 +173,16 @@ public class OkiCore extends JavaPlugin
         return (chat != null);
     }
 
+    private boolean setupEconomy()
+    {
+        RegisteredServiceProvider<Economy_Gringotts> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.plugins.Economy_Gringotts.class);
+        if (economyProvider != null) {
+            gringottsEcon = economyProvider.getProvider();
+        }
+
+        return (gringottsEcon != null);
+    }
+
     public static List<Player> getOnlineStaff()
     {
         List<Player> staff = new ArrayList<>();
@@ -193,6 +205,5 @@ public class OkiCore extends JavaPlugin
             p.sendMessage( ChatColor.RED + "[Staff] " + ChatColor.GRAY + msg );
         }
     }
-
 
 }

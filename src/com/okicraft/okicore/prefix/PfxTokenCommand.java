@@ -32,7 +32,7 @@ public class PfxTokenCommand implements CommandExecutor
             return true;
         }
 
-        if( !sender.hasPermission( "loy.prefix" ) )
+        if( !sender.hasPermission( "oki.prefix" ) )
         {
             sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You don't have perms for that!" );
             return true;

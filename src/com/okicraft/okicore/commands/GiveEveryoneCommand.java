@@ -25,7 +25,7 @@ public class GiveEveryoneCommand implements CommandExecutor
             return true;
         }
 
-        if( ! sender.hasPermission( "loy.giveeveryone" ) )
+        if( ! sender.hasPermission( "oki.giveeveryone" ) )
         {
             sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You don't have permissions for this!" );
             return true;

@@ -13,7 +13,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 public class DontBuildListener implements Listener
 {
-    private final static String PERMISSION = "loy.build";
+    private final static String PERMISSION = "oki.build";
 
     public DontBuildListener() {}
 

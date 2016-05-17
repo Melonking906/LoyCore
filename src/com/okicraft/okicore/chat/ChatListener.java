@@ -1,9 +1,9 @@
 package com.okicraft.okicore.chat;
 
-import com.okicraft.okicore.EmeraldEcon;
 import com.okicraft.okicore.OkiCore;
 import net.md_5.bungee.api.chat.*;
 import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,6 +23,7 @@ public class ChatListener implements Listener
 {
     private static final Chat chat = OkiCore.chat;
     private static final Permission perm = OkiCore.permission;
+    private static final Economy_Gringotts econ = OkiCore.gringottsEcon;
 
     private final SendPacketThread sendThread;
 
@@ -74,17 +75,10 @@ public class ChatListener implements Listener
             return;
         }
 
-/*
-        if(ic.isIgnored( p ))
-        {
-
-        }
-*/
-
         ChatColor msgColor = ChatColor.WHITE;
         boolean isLocal = false;
         boolean isStaff = false;
-       //  boolean isWorld = false; // Is this player in world-specific chat?
+
         switch( cs.getPlayerChannel( p ) )
         {
             case 'l':
@@ -95,11 +89,6 @@ public class ChatListener implements Listener
                 msgColor = ChatColor.RED;
                 isStaff = true;
                 break;
- /*           case 'w':
-                msgColor = ChatColor.LIGHT_PURPLE;
-                isWorld = true;
-                break;
- */
             default:
                 break;
         }
@@ -112,21 +101,6 @@ public class ChatListener implements Listener
             prefix = prefixes.get( random.nextInt( prefixes.size() ) );
         }
 
-
-        // Disable faction prefixes, no factions.
-/*        MPlayer factionPlayer = MPlayer.get( p );
-        if ( prefix.equals( "{faction}" ) )
-        {
-            if ( factionPlayer.hasFaction() )
-            {
-                prefix = ChatColor.DARK_AQUA + factionPlayer.getFactionName();
-            }
-            else
-            {
-                prefix = ChatColor.DARK_AQUA + "Factionless";
-            }
-        }*/
-
         String suffix = chat.getPlayerSuffix( p );
 
         String group = perm.getPrimaryGroup( p ).substring( 0, 1 ).toUpperCase() + perm.getPrimaryGroup( p ).substring( 1 );
@@ -135,25 +109,10 @@ public class ChatListener implements Listener
 
         //Name Tooltip
         String nameToolTip = "";
+        nameToolTip += ChatColor.GREEN + "Ro:   " + ChatColor.GRAY + econ.getBalance( p );
+        nameToolTip += "\n" + ChatColor.WHITE + "Name: " + ChatColor.GRAY + p.getName();
 
-        // More factions stuff off.
- /*       String faction = "none...";
-        String title = "none...";
-        if ( factionPlayer.hasFaction() )
-        {
-            faction = factionPlayer.getFactionName();
-        }
-        if ( factionPlayer.hasTitle() )
-        {
-            title = factionPlayer.getTitle();
-        }
-        nameToolTip += ChatColor.RED + "Faction " + ChatColor.GRAY + faction;
-        nameToolTip += "\n" + ChatColor.GOLD + "Title " + ChatColor.GRAY + title;
-*/
-        nameToolTip += "\n" + ChatColor.GREEN + "Emeralds " + ChatColor.GRAY + EmeraldEcon.getBalance( p );
-        nameToolTip += "\n" + ChatColor.WHITE + "Name " + ChatColor.GRAY + p.getName();
-
-        if( p.hasPermission( "loy.chat.color" ) )
+        if( p.hasPermission( "oki.chat.color" ) )
         {
             msg = ChatColor.translateAlternateColorCodes( '&', msg );
         }
@@ -203,7 +162,7 @@ public class ChatListener implements Listener
 
         if( ! perm.playerInGroup( p, "builder" ) )
         {
-            p.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + "Only staff can see your chat atm ^-^" );
+            p.sendMessage( ChatColor.YELLOW + "* " + ChatColor.GRAY + "Only staff can see your chat at the moment! ^-^" );
 
             recipients.addAll( OkiCore.getOnlineStaff() );
             recipients.add( p );

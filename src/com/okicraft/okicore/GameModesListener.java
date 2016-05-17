@@ -33,7 +33,7 @@ public class GameModesListener implements Listener
             player.addPotionEffect(new PotionEffect( PotionEffectType.JUMP, 0, 0 ), true);
         }
 
-        if( player.hasPermission( "loy.gmanyworld" ) )
+        if( player.hasPermission( "oki.gmanyworld" ) )
         {
             return;
         }
@@ -46,7 +46,7 @@ public class GameModesListener implements Listener
         {
             player.setGameMode( GameMode.SURVIVAL );
 
-            if( player.hasPermission( "loy.fly" ) )
+            if( player.hasPermission( "oki.fly" ) )
             {
                 player.setAllowFlight( true );
                 player.setFlying( true );

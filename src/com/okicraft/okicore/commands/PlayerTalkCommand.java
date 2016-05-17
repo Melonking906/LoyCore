@@ -25,7 +25,7 @@ public class PlayerTalkCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if( ! sender.hasPermission( "loy.playertalk" ) )
+        if( ! sender.hasPermission( "oki.playertalk" ) )
         {
             sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Sorry you don't have permission for that!" );
             return true;

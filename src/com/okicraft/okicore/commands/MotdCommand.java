@@ -16,7 +16,7 @@ public class MotdCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if( sender.hasPermission( "loy.motd" ) )
+        if( sender.hasPermission( "oki.motd" ) )
         {
             JoinLeaveListener.sendMotd( (Player) sender );
         }

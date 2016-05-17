@@ -26,7 +26,7 @@ public class IgnoreCommand implements CommandExecutor {
 
                 sender.sendMessage(OkiCore.getPfx() + ChatColor.RED + "You're missing a part of the command. Try " + ChatColor.GREEN + "/ignore <player>");
 
-            } else if (!(p.hasPermission("loy.chat.ignore"))) {
+            } else if (!(p.hasPermission("oki.chat.ignore"))) {
 
                 sender.sendMessage(OkiCore.getPfx() + ChatColor.RED + "Hmm... it looks like you don't have permission for that!");
                 sender.sendMessage(OkiCore.getPfx() + ChatColor.RED + "Please tell an Admin or an Owner about this!  Thank you! ^-^");

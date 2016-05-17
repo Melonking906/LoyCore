@@ -46,7 +46,7 @@ public class ChatCommand implements CommandExecutor
                 return true;
             }
 
-            if( ! p.hasPermission( "loy.chat." + knownChannels.get( channelRequested ).toLowerCase() ) )
+            if( ! p.hasPermission( "oki.chat." + knownChannels.get( channelRequested ).toLowerCase() ) )
             {
                 p.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Sorry! you don't have permission for that channel!" );
                 return true;
@@ -78,7 +78,7 @@ public class ChatCommand implements CommandExecutor
             p.sendMessage( ChatColor.YELLOW + "----" + ChatColor.GRAY + "Known Channels" +  ChatColor.YELLOW + "----" );
             for( Map.Entry<Character,String> channel : knownChannels.entrySet() )
             {
-                if( p.hasPermission( "loy.chat." + channel.getValue().toLowerCase() ) )
+                if( p.hasPermission( "oki.chat." + channel.getValue().toLowerCase() ) )
                 {
                     p.sendMessage( ChatColor.YELLOW + "* " + channel.getKey() + ChatColor.GRAY + " - " + channel.getValue() + " chat!" );
                 }

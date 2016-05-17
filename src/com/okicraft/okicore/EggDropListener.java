@@ -125,7 +125,7 @@ public class EggDropListener implements Listener
             return;
         }
 
-        if( ! e.getPlayer().hasPermission( "loy.eggonspawner" ) )
+        if( ! e.getPlayer().hasPermission( "oki.eggonspawner" ) )
         {
             e.setCancelled( true );
         }

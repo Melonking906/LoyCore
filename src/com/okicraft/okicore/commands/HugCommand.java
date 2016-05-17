@@ -20,20 +20,33 @@ public class HugCommand implements CommandExecutor
     {
         if ( ( sender instanceof Player ) )
         {
-            if( sender.hasPermission( "loy.hug" ) )
+
+            if( sender.hasPermission( "oki.hug" ) )
             {
                 if( args.length > 0 )
                 {
                     String senderName = ((Player)sender).getDisplayName();
+                    if( !(args[0].equals( "*" ))) {
+                        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                            player.sendMessage(ChatColor.GRAY + "❤ " + senderName + ChatColor.GRAY + " hugged " + args[0] + " ❤");
 
-                    for( Player player : Bukkit.getServer().getOnlinePlayers() )
-                    {
-                        player.sendMessage( ChatColor.GRAY + "❤ " + senderName + ChatColor.GRAY + " hugged " + args[0] + " ❤" );
-
-                        if( args[0].equalsIgnoreCase( player.getName() ) || args[0].equalsIgnoreCase( ChatColor.stripColor( player.getDisplayName() ) ) )
-                        {
-                            TitleMessage.showMessage( player, "", ChatColor.LIGHT_PURPLE + "❤❤❤ " + senderName + ChatColor.LIGHT_PURPLE + " hugged you! ❤❤❤", 50 );
+                            if (args[0].equalsIgnoreCase(player.getName()) || args[0].equalsIgnoreCase(ChatColor.stripColor(player.getDisplayName()))) {
+                                TitleMessage.showMessage(player, "", ChatColor.LIGHT_PURPLE + "❤❤❤ " + senderName + ChatColor.LIGHT_PURPLE + " hugged you! ❤❤❤", 50);
+                            }
                         }
+                    }
+                    else
+                    {
+
+                        for (Player player : Bukkit.getServer().getOnlinePlayers())
+                        {
+
+                            player.sendMessage(ChatColor.GRAY + "❤ " + senderName + ChatColor.GRAY + " hugged everyone! ❤" );
+
+                            TitleMessage.showMessage(player, "", ChatColor.LIGHT_PURPLE + "❤❤❤ " + senderName + ChatColor.LIGHT_PURPLE + " hugged you! ❤❤❤", 50);
+
+                        }
+
                     }
                 }
                 else
@@ -42,6 +55,7 @@ public class HugCommand implements CommandExecutor
                 }
                 return true;
             }
+
         }
         return true;
     }

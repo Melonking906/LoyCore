@@ -20,7 +20,7 @@ public class AnnounceCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if( sender.hasPermission( "loy.announce" ) )
+        if( sender.hasPermission( "oki.announce" ) )
         {
             if( args.length >= 1 )
             {

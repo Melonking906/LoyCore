@@ -17,9 +17,9 @@ public class KickEmAllCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if( ! sender.hasPermission( "loy.kickemall" ) )
+        if( ! sender.hasPermission( "oki.kickemall" ) )
         {
-            sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "With great power comes.. never mind you aint got the power!" );
+            sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "With great power comes... never mind, you ain\'t got the power!" );
             return true;
         }
 
@@ -28,7 +28,7 @@ public class KickEmAllCommand implements CommandExecutor
             player.kickPlayer( ChatColor.YELLOW + "LoyLoy is restarting!" + ChatColor.GREEN + " Come back soon :D" );
         }
 
-        System.out.print( "[Loy] All players have been disconnected!" );
+        System.out.print( "[Oki] All players have been disconnected!" );
 
         Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "stop" );
 

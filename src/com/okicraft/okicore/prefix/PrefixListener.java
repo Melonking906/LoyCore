@@ -1,7 +1,9 @@
 package com.okicraft.okicore.prefix;
 
-import com.okicraft.okicore.EmeraldEcon;
 import com.okicraft.okicore.OkiCore;
+import net.milkbowl.vault.Vault;
+import net.milkbowl.vault.VaultEco;
+import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -20,6 +22,8 @@ import java.util.Random;
 
 public class PrefixListener implements Listener
 {
+
+    private Economy_Gringotts econ = OkiCore.gringottsEcon;
     private Random random;
     private List<ChatColor> colors;
 
@@ -70,7 +74,7 @@ public class PrefixListener implements Listener
 
             boolean error = false;
 
-            if( !player.hasPermission( "loy.makeprefix" ) )
+            if( !player.hasPermission( "oki.makeprefix" ) )
             {
                 player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You don't have permission to make prefixes!" );
                 error = true;
@@ -110,7 +114,7 @@ public class PrefixListener implements Listener
             event.setLine( 3, color + "FREE" );
             if ( price > 0 )
             {
-                event.setLine( 3, color + "" + price + " Emerald(s)" );
+                event.setLine( 3, color + "" + price + " Ro" );
             }
 
             player.sendMessage( OkiCore.getPfx() + "Prefix sign created!" );
@@ -177,17 +181,16 @@ public class PrefixListener implements Listener
                         sign.setLine( 3, color + "FREE" );
                         if ( price > 0 )
                         {
-                            sign.setLine( 3, color + "" + price + " Emerald(s)" );
+                            sign.setLine( 3, color + "" + price + " Ro" );
                         }
                     }
                     //End Update
-
-                    if( EmeraldEcon.getBalance( player ) < price )
+                    if( econ.getBalance( player ) < price )
                     {
                         player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You can't afford this prefix!" );
                         return;
                     }
-                    EmeraldEcon.removeEmeralds( player, price );
+                    econ.withdrawPlayer( player, price );
 
                     OkiCore.chat.setPlayerPrefix( player, prefix );
 

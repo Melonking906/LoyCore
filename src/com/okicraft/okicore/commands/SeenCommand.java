@@ -43,11 +43,11 @@ public class SeenCommand implements CommandExecutor
 
                 if( data == null )
                 {
-                    sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Sorry, no players found by the name " + search );
+                    sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Sorry, no players found with '" + search + "'in their name! :(" );
                     return true;
                 }
 
-                sender.sendMessage( ChatColor.GRAY + "  *=== " + ChatColor.YELLOW + "Spotted on Loy" + ChatColor.GRAY + " ===*" );
+                sender.sendMessage( ChatColor.GRAY + "  *=== " + ChatColor.WHITE + "Spotted on Oki" + ChatColor.GRAY + " ===*" );
                 for( HashMap<String,String> row : data )
                 {
                     SimpleDateFormat sqlFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
@@ -57,7 +57,7 @@ public class SeenCommand implements CommandExecutor
 
                     if( Bukkit.getOfflinePlayer( UUID.fromString(row.get( "uuid" )) ).isOnline() )
                     {
-                        sender.sendMessage( ChatColor.GREEN + name + ChatColor.GRAY + " is online " + ChatColor.GREEN + "now!" );
+                        sender.sendMessage( ChatColor.GREEN + name + ChatColor.GRAY + " is online " + ChatColor.GREEN + "right now!" );
                     }
                     else
                     {
@@ -73,7 +73,7 @@ public class SeenCommand implements CommandExecutor
 
                         String lastseen = printFormat.format( seenDate );
 
-                        sender.sendMessage( ChatColor.GREEN + name + ChatColor.GRAY + " was last seen on " + ChatColor.YELLOW + lastseen + " New York time!" );
+                        sender.sendMessage( ChatColor.GREEN + name + ChatColor.GRAY + " was last seen on " + ChatColor.YELLOW + lastseen + ", New York time!" );
                     }
                 }
             }

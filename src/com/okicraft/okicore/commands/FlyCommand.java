@@ -19,7 +19,7 @@ public class FlyCommand implements CommandExecutor
     {
         if ( ( sender instanceof Player ) )
         {
-            if( sender.hasPermission( "loy.fly" ) )
+            if( sender.hasPermission( "oki.fly" ) )
             {
                 Player p = (Player) sender;
 
@@ -27,7 +27,7 @@ public class FlyCommand implements CommandExecutor
                 {
                     togglePlayerFly( p );
                 }
-                else if ( sender.hasPermission( "loy.fly.other" ) )
+                else if ( sender.hasPermission( "oki.fly.other" ) )
                 {
                     Player other = Bukkit.getPlayer( args[0] );
 

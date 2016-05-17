@@ -25,7 +25,7 @@ public class UnSignCommand implements CommandExecutor
             Player player = (Player) sender;
             ItemStack is = player.getInventory().getItemInMainHand();
 
-            if( player.hasPermission( "loy.unsign" ) )
+            if( player.hasPermission( "oki.unsign" ) )
             {
                 if( is.getType() == Material.WRITTEN_BOOK )
                 {
@@ -35,7 +35,7 @@ public class UnSignCommand implements CommandExecutor
                         if( ( meta instanceof BookMeta ) )
                         {
                             BookMeta bookMeta = ( BookMeta ) meta;
-                            if( ( bookMeta.hasAuthor() ) && ( bookMeta.getAuthor().equalsIgnoreCase( player.getName() ) || player.hasPermission( "loy.unsign.other" ) ) )
+                            if( ( bookMeta.hasAuthor() ) && ( bookMeta.getAuthor().equalsIgnoreCase( player.getName() ) || player.hasPermission( "oki.unsign.other" ) ) )
                             {
                                 BookMeta newMeta = bookMeta.clone();
                                 ItemStack newIs = new ItemStack( Material.BOOK_AND_QUILL );
@@ -46,7 +46,7 @@ public class UnSignCommand implements CommandExecutor
                             }
                             else
                             {
-                                player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You cannot unsign other peoples books!" );
+                                player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You cannot unsign other people\'s books!" );
                             }
                         }
                     }

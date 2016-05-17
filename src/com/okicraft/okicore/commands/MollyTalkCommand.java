@@ -19,7 +19,7 @@ public class MollyTalkCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if( ! sender.hasPermission( "loy.mollytalk" ) )
+        if( ! sender.hasPermission( "oki.mollytalk" ) )
         {
             sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Sorry you don't have permission for that!" );
             return true;
@@ -27,7 +27,7 @@ public class MollyTalkCommand implements CommandExecutor
 
         if( args.length < 1 )
         {
-            sender.sendMessage( OkiCore.getPfx() + "Usage: /mt <message> to speak as molly." );
+            sender.sendMessage( OkiCore.getPfx() + "Usage: /mt <message> to speak as Molly." );
             return true;
         }
 

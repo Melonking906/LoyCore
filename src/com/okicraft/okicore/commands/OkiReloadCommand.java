@@ -18,7 +18,7 @@ public class OkiReloadCommand implements CommandExecutor
     @Override
     public boolean onCommand( CommandSender sender, Command cmd, String label, String[] args )
     {
-        if( sender.hasPermission( "loy.reload" ) )
+        if( sender.hasPermission( "oki.reload" ) )
         {
             plugin.reloadConfig();
             JoinLeaveListener.reloadMessages( plugin );

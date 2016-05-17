@@ -27,13 +27,13 @@ public class SendCommand implements CommandExecutor
         {
             Player s = (Player) sender;
 
-            if( s.hasPermission( "loy.send" ) )
+            if( s.hasPermission( "oki.send" ) )
             {
                 if( args.length > 0 )
                 {
                     if ( EmeraldEcon.getBalance( s ) < COST )
                     {
-                        s.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You cant afford that! Its " + COST + " emerald to send an item." );
+                        s.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You cant afford that! It\'s " + COST + " emerald to send an item." );
                         return true;
                     }
 
@@ -72,11 +72,11 @@ public class SendCommand implements CommandExecutor
                         EmeraldEcon.removeEmeralds( s, COST );
 
                         //s.sendMessage( OkiCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + " for " + OkiCore.economy.format( COST ) + " :D" );
-                        s.sendMessage( OkiCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + " :D" );
+                        s.sendMessage( OkiCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + "! :3" );
                     }
                     else
                     {
-                        s.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Oops, " + args[0] + " doesn't seem to be online, cant send!" );
+                        s.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Oops, " + args[0] + " doesn't seem to be online, you can\'t send them this item!" );
                         return true;
                     }
                 }

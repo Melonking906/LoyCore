@@ -1,7 +1,7 @@
 package com.okicraft.okicore;
 
 import com.okicraft.okicore.autopromote.AutoPromote;
-import io.loyloy.nicky.Nick;
+import io.loyoki.nicky.Nick;
 import net.minecraft.server.v1_9_R1.IChatBaseComponent;
 import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_9_R1.PlayerConnection;
@@ -98,13 +98,13 @@ public class JoinLeaveListener implements Listener
 
         plugin.db.updatePlayer( player );
 
-        if( player.hasPermission( "loy.fly" ) )
+        if( player.hasPermission( "oki.fly" ) )
         {
             player.setAllowFlight( true );
             player.setFlying( true );
         }
 
-        if( !player.hasPermission( "loy.gmanyworld" ) )
+        if( !player.hasPermission( "oki.gmanyworld" ) )
         {
             player.setGameMode( GameMode.SURVIVAL );
         }
@@ -177,7 +177,7 @@ public class JoinLeaveListener implements Listener
                     return;
                 }
                // Old Jolicraft Pack (1.8)
-               // player.setResourcePack( "http://www.loyloy.io/filestore/jolicraft1.8.zip" );
+               // player.setResourcePack( "http://www.loyoki.io/filestore/jolicraft1.8.zip" );
                 // Faithful 1.8
                // player.setResourcePack( "https://dl.dropbox.com/s/s8erbqp06t3swl7/faithful-1.8-edit.zip" );
 
