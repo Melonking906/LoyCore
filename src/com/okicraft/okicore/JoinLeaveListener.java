@@ -1,7 +1,7 @@
 package com.okicraft.okicore;
 
 import com.okicraft.okicore.autopromote.AutoPromote;
-import io.loyoki.nicky.Nick;
+import io.loyloy.nicky.Nick;
 import net.minecraft.server.v1_9_R1.IChatBaseComponent;
 import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_9_R1.PlayerConnection;
@@ -257,7 +257,7 @@ public class JoinLeaveListener implements Listener
 
         // Inject screen title.
         String rawTitle = "§7*- §b" + greeting + " §7-*";
-        String rawSubTitle = "§aWelcome to Loy :3 " + playerName;
+        String rawSubTitle = "§aWelcome to Oki :3 " + playerName;
 
         TitleMessage.showMessage( player, rawTitle, rawSubTitle, 60 );
     }
@@ -273,7 +273,7 @@ public class JoinLeaveListener implements Listener
             count--;
         }
 
-        String rawFooter = ChatColor.GRAY + "*- " + ChatColor.YELLOW + count + " Peeps Online" + ChatColor.GRAY + " -*";
+        String rawFooter = ChatColor.GRAY + "*- " + ChatColor.YELLOW + count + " Peep(s) Online" + ChatColor.GRAY + " -*";
 
         IChatBaseComponent header = IChatBaseComponent.ChatSerializer.a( "{\"text\": \"" + messages.get( "header" ) + "\"}" );
         IChatBaseComponent footer = IChatBaseComponent.ChatSerializer.a( "{\"text\": \"" + rawFooter + "\"}" );

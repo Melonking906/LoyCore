@@ -1,6 +1,7 @@
 package com.okicraft.okicore.autopromote;
 
 import com.okicraft.okicore.OkiCore;
+import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -11,6 +12,8 @@ import java.util.UUID;
 
 public class AutoPromote
 {
+
+    private final Economy_Gringotts econ = OkiCore.gringottsEcon;
     private HashMap<UUID,Date> waitinglist;
     public static final String PROMOTE_RANK = "builder";
 
@@ -22,7 +25,7 @@ public class AutoPromote
         pm.registerEvents( new PromoteListener( this ), plugin );
 
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-        scheduler.scheduleSyncRepeatingTask( plugin, new PromoteRunnable( this, plugin ), 200L, 200L ); // Runs every 10 seconds;
+        scheduler.scheduleSyncRepeatingTask( plugin, new PromoteRunnable( this, plugin, econ ), 200L, 200L ); // Runs every 10 seconds;
     }
 
     public boolean hasUUID( UUID uuid )
