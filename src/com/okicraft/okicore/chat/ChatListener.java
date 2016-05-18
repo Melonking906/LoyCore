@@ -3,7 +3,7 @@ package com.okicraft.okicore.chat;
 import com.okicraft.okicore.OkiCore;
 import net.md_5.bungee.api.chat.*;
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,7 +23,7 @@ public class ChatListener implements Listener
 {
     private static final Chat chat = OkiCore.chat;
     private static final Permission perm = OkiCore.permission;
-    private static final Economy_Gringotts econ = OkiCore.gringottsEcon;
+    private static final Economy econ = OkiCore.gringottsEcon;
 
     private final SendPacketThread sendThread;
 

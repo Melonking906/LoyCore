@@ -1,9 +1,7 @@
 package com.okicraft.okicore.prefix;
 
 import com.okicraft.okicore.OkiCore;
-import net.milkbowl.vault.Vault;
-import net.milkbowl.vault.VaultEco;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -23,7 +21,7 @@ import java.util.Random;
 public class PrefixListener implements Listener
 {
 
-    private Economy_Gringotts econ = OkiCore.gringottsEcon;
+    private Economy econ = OkiCore.gringottsEcon;
     private Random random;
     private List<ChatColor> colors;
 

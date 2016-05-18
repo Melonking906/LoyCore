@@ -3,18 +3,23 @@ package com.okicraft.okicore.commands;
 import com.okicraft.okicore.EmeraldEcon;
 import com.okicraft.okicore.OkiCore;
 import com.okicraft.okicore.TitleMessage;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.gestern.gringotts.api.Eco;
 
 public class SendCommand implements CommandExecutor
 {
     private static final int COST = 1;
+
+    private static final Economy econ = OkiCore.gringottsEcon;
 
     public SendCommand()
     {
@@ -31,7 +36,7 @@ public class SendCommand implements CommandExecutor
             {
                 if( args.length > 0 )
                 {
-                    if ( EmeraldEcon.getBalance( s ) < COST )
+                    if ( econ.getBalance( (OfflinePlayer) s ) < COST )
                     {
                         s.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You cant afford that! It\'s " + COST + " emerald to send an item." );
                         return true;
@@ -60,7 +65,7 @@ public class SendCommand implements CommandExecutor
 
                         if( item.getType().equals( Material.AIR ) )
                         {
-                            sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Umm... You cant send air!" );
+                            sender.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Umm... You can\'t send air!" );
                             return true;
                         }
 
@@ -69,7 +74,7 @@ public class SendCommand implements CommandExecutor
                         r.getInventory().addItem( item );
                         TitleMessage.showMessage( r, "", ChatColor.GREEN + "You got an item from " + ChatColor.YELLOW + sName + ChatColor.GREEN + ", check your inv!", 60 );
 
-                        EmeraldEcon.removeEmeralds( s, COST );
+                        econ.withdrawPlayer( (OfflinePlayer) s, COST );
 
                         //s.sendMessage( OkiCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + " for " + OkiCore.economy.format( COST ) + " :D" );
                         s.sendMessage( OkiCore.getPfx() + "Your item was sent to " + r.getDisplayName() + ChatColor.GREEN + "! :3" );

@@ -2,9 +2,10 @@ package com.okicraft.okicore.autopromote;
 
 import com.okicraft.okicore.OkiCore;
 import com.okicraft.okicore.TitleMessage;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,9 +18,9 @@ public class PromoteRunnable extends BukkitRunnable
 {
     private final AutoPromote autoPromote;
     private final OkiCore plugin;
-    private final Economy_Gringotts econ;
+    private final Economy econ;
     private final double start_amt = 50.0;
-    public PromoteRunnable( AutoPromote autoPromote, OkiCore plugin, Economy_Gringotts econ )
+    public PromoteRunnable( AutoPromote autoPromote, OkiCore plugin, Economy econ )
     {
         this.autoPromote = autoPromote;
         this.plugin = plugin;
@@ -82,8 +83,8 @@ public class PromoteRunnable extends BukkitRunnable
     private void setupNewAccount( Player p )
     {
 
-        econ.createPlayerAccount( p );
-        econ.depositPlayer( p, start_amt );
+        econ.createPlayerAccount( (OfflinePlayer) p );
+        econ.depositPlayer( (OfflinePlayer) p, start_amt );
 
     }
 }

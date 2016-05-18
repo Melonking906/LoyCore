@@ -2,13 +2,14 @@ package com.okicraft.okicore;
 
 import com.okicraft.okicore.autopromote.AutoPromote;
 import io.loyloy.nicky.Nick;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_9_R1.IChatBaseComponent;
 import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_9_R1.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,7 +29,7 @@ public class JoinLeaveListener implements Listener
     private final OkiCore plugin;
     private final SendPacketThread sendThread;
 
-    private final Economy_Gringotts econ = OkiCore.gringottsEcon;
+    private final Economy econ;
 
     private static final String MOLJOIN = ChatColor.GRAY + "Join " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕ " + ChatColor.GRAY;
     private static final String MOLLEAVE = ChatColor.GRAY + "Leave " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕ " + ChatColor.GRAY;
@@ -83,7 +84,7 @@ public class JoinLeaveListener implements Listener
         this.sendThread = new SendPacketThread();
      //   this.death = death;
      //   this.death = death;
-
+        econ = OkiCore.gringottsEcon;
         reloadMessages( plugin );
     }
 
@@ -190,12 +191,12 @@ public class JoinLeaveListener implements Listener
                     return;
                 }
                // Old Jolicraft Pack (1.8)
-               // player.setResourcePack( "http://www.loyoki.io/filestore/jolicraft1.8.zip" );
+               // player.setResourcePack( "http://www.loyloy.io/filestore/jolicraft1.8.zip" );
                 // Faithful 1.8
                // player.setResourcePack( "https://dl.dropbox.com/s/s8erbqp06t3swl7/faithful-1.8-edit.zip" );
 
                 // Faithful 1.9
-                player.setResourcePack( "https://s04-cdn.anonfiles.com/635ca795bbfd98594a32adfaa90ecef2.zip" );
+                player.setResourcePack( "https://drive.google.com/uc?export=download&id=0BwykuEWwJvVKSVREVnpiLUZGMzA" );
 
             }
         }.runTaskLater( plugin, 400L ); //Run after 20 seconds

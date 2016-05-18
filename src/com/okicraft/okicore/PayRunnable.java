@@ -1,6 +1,6 @@
 package com.okicraft.okicore;
 
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ import java.util.Random;
 public class PayRunnable extends BukkitRunnable
 {
     private Random random;
-    private Economy_Gringotts econ = OkiCore.gringottsEcon;
+    private Economy econ = OkiCore.gringottsEcon;
 
     private static final int MAX_FE = 10;
     private static final int MIN_FE = 3;

@@ -1,7 +1,7 @@
 package com.okicraft.okicore.autopromote;
 
 import com.okicraft.okicore.OkiCore;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -13,7 +13,7 @@ import java.util.UUID;
 public class AutoPromote
 {
 
-    private final Economy_Gringotts econ = OkiCore.gringottsEcon;
+    private final Economy econ = OkiCore.gringottsEcon;
     private HashMap<UUID,Date> waitinglist;
     public static final String PROMOTE_RANK = "builder";
 

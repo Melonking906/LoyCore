@@ -2,7 +2,7 @@ package com.okicraft.okicore.commands;
 
 import com.okicraft.okicore.EmeraldEcon;
 import com.okicraft.okicore.OkiCore;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +14,7 @@ public class FixCommand implements CommandExecutor
 {
     private static final int COST = 10;
 
-    private static final Economy_Gringotts econ = OkiCore.gringottsEcon;
+    private static final Economy econ = OkiCore.gringottsEcon;
 
     public FixCommand()
     {

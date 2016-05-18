@@ -17,7 +17,7 @@ import com.okicraft.okicore.pvp.PvPListener;
 import com.okicraft.okicore.prefix.PfxTokenCommand;
 import com.okicraft.okicore.signs.SignColorzListener;
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
+import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +32,7 @@ import java.util.List;
 
 public class OkiCore extends JavaPlugin
 {
-    public static Economy_Gringotts gringottsEcon = null; // Added for convert to Gringotts/Vault setup.
+    public static Economy gringottsEcon = null; // Added for convert to Gringotts/Vault setup.
 
     public static Permission permission = null;
     public static Chat chat = null;
@@ -49,6 +49,7 @@ public class OkiCore extends JavaPlugin
         this.saveDefaultConfig(); // Makes a config if one does not exist.
 
         setupPermissions();
+        setupEconomy();
         setupChat();
         setupIslandCraft();
 
@@ -175,7 +176,7 @@ public class OkiCore extends JavaPlugin
 
     private boolean setupEconomy()
     {
-        RegisteredServiceProvider<Economy_Gringotts> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.plugins.Economy_Gringotts.class);
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (economyProvider != null) {
             gringottsEcon = economyProvider.getProvider();
         }
