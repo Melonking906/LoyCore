@@ -2,6 +2,7 @@ package com.okicraft.okicore;
 
 import com.okicraft.okicore.autopromote.AutoPromote;
 import io.loyloy.nicky.Nick;
+import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
 import net.minecraft.server.v1_9_R1.IChatBaseComponent;
 import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_9_R1.PlayerConnection;
@@ -20,13 +21,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import static com.okicraft.okicore.OkiCore.permission;
+
 public class JoinLeaveListener implements Listener
 {
     private final OkiCore plugin;
     private final SendPacketThread sendThread;
 
-    private static final String MOLJOIN = ChatColor.GRAY + "Join " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕ " + ChatColor.GRAY;
-    private static final String MOLLEAVE = ChatColor.GRAY + "Leave " + ChatColor.AQUA + "Molly " + ChatColor.GREEN + "✕ " + ChatColor.GRAY;
+    private final Economy_Gringotts econ = OkiCore.gringottsEcon;
+
+    private static final String MOLJOIN = ChatColor.GRAY + "Join " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕ " + ChatColor.GRAY;
+    private static final String MOLLEAVE = ChatColor.GRAY + "Leave " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕ " + ChatColor.GRAY;
 
     private static HashMap<String, String> messages = new HashMap<>();
 
@@ -104,6 +109,14 @@ public class JoinLeaveListener implements Listener
             player.setFlying( true );
         }
 
+        if( !player.hasPermission( "oki.account" ))
+        {
+
+            econ.createPlayerAccount( player );
+            permission.playerAdd( player, "oki.account" );
+
+        }
+
         if( !player.hasPermission( "oki.gmanyworld" ) )
         {
             player.setGameMode( GameMode.SURVIVAL );
@@ -148,7 +161,7 @@ public class JoinLeaveListener implements Listener
 
                 player.sendMessage( OkiCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Loy ;3" );
 
-                if( !OkiCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+                if( !permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
                 {
                     return;
                 }
@@ -197,7 +210,7 @@ public class JoinLeaveListener implements Listener
 
         plugin.db.updatePlayer( player );
 
-        if( !OkiCore.permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
+        if( !permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
         {
             return;
         }

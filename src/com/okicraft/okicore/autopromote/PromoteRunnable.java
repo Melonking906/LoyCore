@@ -56,8 +56,6 @@ public class PromoteRunnable extends BukkitRunnable
                         player.sendMessage( OkiCore.getPfx() + "Say hello to everyone!" );
                         player.sendMessage( " " );
 
-                        setupNewAccount( player );
-
                         plugin.db.setPromotedTime( player );
 
                         for( Player onlinePlayer : Bukkit.getServer().getOnlinePlayers() )
