@@ -196,7 +196,7 @@ public class JoinLeaveListener implements Listener
                // player.setResourcePack( "https://dl.dropbox.com/s/s8erbqp06t3swl7/faithful-1.8-edit.zip" );
 
                 // Faithful 1.9
-                player.setResourcePack( "https://drive.google.com/uc?export=download&id=0BwykuEWwJvVKSVREVnpiLUZGMzA" );
+                player.setResourcePack( "https://drive.google.com/uc?export=download&id=0BwykuEWwJvVKR0FfYnkzamNEekE" );
 
             }
         }.runTaskLater( plugin, 400L ); //Run after 20 seconds
