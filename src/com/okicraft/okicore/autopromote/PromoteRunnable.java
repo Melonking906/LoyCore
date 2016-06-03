@@ -19,7 +19,7 @@ public class PromoteRunnable extends BukkitRunnable
     private final AutoPromote autoPromote;
     private final OkiCore plugin;
     private final Economy econ;
-    private final double start_amt = 50.0;
+    private final double start_amt = 1000.0;
     public PromoteRunnable( AutoPromote autoPromote, OkiCore plugin, Economy econ )
     {
         this.autoPromote = autoPromote;

@@ -32,10 +32,10 @@ public class PromoteListener implements Listener
             player.teleport( Bukkit.getWorld( "Oki_1" ).getSpawnLocation() );
 
             player.sendMessage( " " );
-            player.sendMessage( ChatColor.YELLOW + "Hello new person! We are so glad you joined!" );
+            player.sendMessage( ChatColor.YELLOW + "Hello, new person! We are so glad you joined!" );
             player.sendMessage( ChatColor.GRAY + "Don't Worry! You'll be able to build in 1 min!" );
             player.sendMessage( ChatColor.GRAY + "While you wait, please enjoy exploring spawn!" );
-            player.sendMessage( ChatColor.GRAY + "We know its all confusing now so" );
+            player.sendMessage( ChatColor.GRAY + "We know its all confusing now, so" );
             player.sendMessage( ChatColor.GRAY + "just ask in chat if you need any help ;3" );
             player.sendMessage( ChatColor.YELLOW + "Love - Oki Server Staff" );
             player.sendMessage( " " );
@@ -62,4 +62,6 @@ public class PromoteListener implements Listener
             }
         }
     }
+
+
 }

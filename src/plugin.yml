@@ -52,6 +52,3 @@ commands:
     aliases: [pfxtoken]
   resurrect:
     description: Return players from the dead!
-  emeralds:
-    description: Get your emerald balance!
-    aliases: [money,fe]

@@ -39,23 +39,19 @@ public class PrefixListener implements Listener
     }
 
     @EventHandler
-    public void onSignChange( SignChangeEvent event )
-    {
-        if( event.isCancelled() )
-        {
+    public void onSignChange( SignChangeEvent event ) {
+        if (event.isCancelled()) {
             return;
         }
 
-        if( event.getPlayer() == null )
-        {
+        if (event.getPlayer() == null) {
             return;
         }
 
         Player player = event.getPlayer();
 
-        if( ChatColor.stripColor( event.getLine( 0 ) ).toLowerCase().equals( "[prefix]" ) )
-        {
-            String priceString = ChatColor.stripColor( event.getLine( 3 ) );
+        if (ChatColor.stripColor(event.getLine(0)).toLowerCase().equals("[prefix]")) {
+         /*   String priceString = ChatColor.stripColor( event.getLine( 3 ) );
             String prefix;
 
             String blank1 = ChatColor.stripColor( event.getLine( 1 ) );
@@ -117,9 +113,12 @@ public class PrefixListener implements Listener
 
             player.sendMessage( OkiCore.getPfx() + "Prefix sign created!" );
             return;
+        }*/
+
+            player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "Custom Prefixes have been disabled until further notice! :(");
+
         }
     }
-
     @EventHandler
     public void onPlayerInteract( PlayerInteractEvent event )
     {
@@ -136,8 +135,8 @@ public class PrefixListener implements Listener
         Player player = event.getPlayer();
 
         //If the interaction is a prefix token
-        if( event.getAction().equals( Action.RIGHT_CLICK_AIR ) || event.getAction().equals( Action.RIGHT_CLICK_BLOCK ) )
-        {
+        if( event.getAction().equals( Action.RIGHT_CLICK_AIR ) || event.getAction().equals( Action.RIGHT_CLICK_BLOCK ) ) {
+/*
             //Check if a sign is clicked
             if( event.getClickedBlock().getState() instanceof Sign )
             {
@@ -228,6 +227,10 @@ public class PrefixListener implements Listener
 
                 useItem( player );
             }
+        }
+*/
+            player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "Custom Prefixes have been disabled until further notice! :(");
+
         }
     }
 

@@ -23,6 +23,7 @@ public class AntiAfkRunnable extends BukkitRunnable
         HashMap<UUID, Location> newLocations = new HashMap<>();
 
         //Check players to see if they are afk or not logged
+
         for( Player onlinePlayer : Bukkit.getOnlinePlayers() )
         {
             if ( locations.containsKey( onlinePlayer.getUniqueId() ) )

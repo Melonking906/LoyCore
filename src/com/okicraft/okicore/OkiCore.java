@@ -40,7 +40,7 @@ public class OkiCore extends JavaPlugin
 
     public SQL db;
 
-    private static final String PREFIX = ChatColor.WHITE + "[" + ChatColor.AQUA+ "Oki" + ChatColor.WHITE + "]" + ChatColor.GREEN + " ";
+    private static final String PREFIX = ChatColor.WHITE + "[" + ChatColor.AQUA + "Oki" + ChatColor.WHITE + "]" + ChatColor.GREEN + " ";
     private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
     @Override
@@ -91,8 +91,10 @@ public class OkiCore extends JavaPlugin
         getCommand( "pvp" ).setExecutor( new PvPCommand( pvPListener, pvp ) );
 
         //Prefix Stuff
+/*
         pm.registerEvents( new PrefixListener(), this );
         getCommand( "prefixtoken" ).setExecutor( new PfxTokenCommand() );
+*/
 
         // Pocket money
         scheduler.scheduleSyncRepeatingTask(this, new PayRunnable(), 35000L, 72000L ); // Every hour

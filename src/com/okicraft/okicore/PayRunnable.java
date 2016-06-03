@@ -14,8 +14,8 @@ public class PayRunnable extends BukkitRunnable
     private Random random;
     private Economy econ = OkiCore.gringottsEcon;
 
-    private static final int MAX_FE = 10;
-    private static final int MIN_FE = 3;
+    private static final int MAX_RO = 100;
+    private static final int MIN_RO = 500;
 
     public PayRunnable()
     {
@@ -25,7 +25,7 @@ public class PayRunnable extends BukkitRunnable
     @Override
     public void run()
     {
-        int pocketMoney = random.nextInt(MAX_FE - MIN_FE) + MIN_FE;
+        int pocketMoney = random.nextInt(MAX_RO - MIN_RO) + MIN_RO;
 
         Collection<? extends Player> players = Bukkit.getOnlinePlayers();
 
