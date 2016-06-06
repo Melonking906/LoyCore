@@ -7,3 +7,10 @@ tab_footer: ''
 announcements:
 - Hi, Im Molly!
 - Welcome to Loy!
+
+sql:
+    host: "host"
+    port: "3306"
+    database: "databasename"
+    user: "username"
+    pass: "password"

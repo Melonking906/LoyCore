@@ -14,12 +14,13 @@ public class MySQL extends SQL
 
     protected Connection getNewConnection()
     {
-        String host = "localhost";
-        String port = "3306";
-        String database = "mc28126";
-        String user = "mc28126";
-        String pass = "bb08be6108";
-// mysql://localhost:3306/mc28126
+
+        String host = plugin.getConfig().getString("sql.host");
+        String port = plugin.getConfig().getString("sql.port");
+        String database = plugin.getConfig().getString("sql.database");
+        String user = plugin.getConfig().getString("sql.user");
+        String pass = plugin.getConfig().getString("sql.pass");
+
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
