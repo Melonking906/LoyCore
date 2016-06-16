@@ -11,54 +11,43 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class GameModesListener implements Listener
-{
-    public GameModesListener()
-    {
+public class GameModesListener implements Listener {
+    public GameModesListener() {
 
     }
 
     @EventHandler
-    public void onWorldChange( PlayerChangedWorldEvent event )
-    {
+    public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         World toWorld = player.getWorld();
 
-        if( toWorld.getName().equals( "Space" ) )
-        {
-            player.addPotionEffect(new PotionEffect( PotionEffectType.JUMP, 99999, 3 ));
-        }
-        else
-        {
-            player.addPotionEffect(new PotionEffect( PotionEffectType.JUMP, 0, 0 ), true);
-        }
+ /*       if (toWorld.getName().equals("Space")) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 99999, 3));
+        } else {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 0, 0), true);
+        }*/
 
-        if( player.hasPermission( "oki.gmanyworld" ) )
-        {
+        if (player.hasPermission("oki.gmanyworld")) {
             return;
         }
 
-        if( toWorld.getName().equals( "Lake" ) )
-        {
-            player.setGameMode( GameMode.CREATIVE );
-        }
-        else
-        {
-            player.setGameMode( GameMode.SURVIVAL );
+        if(toWorld.getName().equals("Spore")) {
+            player.setGameMode(GameMode.SURVIVAL);
+            if (player.hasPermission("oki.fly")) {
 
-            if( player.hasPermission( "oki.fly" ) )
-            {
-                player.setAllowFlight( true );
-                player.setFlying( true );
+                player.setAllowFlight(true);
+                player.setFlying(true);
             }
-            else
-            {
-                player.setAllowFlight( false );
-                player.setFlying( false );
-            }
+        } else {
+
+            OkiCore.playErrorSound( player );
+            player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "You don't have permission to fly! :O");
+            player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "Please let an " + ChatColor.GRAY + "<" + ChatColor.BLUE + "Admin" + ChatColor.GRAY + ">" + ChatColor.RED + "know!");
+
+
         }
     }
-
+/*
     @EventHandler
     public void onBlockPlace( BlockPlaceEvent event )
     {
@@ -82,5 +71,5 @@ public class GameModesListener implements Listener
         }
 
         ActionMessage.showMessage( player, ChatColor.RED + "Remember this world gets reset!" );
-    }
+    } */
 }

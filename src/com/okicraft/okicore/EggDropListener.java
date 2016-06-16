@@ -60,7 +60,7 @@ public class EggDropListener implements Listener
             return;
         }
 
-        //Fail Chance
+        // Chance
         int chance = 0;
         Material weaponType = k.getInventory().getItemInMainHand().getType();
 

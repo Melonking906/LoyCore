@@ -43,6 +43,8 @@ public class OkiCore extends JavaPlugin
     private static final String PREFIX = ChatColor.WHITE + "[" + ChatColor.AQUA + "Oki" + ChatColor.WHITE + "]" + ChatColor.GREEN + " ";
     private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
+    private static final String ERROR_SOUND = "block.note.bass";
+
     @Override
     public void onEnable()
     {
@@ -90,8 +92,7 @@ public class OkiCore extends JavaPlugin
         pm.registerEvents( pvPListener, this );
         getCommand( "pvp" ).setExecutor( new PvPCommand( pvPListener, pvp ) );
 
-        //Prefix Stuff
-/*
+ /*       //Prefix Stuff
         pm.registerEvents( new PrefixListener(), this );
         getCommand( "prefixtoken" ).setExecutor( new PfxTokenCommand() );
 */
@@ -145,6 +146,14 @@ public class OkiCore extends JavaPlugin
 
     public static String getMol() { return MOLLY; }
 
+    public static String getErrSound() { return ERROR_SOUND; }
+
+    public static void playErrorSound( Player p )
+    {
+
+        p.playSound( p.getLocation(), getErrSound(), 10, 1);
+
+    }
     private void setupIslandCraft()
     {
         try {

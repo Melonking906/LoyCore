@@ -25,7 +25,7 @@ public class KickEmAllCommand implements CommandExecutor
 
         for( Player player : Bukkit.getServer().getOnlinePlayers() )
         {
-            player.kickPlayer( ChatColor.YELLOW + "LoyLoy is restarting!" + ChatColor.GREEN + " Come back soon :D" );
+            player.kickPlayer( ChatColor.YELLOW + "Oki is restarting!" + ChatColor.GREEN + " Come back soon :D" );
         }
 
         System.out.print( "[Oki] All players have been disconnected!" );

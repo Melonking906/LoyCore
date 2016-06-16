@@ -136,7 +136,7 @@ public class PrefixListener implements Listener
 
         //If the interaction is a prefix token
         if( event.getAction().equals( Action.RIGHT_CLICK_AIR ) || event.getAction().equals( Action.RIGHT_CLICK_BLOCK ) ) {
-/*
+
             //Check if a sign is clicked
             if( event.getClickedBlock().getState() instanceof Sign )
             {
@@ -145,7 +145,7 @@ public class PrefixListener implements Listener
 
                 if( line1.equals( "[prefix]" ) )
                 {
-                    String prefix = ChatColor.stripColor( sign.getLine( 1 ) );
+                   /* String prefix = ChatColor.stripColor( sign.getLine( 1 ) );
                     if( prefix == null || prefix.equals( "" ) || prefix.equals( " " ) )
                     {
                         player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "This sign has no prefix! Tell an admin please ;3" );
@@ -192,7 +192,7 @@ public class PrefixListener implements Listener
                     OkiCore.chat.setPlayerPrefix( player, prefix );
 
                     player.sendMessage( OkiCore.getPfx() + "Yay, prefix set to " + ChatColor.GRAY + prefix + ChatColor.GREEN + "!" );
-                }
+                }*/
             }
             //Else assume its a token
             else
@@ -211,7 +211,7 @@ public class PrefixListener implements Listener
                     return;
                 }
 
-                List<String> lore = im.getLore();
+               /* List<String> lore = im.getLore();
 
                 if( lore.size() < 3 )
                 {
@@ -225,10 +225,9 @@ public class PrefixListener implements Listener
 
                 player.sendMessage( OkiCore.getPfx() + "Yay, prefix set to " + ChatColor.GRAY + prefix + ChatColor.GREEN + "!" );
 
-                useItem( player );
+                useItem( player );*/
             }
         }
-*/
             player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "Custom Prefixes have been disabled until further notice! :(");
 
         }

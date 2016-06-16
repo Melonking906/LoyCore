@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class FixCommand implements CommandExecutor
 {
-    private static final int COST = 10;
+    private static final int COST = 25;
 
     private static final Economy econ = OkiCore.gringottsEcon;
 
@@ -32,14 +32,17 @@ public class FixCommand implements CommandExecutor
 
                 if ( econ.getBalance( player ) < COST )
                 {
-                    player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You can\'t afford that! It\'s " + COST + " emeralds to fix an item." );
+                    player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "You can\'t afford that! It\'s " + COST + " Ro to fix an item." );
                     return true;
                 }
 
                 if( itemCheck( berepaired ) )
                 {
                     berepaired.setDurability( ( short ) ( berepaired.getType().getMaxDurability() - berepaired.getType().getMaxDurability() ) );
+
+                    sender.sendMessage( OkiCore.getPfx() + ChatColor.GREEN + COST + " Ro has been removed from your account!");
                     sender.sendMessage( OkiCore.getPfx() + ChatColor.GREEN + "You have repaired the item!" );
+
                     econ.withdrawPlayer( player, COST ); // Gringotts again.
 
                 }

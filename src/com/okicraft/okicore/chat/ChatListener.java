@@ -109,7 +109,6 @@ public class ChatListener implements Listener
         //Name Tooltip
         String nameToolTip = "";
         nameToolTip += ChatColor.WHITE + "Name: " + ChatColor.GRAY + p.getName();
-        nameToolTip +=  "\n" + ChatColor.GREEN + "Ro: " + ChatColor.GRAY + econ.getBalance( p );
 
         if( p.hasPermission( "oki.chat.color" ) )
         {

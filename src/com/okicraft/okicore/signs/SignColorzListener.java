@@ -37,7 +37,7 @@ public class SignColorzListener implements Listener {
         if(!SignColorz.containsColorCodes(e.getLine(0) + " " + e.getLine(1) + " " + e.getLine(2) + " " + e.getLine(3)))
             return;
 
-        if(!(p.hasPermission("sc.coloredsigns") || SignColorz.permission_based == false))
+        if(!(p.hasPermission("oki.signs.color") || SignColorz.permission_based == false))
         {
             p.sendMessage(SignColorz.permissions_message);
             return;
@@ -53,7 +53,7 @@ public class SignColorzListener implements Listener {
             return;
         }
 
-        if(p.hasPermission("sc.magic") || SignColorz.magic_permission_based == false)
+        if(p.hasPermission("oki.signs.magic") || SignColorz.magic_permission_based == false)
         {
             e.setLine(0, SignColorz.translateColorCodes(e.getLine(0)));
             e.setLine(1, SignColorz.translateColorCodes(e.getLine(1)));

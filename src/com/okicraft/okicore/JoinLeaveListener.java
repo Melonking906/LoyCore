@@ -3,14 +3,11 @@ package com.okicraft.okicore;
 import com.okicraft.okicore.autopromote.AutoPromote;
 import io.loyloy.nicky.Nick;
 import net.milkbowl.vault.economy.Economy;
-import net.minecraft.server.v1_9_R1.IChatBaseComponent;
-import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
-import net.minecraft.server.v1_9_R1.PlayerConnection;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
+import net.minecraft.server.v1_9_R2.IChatBaseComponent;
+import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerListHeaderFooter;
+import net.minecraft.server.v1_9_R2.PlayerConnection;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -104,10 +101,30 @@ public class JoinLeaveListener implements Listener
 
         plugin.db.updatePlayer( player );
 
-        if( player.hasPermission( "oki.fly" ) )
+        if( !player.hasPermission( "oki.fly.anyworld" ) )
         {
+
+            if(player.getWorld().equals( "Spore" ) )
+            {
+
+                player.setAllowFlight( true );
+                player.setFlying( true );
+
+            }
+            else
+            {
+
+                player.setFlying( false );
+                player.setAllowFlight( false );
+
+            }
+        }
+        else
+        {
+
             player.setAllowFlight( true );
             player.setFlying( true );
+
         }
 
         if( !player.hasPermission( "oki.account" ))
@@ -160,7 +177,7 @@ public class JoinLeaveListener implements Listener
                     name = displayName;
                 }
 
-                player.sendMessage( OkiCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Loy ;3" );
+                player.sendMessage( OkiCore.getMol() + "Sup " + ChatColor.YELLOW + name + ChatColor.WHITE + "! Welcome to Oki ;3" );
 
                 if( !permission.playerInGroup( player, AutoPromote.PROMOTE_RANK ) )
                 {
@@ -169,8 +186,15 @@ public class JoinLeaveListener implements Listener
 
                 for ( Player onlinePlayer : Bukkit.getOnlinePlayers() ) {
                     if (!onlinePlayer.equals(player)) {
-                        System.out.println( "Sending JOIN message for " + player + " to " + onlinePlayer + ".");
+                    //    System.out.println( "Sending JOIN message for " + player + " to " + onlinePlayer + ".");
                         onlinePlayer.sendMessage(getJoinMessage( player ));
+
+                        // Play the join sound for all players except the joining player.
+                        onlinePlayer.playSound( onlinePlayer.getLocation(), "block.note.pling", 10, 1);
+
+                        // Play the join sound for the joining player now!
+                        onlinePlayer.playSound( onlinePlayer.getLocation(), "block.note.pling", 10, 1);
+
                     }
                 }
 
@@ -231,6 +255,9 @@ public class JoinLeaveListener implements Listener
             if ( !onlinePlayer.equals( player ) )
             {
                 onlinePlayer.sendMessage( getLeaveMessage( player ) );
+
+                // Play the leave sound for all players except the one leaving (duh)
+                onlinePlayer.playSound( onlinePlayer.getLocation(), "block.note.bass", 10, 1);
             }
         }
 

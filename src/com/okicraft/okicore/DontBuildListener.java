@@ -27,6 +27,7 @@ public class DontBuildListener implements Listener
         {
             event.setCancelled( true );
 
+            OkiCore.playErrorSound( player );
             TitleMessage.showMessage( player, "", ChatColor.RED + "You can't chat yet, please wait 1 min from join!", 60 );
         }
     }
@@ -41,6 +42,7 @@ public class DontBuildListener implements Listener
         {
             event.setCancelled( true );
 
+            OkiCore.playErrorSound( player );
             TitleMessage.showMessage( player, "", ChatColor.RED + "Please wait for your rank to load! (1 min from join)", 60 );
         }
     }
@@ -54,6 +56,8 @@ public class DontBuildListener implements Listener
         if( hasNoPermission( player ) )
         {
             event.setCancelled( true );
+
+            OkiCore.playErrorSound( player );
             TitleMessage.showMessage( player, "", ChatColor.RED + "Please wait for your rank to load! (1 min from join)", 60 );
         }
     }
@@ -67,6 +71,7 @@ public class DontBuildListener implements Listener
         {
             event.setCancelled( true );
             Player player = (Player) event.getEntity();
+            OkiCore.playErrorSound( player );
             TitleMessage.showMessage( player, "", ChatColor.RED + "Please wait for your rank to load! (1 min from join)", 60 );
         }
     }
@@ -85,6 +90,7 @@ public class DontBuildListener implements Listener
             {
                 Player player = (Player) entity;
                 event.setCancelled( true );
+                OkiCore.playErrorSound( player );
                 TitleMessage.showMessage( player, "", ChatColor.RED + "Please wait for your rank to load! (1 min from join)", 60 );
             }
             else if( damager instanceof Projectile )
@@ -122,6 +128,7 @@ public class DontBuildListener implements Listener
             if( hasNoPermission( player ) )
             {
                 event.setCancelled( true );
+                OkiCore.playErrorSound( player );
                 TitleMessage.showMessage( player, "", ChatColor.RED + "Please wait for your rank to load! (1 min from join)", 60 );
             }
         }
