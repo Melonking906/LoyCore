@@ -104,7 +104,7 @@ public class JoinLeaveListener implements Listener
         if( !player.hasPermission( "oki.fly.anyworld" ) )
         {
 
-            if(player.getWorld().equals( "Spore" ) )
+            if(player.getWorld().getName().equals( "Spore" ) )
             {
 
                 player.setAllowFlight( true );

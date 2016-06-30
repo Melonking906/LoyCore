@@ -21,12 +21,6 @@ public class GameModesListener implements Listener {
         Player player = event.getPlayer();
         World toWorld = player.getWorld();
 
- /*       if (toWorld.getName().equals("Space")) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 99999, 3));
-        } else {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 0, 0), true);
-        }*/
-
         if (player.hasPermission("oki.gmanyworld")) {
             return;
         }
@@ -38,12 +32,28 @@ public class GameModesListener implements Listener {
                 player.setAllowFlight(true);
                 player.setFlying(true);
             }
+            else
+            {
+
+                OkiCore.playErrorSound( player );
+                player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Oops!  Looks like you don't have permission to fly in the Island World!");
+                player.sendMessage( OkiCore.getPfx() + ChatColor.RED + "Please let an " + ChatColor.GRAY + "<" + ChatColor.BLUE + "Admin" + ChatColor.GRAY + ">" + ChatColor.RED + "know!");
+
+            }
         } else {
+            if(player.hasPermission( "oki.fly.anyworld" ) )
+            {
 
-            OkiCore.playErrorSound( player );
-            player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "You don't have permission to fly! :O");
-            player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "Please let an " + ChatColor.GRAY + "<" + ChatColor.BLUE + "Admin" + ChatColor.GRAY + ">" + ChatColor.RED + "know!");
+               player.setAllowFlight( true);
+                player.setFlying( true );
 
+            }
+            else {
+
+                OkiCore.playErrorSound(player);
+                player.sendMessage(OkiCore.getPfx() + ChatColor.RED + "You don't have permission to fly in this world!");
+
+            }
 
         }
     }

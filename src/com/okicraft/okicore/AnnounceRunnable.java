@@ -89,6 +89,7 @@ public class AnnounceRunnable extends BukkitRunnable
         public boolean send()
         {
             enact();
+            player.playSound( player.getLocation(), "block.note.pling", 10, 1);
             player.sendMessage( format() );
             return true;
         }

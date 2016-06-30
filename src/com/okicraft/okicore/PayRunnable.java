@@ -47,7 +47,7 @@ public class PayRunnable extends BukkitRunnable
                 pocketMoney = random.nextInt(MAX_RO_RAVEN - MIN_RO_RAVEN) + MIN_RO_RAVEN;
                 econ.depositPlayer( player, pocketMoney );
                 TitleMessage.showMessage( player, "", ChatColor.GOLD + "You got " + ChatColor.YELLOW + pocketMoney + ChatColor.GOLD + " Ro in pocket money!", 80 );
-                player.sendMessage( OkiCore.getPfx() + ChatColor.GOLD + "Thank you, " + player.getDisplayName() + ", for your support! :D" );
+                player.sendMessage( OkiCore.getPfx() + ChatColor.GREEN + "Thank you, " + player.getDisplayName() + ChatColor.GREEN + ", for your support! :D" );
                 player.sendMessage( OkiCore.getPfx() + ChatColor.GOLD + "You got " + ChatColor.YELLOW + pocketMoney + ChatColor.GOLD + " Ro in pocket money!" );
             }
             else if( permission.playerInGroup( player, "Falcon" ) )
@@ -56,7 +56,7 @@ public class PayRunnable extends BukkitRunnable
                 pocketMoney = random.nextInt(MAX_RO_FALCON - MIN_RO_FALCON) + MIN_RO_FALCON;
                 econ.depositPlayer( player, pocketMoney );
                 TitleMessage.showMessage( player, "", ChatColor.GOLD + "You got " + ChatColor.YELLOW + pocketMoney + ChatColor.GOLD + " Ro in pocket money!", 80 );
-                player.sendMessage( OkiCore.getPfx() + ChatColor.GOLD + "Thank you, " + player.getDisplayName() + ", for your support! :D" );
+                player.sendMessage( OkiCore.getPfx() + ChatColor.GREEN + "Thank you, " + player.getDisplayName() + ChatColor.GREEN + ", for your support! :D" );
                 player.sendMessage( OkiCore.getPfx() + ChatColor.GOLD + "You got " + ChatColor.YELLOW + pocketMoney + ChatColor.GOLD + " Ro in pocket money!" );
             }
             else if( permission.playerInGroup( player, "Phoenix" ) )
@@ -65,7 +65,7 @@ public class PayRunnable extends BukkitRunnable
                 pocketMoney = random.nextInt(MAX_RO_PHOENIX - MIN_RO_PHOENIX) + MIN_RO_PHOENIX;
                 econ.depositPlayer( player, pocketMoney );
                 TitleMessage.showMessage( player, "", ChatColor.GOLD + "You got " + ChatColor.YELLOW + pocketMoney + ChatColor.GOLD + " Ro in pocket money!", 80 );
-                player.sendMessage( OkiCore.getPfx() + ChatColor.GOLD + "Thank you, " + player.getDisplayName() + ", for your support! :D" );
+                player.sendMessage( OkiCore.getPfx() + ChatColor.GREEN + "Thank you, " + player.getDisplayName() + ChatColor.GREEN + ", for your support! :D" );
                 player.sendMessage( OkiCore.getPfx() + ChatColor.GOLD + "You got " + ChatColor.YELLOW + pocketMoney + ChatColor.GOLD + " Ro in pocket money!" );
             }
             else

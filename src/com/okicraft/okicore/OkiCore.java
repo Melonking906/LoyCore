@@ -41,7 +41,7 @@ public class OkiCore extends JavaPlugin
     public SQL db;
 
     private static final String PREFIX = ChatColor.WHITE + "[" + ChatColor.AQUA + "Oki" + ChatColor.WHITE + "]" + ChatColor.GREEN + " ";
-    private static final String MOLLY = ChatColor.GRAY + "Bot " + ChatColor.DARK_PURPLE + "Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
+    private static final String MOLLY = ChatColor.GRAY + "<" + ChatColor.WHITE + "OkiBot" + ChatColor.GRAY + ">" + ChatColor.DARK_PURPLE + " Molly " + ChatColor.GREEN + "✕" + ChatColor.WHITE + " ";
 
     private static final String ERROR_SOUND = "block.note.bass";
 

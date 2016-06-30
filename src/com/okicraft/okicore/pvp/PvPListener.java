@@ -2,7 +2,9 @@ package com.okicraft.okicore.pvp;
 
 import com.okicraft.okicore.ActionMessage;
 import com.okicraft.okicore.ActionMessage;
+import com.okicraft.okicore.OkiCore;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -37,10 +39,14 @@ public class PvPListener implements Listener
         if ( pvp.isPvPWorld( event.getPlayer().getWorld().getName() ) )
         {
             ActionMessage.showMessage( event.getPlayer(), ChatColor.RED + "*Beep* PvP is enabled in this world!" );
+            event.getPlayer().sendMessage( OkiCore.getPfx() + ChatColor.RED + "*Beep* PvP is enabled in this world!");
+            event.getPlayer().playSound( event.getPlayer().getLocation(), "block.note.pling", 10, 1);
         }
         else
         {
             ActionMessage.showMessage( event.getPlayer(), ChatColor.GREEN + "*Boop* PvP is optional in this world!" );
+            event.getPlayer().sendMessage( OkiCore.getPfx() + ChatColor.GREEN + "*Boop* PvP is optional in this world!");
+            event.getPlayer().playSound( event.getPlayer().getLocation(), "block.note.pling", 10, 1);
         }
     }
 
@@ -74,7 +80,7 @@ public class PvPListener implements Listener
         {
             damager = (Player) event.getDamager();
         }
-        else if( event.getDamager() instanceof Projectile )
+        else if( event.getDamager() instanceof Projectile)
         {
             Projectile projectile = (Projectile) event.getDamager();
 
@@ -83,6 +89,7 @@ public class PvPListener implements Listener
                 return;
             }
 
+            projectile.setBounce( true );
             damager = (Player) projectile.getShooter();
         }
         else
